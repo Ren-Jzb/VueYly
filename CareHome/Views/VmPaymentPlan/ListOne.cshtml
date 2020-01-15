@@ -1,0 +1,391 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title id="title">派单计划管理</title>
+    <link href="/assets_pc/style/reset.css?v=1.1.3" rel="stylesheet" type="text/css" />
+    <link href="/assets_pc/style/common.css?v=1.1.3" rel="stylesheet" type="text/css" />
+    <link href="/assets_pc/vendor/perfect-scrollbar/perfect-scrollbar.css?v=1.1.3" rel="stylesheet" />
+
+    <script src="/assets_pc/script/setFontSize.js?v=1.1.3"></script>
+    <script src="/assets_pc/vendor/perfect-scrollbar/perfect-scrollbar.js?v=1.1.3"></script>
+    <script src="/assets_pc/js/My97/WdatePicker.js?v=1.1.3" type="text/javascript"></script>
+    <script src="/assets_pc/js/jquery/jquery/1.11.3/jquery.js"></script>
+
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
+    @*基库*@
+    <script src="/Scripts/vue.js"></script>
+    @*ajax支持*@
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+</head>
+<body>
+    <div id="divData" v-cloak>
+        <div class="main-content">
+            <div class="content-head">
+                <div class="title-box">
+                    <h2 class="content-title">派单计划管理</h2>
+                </div>
+                <div id="OperateButton" class="add-btn-box">
+                    <a href="javascript:;" @@click="AddPgs()" class="OperateButton btn-add">添加</a>
+                    @*@Html.Raw(ViewBag.OperateButton)*@
+                    <a href="javascript:;" @@click="ShowSearchBox" class="OperateButton btn-filter">筛选</a>
+                </div>
+            </div>
+            <div class="content-body" id="scroll-box">
+                <div class="list-box">
+                    <div class="table-box">
+                        <table id="tblist" class="tblist">
+                            <tr class="odd">
+                                <th class="w50">序号</th>
+                                <th>老人姓名<i id="UserName" class=""></i></th>
+                                <th>家政姓名</th>
+                                <th>开始日期</th>
+                                <th>结束日期</th>
+                                <th>服务时长</th>
+                                <th class="w200">备注</th>
+                            </tr>
+                            <tr v-for="(value,key) in pglist">
+                                <td v-on:click="EditPgs(value)">{{key+1}}</td>
+                                <td @@click="EditPgs(value)">{{value.UserName}}</td>
+                                <td @@click="EditPgs(value)">{{value.RealName}}</td>
+                                <td @@click="EditPgs(value)">{{dateFormat(value.ServerStart)}}</td>
+                                <td @@click="EditPgs(value)">{{dateFormat(value.ServerEnd)}}</td>
+                                <td @@click="EditPgs(value)">{{value.ServerTime}}</td>
+                                <td @@click="EditPgs(value)">{{value.Remark}}</td>
+                            </tr>
+                        </table>
+                        <mypage v-bind:pages="pages" v-on:getdata="getPgList"></mypage>
+
+                    </div>
+                    <input type="hidden" id="sortfield" value="" />
+                    <input type="hidden" id="sorttype" value="" />
+                </div>
+            </div>
+        </div>
+
+
+        <!--details页面 begin-->
+        <div class="detail-content" id="detailsBox">
+            <!--search页面 end-->
+            <div class="search-box clearfix" id="div_shearchBox" v-show="div_shearchBox" v-on:close="div_shearchBox=false">
+                <h2 class="detail-title">筛选条件</h2>
+                <div class="select-item">
+                    <h3 class="select-title">家政姓名:</h3>
+                    <input type="text" class="select-input" v-model="searchName">
+                </div>
+                <div class="select-item"><a href="###" class="search-btn" v-on:click="getPgList(searchName)">查询</a></div>
+            </div>
+            <!--search页面 end-->
+            <!--detail页面 begin-->
+            <div class="detail-box" id="div_detailsBox" v-show="div_detailsBox" v-on:close="div_detailsBox=false">
+                <div class="add-btn-box">
+                    <a href="javascript:void(0);" class="OperateButton btn-del" @@click="Delete(EditPg.ID)">删除</a>
+                    <a href="javascript:void(0);" class="OperateButton btn-save" @@click="SavePg()">保存</a>
+                    <a href="javascript:void(0);" class="OperateButton" @@click="Canle()">取消</a>
+                    @*@Html.Raw(ViewBag.DetailsOperateButton)*@
+                </div>
+                <div class="info-item">
+                    <h3 class="info-title required">老人姓名:</h3>
+                    <select class="inputnull select" id="ddlCustomerName" style="width:120px;" v-model="EditPg.CustomerId">
+                        @Html.Raw(ViewBag.GetCustomerName)
+                    </select>
+                </div>
+                <div class="info-item">
+                    <h3 class="info-title required">家政姓名:</h3>
+                    <select class="inputnull select" id="ddlCareName" style="width:120px;" v-model="EditPg.HgId">
+                        @Html.Raw(ViewBag.GetCareName)
+                    </select>
+                </div>
+
+                <div class="info-item half-item">
+                    <h3 class="info-title">服务开始日期:</h3>
+                    <input class="text-input" type="text" v-model="ServerStart" id="ServerStart" @@click="datePicker('ServerStart')" autocomplete="off" />
+                </div>
+                <div class="info-item half-item">
+                    <h3 class="info-title">服务结束日期:</h3>
+                    @*<input class="text-input" type="text" v-model="ServerEndTime" id="ServerEndTime" @@click="datePicker('ServerEndTime')" autocomplete="off" />*@
+
+                    <input class="text-input" type="text" id="ServerEnd" @@click="datePicker('ServerEnd')" v-model="ServerEnd" autocomplete="off">
+                </div>
+                <div class="info-item half-item">
+                    <h3 class="info-title">服务时长:</h3>
+                    <input class="text-input" type="text" id="txtServetTime" v-model="EditPg.ServerTime">
+                </div>
+                <div class="split-line"></div>
+                <div class="info-item  half-item">
+                    <h3 class="info-title">星期一:</h3>
+                    <input class="text-input" type="text" v-model="EditPg.WeekOne" id="WeekOne" @@click="timePicker('WeekOne')" autocomplete="off" />
+                </div>
+                <div class="info-item  half-item">
+                    <h3 class="info-title">星期二:</h3>
+                    <input class="text-input" type="text" v-model="EditPg.WeekTwo" id="WeekTwo" @@click="timePicker('WeekTwo')" autocomplete="off" />
+                </div>
+                <div class="info-item  half-item">
+                    <h3 class="info-title">星期三:</h3>
+                    <input class="text-input" type="text" v-model="EditPg.WeekThree" id="WeekThree" @@click="timePicker('WeekThree')" autocomplete="off" />
+                </div>
+                <div class="info-item  half-item">
+                    <h3 class="info-title">星期四:</h3>
+                    <input class="text-input" type="text" v-model="EditPg.WeekFour" id="WeekFour" @@click="timePicker('WeekFour')" autocomplete="off" />
+                </div>
+                <div class="info-item  half-item">
+                    <h3 class="info-title">星期五:</h3>
+                    <input class="text-input" type="text" v-model="EditPg.WeekFive" id="WeekFive" @@click="timePicker('WeekFive')" autocomplete="off" />
+                </div>
+                <div class="info-item  half-item">
+                    <h3 class="info-title">星期六:</h3>
+                    <input class="text-input" type="text" v-model="EditPg.WeekSix" id="WeekSix" @@click="timePicker('WeekSix')" autocomplete="off" />
+                </div>
+                <div class="info-item  half-item">
+                    <h3 class="info-title">星期日:</h3>
+                    @*<input class="text-input" type="text" id="txtSeven" onfocus="WdatePicker({dateFmt:'HH:mm'})" v-model="EditPg.WeekSeven">*@
+                    <input class="text-input" type="text" v-model="EditPg.WeekServer" id="WeekServer" @@click="timePicker('WeekServer')" autocomplete="off" />
+                </div>
+                <div class="split-line"></div>
+                <div class="info-item">
+                    <h3 class="info-title">备注:</h3>
+                    <textarea id="txtRemark" v-model="EditPg.Remark"></textarea>
+                </div>
+
+            </div>
+            <!--detail页面 end-->
+        </div>
+        <!--details页面 end-->
+    </div>
+    <template id="myPage">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                @*上一页<<*@
+                <li v-bind:class="{disabled:pages.curPage==1}">
+                    <a href="javascript:;" v-on:click="pages.curPage==1?'':go(pages.curPage-1)" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                @*第一页*@
+                <li v-bind:class="{active:pages.curPage==1}"><a href="javascript:;" v-on:click="go(1)">{{pages.firstNum}}</a></li>
+                @*前面的省略号...*@
+                <li v-if="pages.previousSpot" class="disabled"><span><span aria-hidden="true">...</span></span></li>
+                @*中间的页，使用了for标签>>*@
+                <li v-for="item in pages.pagelist" v-bind:class="{active:pages.curPage==item}"><a href="javascript:;" v-on:click="go(item)">{{item}}</a></li>
+                @*后面的省略号...*@
+                <li v-show="pages.nextSpot" class="disabled"><span><span aria-hidden="true">...</span></span></li>
+                @*最后一页,刚开始是不对的，后来加了v-if的判断，因为只有一页的时候会显示两个1*@
+                <li v-if="pages.totalPages!=1" v-bind:class="{active:pages.curPage==pages.lastNum}"><a href="javascript:;" v-on:click="go(pages.lastNum)">{{pages.lastNum}}</a></li>
+                @*下一页>>*@
+                <li v-bind:class="{disabled:pages.curPage==pages.lastNum}">
+                    <a href="javascript:;" v-on:click="pages.curPage==pages.lastNum?'':go(pages.curPage+1)" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </template>
+
+    <!--新增页面遮罩层-->
+    <div class="shade-box" id="div_shadeBox"></div>
+    <!--新增页面遮罩层 end-->
+    <!--PageNodeId Begin-->
+    <input type="hidden" id="txtAddPageNodeId" value="@ViewBag.AddPageNodeId" />
+    <input type="hidden" id="txtEditPageNodeId" value="@ViewBag.EditPageNodeId" />
+    <input type="hidden" id="txtDetailPageNodeId" value="@ViewBag.DetailPageNodeId" />
+    <!--PageNodeId End-->
+    <input type="hidden" id="txtWelfareCentreID" value="@ViewBag.WelfareCentreID" />
+
+</body>
+</html>
+<script type="text/javascript">
+    Vue.component('mypage', {
+        template: '#myPage',
+        props: ['pages'],
+        methods: {
+            go: function (n) {
+                this.$emit("getdata", n = n);
+            },
+        }
+    });
+
+    var vv = new Vue({
+        el: "#divData",
+        data: {
+            div_detailsBox: false,
+            div_shearchBox: true,
+
+            searchName: "",
+            newPg: { CustomerId: "", HgId: "", ServerStart: "", ServerEnd: "", WeekOne: "", WeekTwo: "", WeekThree: "", WeekFour: "", WeekFive: "", WeekSix: "", WeekServer: "", ServerTime: "" },
+            pglist: [],
+            EditPg: { ID: "", CustomerId: "", HgId: "", ServerStart: "", ServerEnd: "", WeekOne: "", WeekTwo: "", WeekThree: "", WeekFour: "", WeekFive: "", WeekSix: "", WeekServer: "", ServerTime: "" },
+            pages: [],
+
+        },
+        mounted: function () {
+            this.getPgList('');
+        },
+        computed: {
+            ServerStart: {
+                get: function () {
+                    return this.dateFormat(this.EditPg.ServerStart);
+                }
+            },
+            ServerEnd: {
+                get: function () {
+                    return this.dateFormat(this.EditPg.ServerEnd);
+                }
+            }
+        },
+        methods: {
+            datePicker: function (elementId) {
+                var value = null;
+                let vueObj = this;
+                WdatePicker({
+                    el: elementId,
+                    dateFmt: 'yyyy-MM-dd',
+                    onpicked: function () {
+                        value = $("#" + elementId).val();
+                        //vueObj.EditPg[elementId] = value;
+                        str = value.replace(/-/g, '/');
+                        vueObj.EditPg[elementId] = " /Date(" + new Date(str).getTime() + ")/";
+                    },
+                    oncleared: function () {
+                        vueObj.EditPg[elementId] = value;
+                    }
+                });
+            },
+            timePicker: function (eId) {
+                var value = null;
+                let vueObj = this;
+                WdatePicker({
+                    el: eId,
+                    dateFmt: 'HH:mm',
+                    onpicked: function () {
+                        value = $("#" + eId).val();
+                        vueObj.EditPg[eId] = value;
+                    },
+                    oncleared: function () {
+                        vueObj.EditPg[eId] = value;
+                    }
+                });
+            },
+            ShowSearchBox: function () {
+                this.div_detailsBox = false;
+                this.div_shearchBox = true;
+            },
+            //5.删除
+            Delete: function (Id) {
+                this.$http.post('/VmPaymentPlan/Delete', { id: Id }).then(function (res) {
+                    this.getPgList('');
+                });
+            },
+            //添加
+            AddPgs() {
+                this.div_detailsBox = true;
+                this.div_shearchBox = false;
+
+                this.EditPg = { CustomerId: "", HgId: "", ServerStart: "", ServerEnd: "", WeekOne: "", WeekTwo: "", WeekThree: "", WeekFour: "", WeekFive: "", WeekSix: "", WeekServer: "", ServerTime: "" };
+            },
+            //取消
+            Canle() {
+                this.div_detailsBox = false;
+                this.div_shearchBox = true;
+            },
+            //2.保存编辑
+            SavePg: function () {
+                //处理日期
+                this.EditPg.ServerStart = this.dateFormat(this.EditPg.ServerStart);
+                this.EditPg.ServerEnd = this.dateFormat(this.EditPg.ServerEnd);
+
+                this.$http.post('/VmPaymentPlan/AddOrEditPg', this.EditPg).then(function (res) {
+                    if (res.bodyText == "true") {
+                        this.div_detailsBox = false;
+                        this.div_shearchBox = true;
+                        this.getPgList('');
+                    }
+                });
+            },
+            //分页相关
+            go: function (n) {
+                this.getPgList(n);
+            },
+            //获取数据
+            getPgList: function (n) {
+                n = n || 1;
+                var _this = this;
+                axios.post("/VmPaymentPlan/SearchList", {
+                    Name: this.searchName,
+                    curPage: n
+                }).then(function (res) {
+                    _this.pages = res.data.pages;
+                    _this.pglist = res.data.list;
+                });
+            },
+            //编辑
+            EditPgs(opg) {
+                this.div_detailsBox = true;
+                this.div_shearchBox = false;
+
+                this.EditPg = null;
+                this.EditPg = JSON.parse(JSON.stringify(opg));
+            },
+            //日期处理
+            dateFormat: function (value) {
+                if (this.isEmpty(value))
+                    return "";
+                var date = new Date(parseInt(value.replace(/\/Date\((-?\d+)\)\//, '$1')));
+                Y = date.getFullYear();
+                m = date.getMonth() + 1;
+                d = date.getDate();
+                if (m < 10) {
+                    m = '0' + m;
+                }
+                if (d < 10) {
+                    d = '0' + d;
+                }
+                var t = Y + '-' + m + '-' + d;
+                return t;
+            },
+            isEmpty: function (v) //非空效验
+            {
+                switch (typeof v) {
+                    case 'undefined':
+                        return true;
+                    case 'string':
+                        if (v.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, '').length === 0) return true;
+                        break;
+                    case 'boolean':
+                        if (!v) return true;
+                        break;
+                    case 'number':
+                        if (0 === v || isNaN(v)) return true;
+                        break;
+                    case 'object':
+                        if (null === v || v.length === 0) return true;
+                        for (var i in v) {
+                            return false;
+                        }
+                        return true;
+                    case 'null':
+                        return true;
+                    default:
+                        return true;
+                }
+                return false;
+            }
+        }
+    });
+
+</script>

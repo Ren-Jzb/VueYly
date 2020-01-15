@@ -1,0 +1,1400 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title id="title">老人信息</title>
+    <link href="/assets_pc/style/reset.css?v=1.1.3" rel="stylesheet" type="text/css" />
+    <link href="/assets_pc/style/common.css?v=1.1.3" rel="stylesheet" type="text/css" />
+    <link href="/assets_pc/vendor/perfect-scrollbar/perfect-scrollbar.css?v=1.1.3" rel="stylesheet" />
+
+    <style>
+        .btn-upload {
+            display: inline-block;
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            font-size: 14px;
+            text-align: center;
+            background-color: #8184ff;
+            color: #fff;
+            margin-top: 10px;
+            margin-right: 20px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+
+
+    <script src="/assets_pc/script/setFontSize.js?v=1.1.3"></script>
+    <script src="/assets_pc/vendor/perfect-scrollbar/perfect-scrollbar.js?v=1.1.3"></script>
+    <script src="/assets_pc/js/My97/WdatePicker.js?v=1.1.3" type="text/javascript"></script>
+</head>
+<body>
+
+    <!--list页面 begin-->
+    <div class="main-content">
+        <div class="content-head">
+            <!--OperateButton End-->
+            <div class="title-box">
+                <h2 class="content-title">老人信息</h2>
+            </div>
+            <div id="OperateButton" class="add-btn-box">
+                @Html.Raw(ViewBag.OperateButton)
+                <a href="javascript:;" id="btnShowSearchBox" class="OperateButton btn-filter">筛选</a>
+            </div>
+        </div>
+        <!--List Content Begin-->
+        <div class="content-body" id="scroll-box">
+            <div class="list-box">
+
+                <div class="table-box">
+                    <table id="tblist">
+                        <tr>
+                            @*<th style="width: 40px ;"><input type="checkbox" align="absmiddle" id="cbListCheckAll" /></th>*@
+                            <th class="w50">序号</th>
+                            <th>姓名</th>
+                            <th>性别</th>
+                            <th>年龄</th>
+                            <th>所属机构</th>
+                            <th>居住地址</th>
+                            <th>提交时间</th>
+                        </tr>
+
+                    </table>
+                    <div class="pagination_main" id="divPagination">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--List Content End-->
+
+    </div>
+    <!--list页面 end-->
+    <!--details页面 begin-->
+    <div class="detail-content">
+        <!--search页面 end-->
+        <div class="search-box clearfix" id="div_shearchBox">
+            <h2 class="detail-title">筛选条件</h2>
+
+            @*<div class="select-item hid">
+                    <h3 class="select-title">楼栋:</h3>
+                    <select id="ddlDongBySearch">
+                        <option value="">==全部==</option>
+                        @Html.Raw(ViewBag.GetDongID)
+                    </select>
+                </div>
+                <div class="select-item hid">
+                    <h3 class="select-title">楼层:</h3>
+                    <select id="ddlFloorBySearch">
+                        <option value="">==全部==</option>
+                    </select>
+                </div>
+                <div class="select-item hid">
+                    <h3 class="select-title">房间号:</h3>
+                    <select id="ddlRoomBySearch">
+                        <option value="">==全部==</option>
+                    </select>
+                </div>*@
+            <div class="select-item hid">
+                <h3 class="select-title">护理级别:</h3>
+                <select id="ddlCustomerHLMCBySearch">
+                    <option value="">==全部==</option>
+                    @Html.Raw(ViewBag.GetCustomerHLMC)
+                </select>
+            </div>
+            <div class="select-item hid">
+                <h3 class="select-title">性别:</h3>
+                <select id="ddlCustomerGender">
+                    <option value="">==全部==</option>
+                    <option value="1">男</option>
+                    <option value="0">女</option>
+                </select>
+            </div>
+            <div class="select-item hid">
+                <h3 class="select-title">户籍地:</h3>
+                <select id="ddlCustomerHJDQBySearch">
+                    <option value="">==全部==</option>
+                    @Html.Raw(ViewBag.GetCustomerHjd)
+                </select>
+            </div>
+            <div class="select-item hid">
+                <h3 class="select-title">年龄段:</h3>
+                <select id="ddlAgeBySearch">
+                    <option value="">==全部==</option>
+                    <option value="0-59">59岁及以下 </option>
+                    <option value="60-69">60岁至69   </option>
+                    <option value="70-79">70岁至79   </option>
+                    <option value="80-89">80岁至89   </option>
+                    <option value="90-99">90岁至99   </option>
+                    <option value="100-200">100岁及以上</option>
+                </select>
+            </div>
+            <div class="select-item hid">
+                <h3 class="select-title">状态:</h3>
+                <select id="ddlIsValid" class="select">
+                    <option value="">==全部==</option>
+                    <option value="1" selected="selected">入院</option>
+                    <option value="-1">离院</option>
+                </select>
+            </div>
+            <div class="select-item hid"><h3 class="select-title">姓名:</h3><input type="text" class="select-input" id="txtCustomerNameBySearch"></div>
+            <div class="select-item hid"><h3 class="select-title">备注:</h3><input type="text" class="select-input" id="txtRemarkBySearch"></div>
+
+            <div class="select-item"><a href="###" class="search-btn" id="BtnSearch">查询</a></div>
+        </div>
+        <!--search页面 end-->
+        <!--detail页面 begin-->
+        <div class="detail-box" id="div_detailsBox" style="display:none">
+            <div class="add-btn-box">
+                @Html.Raw(ViewBag.DetailsOperateButton)
+            </div>
+
+            <input type="hidden" id="txtId" value="" />
+            <div style="padding-left: 150px;position: relative;">
+                <div class="user-info-box" style="position: absolute;left: 0;">
+                    <div class="avatar-box" id="btnCustomerImg">
+                        <img class="user-avatar" src="/assets_pc/images/NoHeadImg.png" id="customrerImg" alt="">
+                        <input type="hidden" id="txtOrgMindUserId" />
+                    </div>
+                    <input class="patient-name" type="text" id="txtName">
+                    <div class="mui-switch-con">
+                        <input type="checkbox" name="rbCustomerGender" id="ss2" value="1" class="mui-switch-input">
+                        <label for="ss2" class="mui-switch-label"><span>男</span><span>女</span></label>
+
+                    </div>
+                </div>
+                <div class="info-item age-item" style="margin: 0 ;"><h3 class="info-title ">年龄:</h3><input class="text-input age-input" type="text" id="txtAge"> </div>
+                <div class="info-item age-item" style="margin: 0 ;"><h3 class="info-title ">出生日期:</h3><input class="text-input" type="text" id="txtCustomerBrith" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})"> </div>
+            </div>
+            <div class="info-item">
+                <h3 class="info-title ">入院日期:</h3>
+                <input class="text-input" type="text" id="txtAdmissionDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})">
+            </div>
+            <div class="info-item small-item">
+                <h3 class="info-title">所属机构:</h3>
+                <select id="ddlOrgID" class="select">
+                    @Html.Raw(ViewBag.GetOrgID)
+                </select>
+            </div>
+            <div class="info-item">
+                <h3 class="info-title ">社保卡号:</h3>
+                <input class="text-input" type="text" id="txtCustomerSBKH">
+            </div>
+            <div class="info-item">
+                <h3 class="info-title ">身份证号:</h3>
+                <input class="text-input" type="text" id="txtCustomerCardID">
+            </div>
+            <div class="info-item">
+                <h3 class="info-title ">电话:</h3>
+                <input class="text-input" type="text" id="txtPhone">
+            </div>
+            <div class="info-item">
+                <h3 class="info-title ">地址:</h3>
+                <input class="text-input" type="text" id="txtAddress">
+            </div>
+
+            <div class="info-item half-item">
+                <h3 class="info-title ">民族:</h3>
+                <input class="text-input" type="text" id="txtCustomerMZ">
+            </div>
+            <div class="info-item half-item">
+                <h3 class="info-title ">政治面貌:</h3>
+                <input class="text-input" type="text" id="txtCustomerZZMM">
+            </div>
+            <div class="info-item half-item">
+                <h3 class="info-title ">籍贯:</h3>
+                <input class="text-input" type="text" id="txtCustomerJG">
+            </div>
+            <div class="info-item half-item">
+                <h3 class="info-title ">户籍地:</h3>
+                <select name="floor" id="ddlCustomerHJDQ_dic">
+                    @Html.Raw(ViewBag.GetCustomerHjd)
+                </select>
+            </div>
+            <div class="info-item half-item">
+                <h3 class="info-title ">教育程度:</h3>
+                <select name="floor" id="ddlCustomerJYCD">
+                    <option value="">请选择</option>
+                    <option value="文盲">文盲</option>
+                    <option value="略识文字">略识文字</option>
+                    <option value="能读写">能读写</option>
+                </select>
+            </div>
+            <div class="info-item half-item">
+                <h3 class="info-title ">婚姻状况:</h3>
+                <select name="floor" id="ddlCustomerWedlock">
+                    <option value="">请选择</option>
+                    <option value="已婚">已婚</option>
+                    <option value="离婚">离婚</option>
+                    <option value="丧偶">丧偶</option>
+                    <option value="再婚">再婚</option>
+                    <option value="未婚">未婚</option>
+                </select>
+            </div>
+            <div class="split-line"></div>
+
+            <div class="info-item">
+                <h3 class="info-title ">铃号:</h3>
+                <input class="text-input" type="text" id="txtBedNO">
+            </div>
+            @*<div class="info-item  half-item">
+            <h3 class="info-title">楼栋:</h3>
+            <select name="floor" id="ddlDong">
+                @Html.Raw(ViewBag.GetDongID)
+            </select>
+        </div>
+        <div class="info-item  half-item">
+            <h3 class="info-title">楼层:</h3>
+            <select name="floor" id="ddlFloor">
+                <option>未分配</option>
+            </select>
+        </div>
+        <div class="info-item  half-item">
+            <h3 class="info-title">房间号:</h3>
+            <select name="bed-number" id="ddlRoom"></select>
+        </div>
+        <div class="info-item  half-item">
+            <h3 class="info-title">床号:</h3>
+            <select name="bed-number" id="ddlbednoID"></select>
+            <input type="hidden" id="txtOldbednoID" />
+            <input type="hidden" id="txtDevicesId" />
+        </div>*@
+            <div class="split-line"></div>
+
+            <div class="info-item">
+                <h3 class="info-title">最高学历:</h3>
+                <select name="floor" id="ddlCustomerWHCD_dic">
+                    @Html.Raw(ViewBag.GetCustomerWHCD)
+                </select>
+
+            </div>
+
+
+            <div class="info-item"><h3 class="info-title">代理人:</h3><input class="text-input" type="text" id="txtCustomerDlrXm"></div>
+            <div class="info-item">
+                <h3 class="info-title">与老人关系:</h3>
+                <select id="ddlCustomerDlrGx">
+                    @Html.Raw(ViewBag.GetCustomerDlrGx)
+                </select>
+
+            </div>
+            <div class="info-item"><h3 class="info-title">代理人电话:</h3><input class="text-input" type="text" id="txtCustomerDlrTel"></div>
+
+            <div class="info-item middle-item"><h3 class="info-title">代理人地址:</h3><input class="text-input" type="text" id="txtCustomerDlrDz"></div>
+            <div class="info-item"><h3 class="info-title">邮编:</h3><input class="text-input" type="text" id="txtCustomerDlrYb"></div>
+
+            <div class="info-item middle-item"><h3 class="info-title">工作单位:</h3><input class="text-input" type="text" id="txtCompany"></div>
+            <div class="info-item"><h3 class="info-title">职务:</h3><input class="text-input" type="text" id="txtCustomerZW"></div>
+
+
+            <div class="info-item middle-item"><h3 class="info-title">禁忌药物:</h3><input class="text-input" type="text" id="txtCustomerJJYW"></div>
+            <div class="info-item">
+                <h3 class="info-title">护理等级:</h3>
+                <select name="floor" id="ddlCustomerHLMC_dic">
+                    @Html.Raw(ViewBag.GetCustomerHLMC)
+                </select>
+            </div>
+
+            <div class="info-item middle-item"><h3 class="info-title">禁忌食物:</h3><input class="text-input" type="text" id="txtCustomerJJSW"></div>
+            <div class="info-item">
+                <h3 class="info-title">饮食类型:</h3>
+                <select name="floor" id="ddlCustomerYSLX_dic">
+                    @Html.Raw(ViewBag.GetCustomerYSLX)
+                </select>
+            </div>
+
+            <div class="info-item">
+                <h3 class="info-title">老人生肖:</h3>
+                <select id="ddlCustomerSX">
+                    <option value="鼠">鼠</option>
+                    <option value="牛">牛</option>
+                    <option value="虎">虎</option>
+                    <option value="兔">兔</option>
+                    <option value="龙">龙</option>
+                    <option value="蛇">蛇</option>
+                    <option value="马">马</option>
+                    <option value="羊">羊</option>
+                    <option value="猴">猴</option>
+                    <option value="鸡">鸡</option>
+                    <option value="狗">狗</option>
+                    <option value="猪">猪</option>
+                </select>
+
+            </div>
+            <div class="info-item"><h3 class="info-title">住宅电话:</h3><input class="text-input" type="text" id="txtCustomerZZDH"></div>
+            <div class="info-item">
+                <h3 class="info-title">是否是本市:</h3>
+                <select id="ddlCustomerSFBS">
+                    <option value="是">是</option>
+                    <option value="否">否</option>
+                </select>
+            </div>
+
+            <div class="info-item"><h3 class="info-title">是否是外网预约:</h3><input class="text-input" type="text" id="txtCustomerSFWWYY"></div>
+            <div class="info-item"><h3 class="info-title">预约时间:</h3><input class="text-input" type="text" id="txtCustomerYYSJ" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"></div>
+            <div class="info-item"><h3 class="info-title">预约编号:</h3><input class="text-input" type="text" id="txtCustomerYYBH"></div>
+
+            <div class="info-item"><h3 class="info-title">在院编号:</h3><input class="text-input" type="text" id="txtCustomerZYBH"></div>
+            <div class="info-item">
+                <h3 class="info-title">与院状态:</h3>
+                <select id="ddlCustomerYYZT">
+                    <option value="在院">在院</option>
+                    <option value="离院">离院</option>
+                </select>
+            </div>
+            <div class="info-item"><h3 class="info-title">养老补助:</h3><input class="text-input" type="text" id="txtCustomerYLBZ"></div>
+            <div class="info-item"><h3 class="info-title">养老金收入:</h3><input class="text-input" type="text" id="txtCustomerYLJSR"></div>
+            <div class="info-item">
+                <h3 class="info-title">老人类型:</h3>
+                <select name="floor" id="ddlCustomerType_dic">
+                    @Html.Raw(ViewBag.GetCustomerType)
+                </select>
+            </div>
+            <div class="info-item"><h3 class="info-title">备注:</h3><input class="text-input" type="text" id="txtRemark"></div>
+
+
+
+        </div>
+        <!--detail页面 end-->
+    </div>
+    <!--details页面 end-->
+    <!--新增页面遮罩层-->
+    <div class="shade-box" id="div_shadeBox"></div>
+
+    <div>
+
+    </div>
+    <div style="width:400px;height:270px; padding: 0 20px; display:none;" id="div_CustomerImgBox">
+        <img src="/assets_pc/images/NoHeadImg.png" style="height: 1.5rem;" id="imgHeadImg" />
+        <div class="div_fileimg" id="div_FileImg">
+            <form action="/Customer/DoUploadImg" id="formUploadBusinessLicence" enctype="multipart/form-data" method="post" target="hidden_BusinessLicence_frame">
+                <input type="file" id="ts-image-uploader" name="ts-image-uploader" class="upFile file_input" accept="image/gif,image/jpg,image/jpeg,image/bmp,image/png" />
+
+                <input type="submit" value="确定上传" class="btn-upload upBusinessLicence">
+                @*<span class="btn-upload" id="btnDelImg">删除图片</span>*@
+
+                <input type="hidden" id="txtId2" name="txtId2" value="" />
+            </form>
+            <iframe id="hidden_BusinessLicence_frame" name="hidden_BusinessLicence_frame" style="display: none"></iframe>
+            <input type="hidden" id="txtHeadImg" value="" />
+
+            <span id="div_upload_picture_msg" class="div_msg" style="line-height: 35px;"></span>
+        </div>
+    </div>
+
+    <input type="hidden" id="sorttype" value="" />
+    <input type="hidden" id="sortfield" value="" />
+    <!--PageNodeId Begin-->
+    <input type="hidden" id="txtAddPageNodeId" value="@ViewBag.AddPageNodeId" />
+    <input type="hidden" id="txtEditPageNodeId" value="@ViewBag.EditPageNodeId" />
+    <input type="hidden" id="txtDetailPageNodeId" value="@ViewBag.DetailPageNodeId" />
+    <!--PageNodeId End-->
+</body>
+</html>
+<script>
+    var scroll_box = document.getElementById('scroll-box');
+    Ps.initialize(scroll_box);
+    //初始化自定义滚动条
+</script>
+<script src="/assets_pc/js/require/require/2.2.0/require.js?v=1.1.3"></script>
+<script src="/assets_pc/js/require/config/1.0.1/require.config.js?v=1.1.3"></script>
+<script type="text/javascript">
+    function ImgUpload_Callback(mType) {
+        if (mType == "-1") {
+            document.getElementById("div_upload_picture_msg").innerHTML = "<font color=red>上传失败，请稍后再试！</font>";
+        }
+        else if (mType == "-3") {
+            document.getElementById("div_upload_picture_msg").innerHTML = "<font color=red>上传格式错误！</font>";
+        } else if (mType == "-4") {
+            document.getElementById("div_upload_picture_msg").innerHTML = "<font color=red>上传大小错误！</font>";
+        } else {
+            var c_msg = mType.split("|");
+            document.getElementById("div_upload_picture_msg").innerHTML = "<font color=green>上传图片成功！</font>";
+            document.getElementById("txtHeadImg").value = c_msg[1];
+            $("#imgHeadImg").attr("src", "/Upload/CustomerHeadImg/" + c_msg[1]);
+            $("#customrerImg").attr("src", "/Upload/CustomerHeadImg/" + c_msg[1]);
+            layer.msg("操作成功.", { icon: 1, time: 2000, shade: [0.3, '#000'] });
+            layer.closeAll();
+        }
+    }
+    require(["jquery", "MISSY", "jquery.layui"], function () {
+        var ParamUrl = "http://api.yymedic.com/gateway";
+        var _iAddPageNodeId = $("#txtAddPageNodeId").val();
+        var _iEditPageNodeId = $("#txtEditPageNodeId").val();
+        var _iDetailPageNodeId = $("#txtDetailPageNodeId").val();
+        var _iNodeId = MISSY.getQueryString("NodeId");
+        var _ipageType = MISSY.getQueryString("pageType");
+        var _iuserId = MISSY.getQueryString("userId");
+        var _iPageSize = 10; //PAGE NUMBER
+        var _iCurrentPage = 1; //CurrentPage
+        var _iPageCount = 5;
+        var CustomerID;
+        $(function () {
+            initPage();
+        });
+        function initPage() //initPage
+        {
+            $("#BtnAddOperate").click(function () { ClickAdd(); });
+            $("#BtnUpdateOperate").click(function () { ClickUpdate(); });
+            $("#BtnDeleteOperate").click(function () { ClickDelete(); });
+            $("#BtnPhyDeleteOperate").click(function () { ClickPhyDelete(); });
+            $("#BtnEnableOperate").click(function () { ClickEnable(); });
+            $("#BtnDisableOperate").click(function () { ClickDisable(); });
+            $("#BtnSearch").click(function () { ClickSearch(); });
+            $("#btnShowSearchBox").click(function () { ClickShowSearchBox(); });
+            $("#BtnSaveOperate").click(function () { ClickSubmit(); });//保存
+            $("#BtnCancelOperate").click(function () { ClickBack(); });
+            $("#cbListCheckAll").click(function () { MISSY.setClickCheckAll(this, "nameCbox"); });
+            $("body").keydown(function (event) {
+                var e = document.all ? window.event : event;
+                var keycode = (e.keyCode ? e.keyCode : e.which);
+                if (keycode === 13) {
+                    ClickSearch();
+                }
+            });
+            $("#ddlDongBySearch").change(function () { ChangeFloorBySearch(); });
+            $("#ddlFloorBySearch").change(function () { ChangeRoomBySearch(); });
+            $("#ddlDong").change(function () { ChangeFloor(); });
+            $("#ddlFloor").change(function () { ChangeRoom(); });
+            $("#ddlRoom").change(function () { ChangeBedNo(); });
+            $("#btnCustomerImg").click(function () { ClickShowCustomerImgBox(); });//div_CustomerImgBox
+            var PC_IsOk = MISSY.getCookie("PC_IsOk");
+            if (PC_IsOk == "1") {
+                var PC_DongId = MISSY.getCookie("PC_DongId");
+                if (MISSY.isEmpty(PC_DongId) == false) {
+                    $("#ddlDongBySearch").val(PC_DongId);
+                }
+                var PC_FloorId = MISSY.getCookie("PC_FloorId");
+                if (MISSY.isEmpty(PC_FloorId) == false) {
+                    ChangeFloorBySearch();
+                    $("#ddlFloorBySearch").val(PC_FloorId);
+                }
+                var PC_RoomId = MISSY.getCookie("PC_RoomId");
+                if (MISSY.isEmpty(PC_RoomId) == false) {
+                    ChangeRoomBySearch();
+                    $("#ddlRoomBySearch").val(PC_RoomId);
+                }
+                var PC_CustomerName = MISSY.getCookie("PC_CustomerName");
+                if (MISSY.isEmpty(PC_CustomerName) == false) {
+                    $("#txtCustomerNameBySearch").val(PC_CustomerName);
+                }
+                var tempCurrentPage = MISSY.getCookie("Customer_List_CurrentPage");
+                if (!MISSY.isEmpty(tempCurrentPage)) {
+                    _iCurrentPage = tempCurrentPage;
+                }
+                var tempPageSize = MISSY.getCookie("Customer_List_PageSize");
+                if (!MISSY.isEmpty(tempCurrentPage)) {
+                    _iPageSize = tempPageSize;
+                }
+            } else {
+                ChangeFloorBySearch();
+            }
+            ChangeFloor();
+            //第三方调用页面
+            switch (GetQueryString('type')) {
+                case "1"://个人综合信息调用
+                    $(".hid").hide();
+                    CustomerID = GetQueryString('customerid');
+                    ChangePage(_iCurrentPage, _iPageSize);
+                    break;
+                default:
+                    ChangePage(_iCurrentPage, _iPageSize);
+                    break;
+            }
+
+        }
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+        //显示打印box
+        function ClickShowCustomerImgBox() {
+            MISSY.iShowDialog("div_CustomerImgBox", "上传头像");
+        }
+        function ChangePage(paramCurrentPage, paramPageSize) //ChangePage
+        {
+            MISSY.setCookie("PC_IsOk", "1", 30, '');
+            MISSY.setCookie("PC_DongId", $("#ddlDongBySearch").val(), 30, '');
+            MISSY.setCookie("PC_FloorId", $("#ddlFloorBySearch").val(), 30, '');
+            MISSY.setCookie("PC_RoomId", $("#ddlRoomBySearch").val(), 30, '');
+            MISSY.setCookie("PC_CustomerName", $("#txtCustomerNameBySearch").val(), 30, '');
+            MISSY.setCookie("Customer_List_CurrentPage", paramCurrentPage, 30, '');
+            MISSY.setCookie("Customer_List_PageSize", paramPageSize, 30, '');
+            var colNumber = $("#tblist tr th").length;
+            $.ajax({
+                type: "post",
+                url: "SearchList",
+                data: {
+                    CustomerName: $("#txtCustomerNameBySearch").val(),
+                    CustomerHLMCBySearch: $("#ddlCustomerHLMCBySearch").val(),
+                    CustomerGender: $("#ddlCustomerGender").val(),
+                    CustomerHJDQBySearch: $("#ddlCustomerHJDQBySearch").val(),
+                    AgeBySearch: $("#ddlAgeBySearch").val(),
+                    userId: _iuserId,
+                    sortfield: $("#sortfield").val(),
+                    sorttype: $("#sorttype").val(),
+                    NodeId: _iNodeId,
+                    currentPage: paramCurrentPage,
+                    pageSize: paramPageSize,
+                    IsValid: $("#ddlIsValid").val(),
+                    RemarkBySearch: $("#txtRemarkBySearch").val(),
+                    CustomerID: CustomerID
+                },
+                dataType: "json",
+                beforeSend: function () {
+                    $("#tblist tr:gt(0)").remove();
+                    $("#tblist").append("<tr><td align=\"center\" colspan=\"" + colNumber + "\">加载中，请稍等．．．</td></tr>");
+                },
+                success: function (response) {
+                    //var response = JSON.parse(responseText);
+                    if (!response) {
+                        MISSY.iErrorReturnNull();
+                        return;
+                    }
+                    switch (response.ErrorType) //标记
+                    {
+                        case 0: //错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1: //返回正确数据
+                            break;
+                        case 2: //请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3: //未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4: //无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5: //无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                    var buf = new Array();
+                    var responseList = response.Data == null ? new Array() : response.Data;
+                    for (var i = 0; i < responseList.length; i++) {
+                        var model = responseList[i];
+                        buf.push("<tr class=\"view\" data-val=\"" + model.ID + "\"  >");
+                        buf.push("<td class=\"w078\">" + (i + 1) + "</td>");
+                        buf.push("<td class=\"w078\">" + model.CustomerName + "</td>");
+                        buf.push("<td class=\"w078\">" + (model.CustomerGender == 1 ? "男" : "女") + "</td>");
+                        buf.push("<td class=\"w078\">" + model.CustomerAge + "</td>");
+                        buf.push("<td class=\"w078\">" + model.WelfareName + "</td>");
+                        buf.push("<td class=\"w078\">" + (model.CustomerAddress == "" ? "无" : model.CustomerAddress) + "</td>");
+                        buf.push("<td class=\"w125\">" + MISSY.formatDate(model.OperateDate, 4) + "</td>");
+                        buf.push("</tr>");
+                    }
+                    if (buf.length <= 0)
+                        buf.push("<tr><td align=\"center\" colspan=\"" + colNumber + "\">暂无数据．</td></tr>");
+                    $("#tblist tr:gt(0)").remove();
+                    $("#tblist").append(buf.join(""));
+                    $(".view").click(function () {
+                        $("#tblist .view").removeClass("selected");
+                        $(this).addClass("selected");
+                        getInitSingle($(this).attr("data-val"));
+                    });
+                    var responseTotalRecord = response.TotalRecord;
+                    var responsePageSize = response.PageSize;
+                    var responseCurrentPage = response.CurrentPage;
+                    _iCurrentPage = responseCurrentPage;
+                    var responsePageCount = response.PageCount;
+                    _iPageCount = responsePageCount;
+                    if (responsePageCount > 1) {
+                        layui.use(['laypage'], function () {
+                            var laypage = layui.laypage;
+                            //完整功能
+                            laypage.render({
+                                elem: 'divPagination'
+                                , count: responseTotalRecord
+                                , curr: responseCurrentPage
+                                , limit: _iPageSize
+                                , layout: ['prev', 'page', 'next', 'count']
+                                , jump: function (obj, first) {
+                                    console.log(obj)
+                                    if (first != true) { //一定要加此判断，否则初始时会无限刷新
+                                        ClickPageChange(obj.curr);
+                                    }
+                                }
+                            });
+                        });
+                    } else {
+                        $("#divPagination").html("");
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    $("#tblist tr:gt(0)").remove();
+                    $("#tblist").append("<tr><td align=\"center\" colspan=\"" + colNumber + "\">系统性错误，请稍后再试.或点击<a href=\"ClickRefresh()\">刷新</a></td></tr>");
+                }
+            });
+        }
+
+        function ClickPageChange(tempGoPage) //PageChange
+        {
+            ChangePage(tempGoPage, _iPageSize);
+        }
+
+        function ClickRefresh() //Refresh
+        {
+            ChangePage(_iCurrentPage, _iPageSize);
+        }
+
+        function ClickSearch() //Serach
+        {
+            ChangePage(1, _iPageSize);
+        }
+
+        function ClickAdd() //Add
+        {
+            inputClear();
+            $("#div_shadeBox").addClass("show");
+            $(".info-item").addClass("add-food");
+            $("#txtName").addClass("patient-name-add");
+            $("#div_detailsBox").show();
+            $("#div_shearchBox").hide();
+            $("#BtnDeleteOperate").hide();
+            $("#BtnPhyDeleteOperate").hide();
+        }
+
+        function ClickUpdate() //Update
+        {
+            var id = "";
+            var checkboxlist = document.getElementsByName("nameCbox");
+            var checkboxLength = 0;
+            for (var j = 0; j < checkboxlist.length; j++) {
+                if (checkboxlist[j].type === "checkbox") {
+                    if (checkboxlist[j].checked) {
+                        checkboxLength++;
+                    }
+                }
+            }
+            if (checkboxLength > 1) {
+                MISSY.iErrorMessage("请只选择一项数据.");
+                return;
+            }
+            for (var i = 0; i < checkboxlist.length; i++) {
+                if (checkboxlist[i].type === "checkbox") {
+                    if (checkboxlist[i].checked) {
+                        id = checkboxlist[i].value;
+                        break;
+                    }
+                }
+            }
+            if (id !== "") {
+                location.href = "Details?NodeId=" + _iEditPageNodeId + "&ID=" + id.split("|")[0] + "&_r=" + Math.random();
+            } else {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+
+        function ConfirmOperateStatus(paramButtonId, paramIds, bedIds) //OperateStatus操作状态
+        {
+            var layerLoadIndex;
+            $.ajax({
+                url: "ListOperateStatus",
+                data: { NodeId: _iNodeId, oButtonId: paramButtonId, ids: paramIds, bedIds: bedIds },
+                type: "post",
+                dataType: "json",
+                beforeSend: function () { layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候"); },
+                ContentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    if (!response) {
+                        MISSY.iErrorReturnNull();
+                        return;
+                    }
+                    switch (response.ErrorType) //标记
+                    {
+                        case 0: //错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1: //返回正确数据
+                            MISSY.iSuccessMessage(response.MessageContent, ClickBack);
+                            return;
+                        case 2: //请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3: //未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4: //无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5: //无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                },
+                complete: function (xmlHttpRequest, textStatus) {
+                    MISSY.iHideLoading(layerLoadIndex);
+                }
+            });
+        }
+
+        function ClickDelete() //Delete
+        {
+            var paramIds = $("#txtId").val();
+            var paramBedIds = $("#ddlbednoID").val();
+            if (paramIds !== "") {
+                MISSY.iConfirmMessage("您确定此老人要离院吗？", function () {
+                    //var tempParamIdsArray = paramIds.split(",");
+                    //var tempArray = [];
+                    //var tempArray2 = [];
+                    //for (var i = 0; i < tempParamIdsArray.length; i++) {
+                    //    tempArray.push(tempParamIdsArray[i].split("|")[0]);
+                    //    tempArray2.push(tempParamIdsArray[i].split("|")[1]);
+                    //}
+                    ConfirmOperateStatus(40, paramIds, paramBedIds);
+                });
+            } else {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+
+        function ClickPhyDelete() //PhyDelete
+        {
+            var paramIds = $("#txtId").val();
+            var paramBedIds = $("#ddlbednoID").val();
+            //var paramIds = MISSY.getCheckboxCheckedVal("nameCbox", ",");
+            if (paramIds !== "") {
+                MISSY.iConfirmMessage("请谨慎操作，删除后数据不可恢复，您确定要删除吗？", function () {
+                    //var tempParamIdsArray = paramIds.split(",");
+                    //var tempArray = [];
+                    //var tempArray2 = [];
+                    //for (var i = 0; i < tempParamIdsArray.length; i++) {
+                    //    tempArray.push(tempParamIdsArray[i].split("|")[0]);
+                    //    tempArray2.push(tempParamIdsArray[i].split("|")[1]);
+                    //}
+                    var layerLoadIndex;
+                    $.ajax({
+                        url: "ListPhyDel",
+                        data: { NodeId: _iNodeId, ids: paramIds, bedIds: paramBedIds },
+                        type: "post",
+                        dataType: "json",
+                        beforeSend: function () { layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候"); },
+                        ContentType: "application/json;charset=utf-8",
+                        success: function (response) {
+                            if (!response) {
+                                MISSY.iErrorReturnNull();
+                                return;
+                            }
+                            switch (response.ErrorType) //标记
+                            {
+                                case 0: //错误
+                                    MISSY.iErrorMessage(response.MessageContent);
+                                    return;
+                                case 1: //返回正确数据
+                                    MISSY.iSuccessMessage(response.MessageContent, ClickBack);
+                                    return;
+                                case 2: //请求地址不正确
+                                    MISSY.iNoFound(response.MessageContent);
+                                    return;
+                                case 3: //未登录
+                                    MISSY.iNoLogin(response.MessageContent);
+                                    return;
+                                case 4: //无页面权限
+                                    MISSY.iNoPageAuth(response.MessageContent);
+                                    return;
+                                case 5: //无操作权限
+                                    MISSY.iNoOperateAuth(response.MessageContent);
+                                    return;
+                                default:
+                                    MISSY.iErrorMessage(response.MessageContent);
+                                    return;
+                            }
+                        },
+                        error: function (xmlHttpRequest, textStatus, errorThrown) {
+                            MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                            MISSY.iSystemAjaxError();
+                        },
+                        complete: function (xmlHttpRequest, textStatus) {
+                            MISSY.iHideLoading(layerLoadIndex);
+                        }
+                    });
+                });
+            } else {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+
+        function ChangeFloorBySearch() {
+            $.ajax({
+                type: "post",
+                url: "ChangeFloorByDong",
+                data: {
+                    DongID: $("#ddlDongBySearch").val()
+                },
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    if (!response) {
+                        MISSY.iErrorReturnNull();
+                        return;
+                    }
+                    var buf = new Array();
+                    var responseList = response.Data == null ? new Array() : response.Data;
+                    buf.push("<option>==全部==</option>");
+                    for (var i = 0; i < responseList.length; i++) {
+                        var model = responseList[i];
+                        buf.push("<option value=\"" + model.ID + "\">" + model.Name + "</option>");
+                    }
+                    if (buf.length <= 0)
+                        buf.push("<option value=\"\">==全部==</option>");
+                    $("#ddlFloorBySearch").html(buf.join("")); ChangeRoomBySearch();
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    $("#ddlFloorBySearch").html("<option value=\"\">系统性错误，请稍后再试</option>");
+                }
+            });
+        }
+        function ChangeRoomBySearch() //ChangePage
+        {
+            $.ajax({
+                type: "post",
+                url: "ChangeRoomByFloor",
+                data: {
+                    FloorID: $("#ddlFloorBySearch").val()
+                },
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    if (!response) {
+                        MISSY.iErrorReturnNull();
+                        return;
+                    }
+                    var buf = new Array();
+                    buf.push("<option value=\"\">==全部==</option>");
+                    var responseList = response.Data == null ? new Array() : response.Data;
+                    for (var i = 0; i < responseList.length; i++) {
+                        var model = responseList[i];
+                        buf.push("<option value=\"" + model.ID + "\">" + model.Name + "</option>");
+                    }
+                    if (buf.length <= 0)
+                        buf.push("<option value=\"\">==全部==</option>");
+                    $("#ddlRoomBySearch").html(buf.join(""));
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    $("#ddlRoomBySearch").html("<option value=\"\">系统性错误，请稍后再试</option>");
+                }
+            });
+        }
+
+        //显示搜索box
+        function ClickShowSearchBox() {
+            $("#div_detailsBox").hide();
+            $("#div_shearchBox").show();
+        }
+        function ChangeFloor() {
+            $.ajax({
+                type: "post",
+                url: "ChangeFloorByDong",
+                data: {
+                    DongID: $("#ddlDong").val()
+                },
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    if (!response) {
+                        MISSY.iErrorReturnNull();
+                        return;
+                    }
+                    var buf = new Array();
+                    var responseList = response.Data == null ? new Array() : response.Data;
+                    buf.push("<option>未分配</option>");
+                    for (var i = 0; i < responseList.length; i++) {
+                        var model = responseList[i];
+                        buf.push("<option value=\"" + model.ID + "\">" + model.Name + "</option>");
+                    }
+                    if (buf.length <= 0)
+                        buf.push("<option value=\"\">请选择</option>");
+                    $("#ddlFloor").html(buf.join(""));
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    $("#ddlFloor").html("<option value=\"\">系统性错误，请稍后再试</option>");
+                }
+            });
+        }
+        function ChangeRoom() //ChangePage
+        {
+            $.ajax({
+                type: "post",
+                url: "ChangeRoomByFloor",
+                data: {
+                    FloorID: $("#ddlFloor").val()
+                },
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    if (!response) {
+                        MISSY.iErrorReturnNull();
+                        return;
+                    }
+                    var buf = new Array();
+                    var responseList = response.Data == null ? new Array() : response.Data;
+                    buf.push("<option>未分配</option>");
+                    for (var i = 0; i < responseList.length; i++) {
+                        var model = responseList[i];
+                        buf.push("<option value=\"" + model.ID + "\">" + model.Name + "</option>");
+                    }
+                    if (buf.length <= 0)
+                        buf.push("<option value=\"\">请选择</option>");
+                    $("#ddlRoom").html(buf.join(""));
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    $("#ddlRoom").html("<option value=\"\">系统性错误，请稍后再试</option>");
+                }
+            });
+        }
+
+        function ChangeBedNo(ibedId) //ChangePage
+        {
+            $.ajax({
+                type: "post",
+                url: "ChangeBedNoByRoom",
+                data: {
+                    RoomID: $("#ddlRoom").val(),
+                    NodeId: _iNodeId,
+                    bedId: ibedId
+                },
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    if (!response) {
+                        MISSY.iErrorReturnNull();
+                        return;
+                    }
+                    var buf = new Array();
+                    var responseList = response.Data == null ? new Array() : response.Data;
+                    var item = responseList.BedItem;
+                    buf.push("<option value=\"\">未分配</option>");
+                    if (item != null) {
+                        var bedNO = item.BEDNO;
+                        var strNO = bedNO.split('-');
+                        buf.push("<option  value=\"" + item.ID + "\">" + (strNO[2]) + "床" + "</option>");
+
+                    }
+                    var List = responseList.BedList == null ? new Array() : responseList.BedList;
+
+                    for (var i = 0; i < List.length; i++) {
+                        var model = List[i];
+                        var bedNO = model.BEDNO;
+                        var str = bedNO.split('-');
+
+                        buf.push("<option dcType=\"" + model.DevicesId + "\"  value=\"" + model.ID + "\">" + (str[2]) + "床" + "</option>");
+                    }
+                    if (buf.length <= 0)
+                        buf.push("<option value=\"\">未分配</option>");
+                    $("#ddlbednoID").html(buf.join(""));
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    $("#ddlbednoID").html("<option value=\"\">系统性错误，请稍后再试</option>");
+                }
+            });
+        }
+
+        function getInitSingle(ID) {
+            $("#div_detailsBox").show();
+            $("#div_shearchBox").hide();
+            $(".info-item").removeClass("add-food");
+            $("#txtName").removeClass("patient-name-add");
+            $("#BtnDeleteOperate").show();
+            $("#BtnPhyDeleteOperate").show();
+            if (MISSY.isEmpty(ID))
+                return;
+            var layerLoadIndex;
+            $.ajax({
+                url: "InitSingle",
+                data: { NodeId: _iNodeId, ID: ID },
+                type: "POST",
+                dataType: "json",
+                ContentType: "application/json;charset=utf-8",
+                beforeSend: function () { layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候"); },
+                success: function (response) {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType)//标记
+                    {
+                        case 0: //错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1: //返回正确数据
+                            break;
+                        case 2: //请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3: //未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4: //无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5: //无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                    var model = response.Entity;
+                    $("#txtOrgMindUserId").val(model.OrgMindUserId);
+                    $("#txtId").val(model.ID);
+                    $("#txtId2").val(model.ID);
+                    $("#ddlOrgID").val(model.WelfareCentreID);
+                    $("#txtName").val(model.CustomerName);
+                    //$("#ddlDong").val(model.DongID); ChangeFloor();
+                    //$("#ddlFloor").val(model.FloorID);
+                    //ChangeRoom();
+                    //$("#ddlRoom").val(model.RoomID);
+                    //ChangeBedNo(model.BedID);
+                    //$("#ddlbednoID").val(model.BedID);
+                    //$("#txtOldbednoID").val(model.BedID);
+                    $("#txtDevicesId").val(model.DevicesId);
+                    $("#txtCustomerJG").val(model.CustomerJG);
+                    $("#txtAddress").val(model.CustomerAddress);
+                    $("#txtAge").val(model.CustomerAge);
+                    $("#txtCompany").val(model.CustomerCompany);
+                    $("#txtPhone").val(model.CustomerTel);
+                    $("#txtCustomerGSR").val(model.CustomerGSR);
+                    $("#txtAdmissionDate").val(MISSY.formatDate(model.AdmissionDate, 1));
+                    $("#txtDiagnosticDate").val(MISSY.formatDate(model.DiagnosticDate, 1));
+                    if (model.CustomerGender == 1) {
+
+                        $("#ss2").prop("checked", true);
+                        $("#txtSex").html("男");
+                    } else {
+                        $("#ss2").prop("checked", false);
+                        $("#txtSex").html("女");
+                    }
+                    $("#ddlCustomerWedlock").val(model.CustomerWedlock);
+                    $("#ddlCustomerJYCD").val(model.CustomerJYCD);
+                    $("#txtCustomerJJYW").val(model.CustomerJJYW);
+                    $("#txtCustomerJJSW").val(model.CustomerJJSW);
+                    $("#ddlCustomerYSLX_dic").val(model.CustomerYSLX_dic);
+                    $("#txtCustomerYYBH").val(model.CustomerYYBH);
+                    $("#txtCustomerSFWWYY").val(model.CustomerSFWWYY);
+                    $("#ddlCustomerHLMC_dic").val(model.CustomerHLMC_dic);
+                    $("#txtCustomerCardID").val(model.CustomerCardID);
+                    $("#txtCustomerSBKH").val(model.CustomerSBKH);
+                    $("#ddlCustomerType_dic").val(model.CustomerType_dic);
+                    $("#txtCustomerMZ").val(model.CustomerMZ);
+                    $("#ddlCustomerWHCD_dic").val(model.CustomerWHCD_dic);
+                    $("#txtCustomerZW").val(model.CustomerZW);
+                    $("#txtCustomerYLJSR").val(model.CustomerYLJSR);
+                    $("#txtCustomerZZDH").val(model.CustomerZZDH);
+                    $("#ddlCustomerYYZT").val(model.CustomerYYZT);
+                    $("#txtCustomerSFBS").val(model.CustomerSFBS);
+                    $("#txtCustomerZYBH").val(model.CustomerZYBH);
+                    $("#txtCustomerYYSJ").val(MISSY.formatDate(model.CustomerYYSJ, 4));
+                    $("#txtCustomerLYSJ").val(model.CustomerLYSJ);
+                    $("#txtCustomerLYYY").val(model.CustomerLYYY);
+                    $("#txtCustomerYLBZ").val(model.CustomerYLBZ);
+                    $("#txtCustomerBrith").val(MISSY.formatDate(model.CustomerBrith, 1));
+                    $("#ddlCustomerSX").val(model.CustomerSX);
+                    $("#ddlCustomerSFBS").val(model.CustomerSFBS);
+                    $("#txtBedNumberName").val(model.BedNumberName);
+                    $("#txtHeadImg").val(model.CustomerHeadImg);
+                    if (!MISSY.isEmpty(model.CustomerHeadImg)) {
+                        $("#customrerImg").attr("src", "/Upload/CustomerHeadImg/" + model.CustomerHeadImg);
+                        $("#imgHeadImg").attr("src", "/Upload/CustomerHeadImg/" + model.CustomerHeadImg);
+                    } else {
+                        $("#customrerImg").attr("src", "/assets_pc/images/NoHeadImg.png");
+                        $("#imgHeadImg").attr("src", "/assets_pc/images/NoHeadImg.png");
+                    }
+                   
+                    MISSY.setRadioChecked("rbCustomerJYCD", model.CustomerJYCD);
+                    $("#txtCustomerZZMM").val(model.CustomerZZMM);
+                    $("#txtCustomerDlrXm").val(model.CustomerDlrXm);
+                    $("#txtCustomerDlrTel").val(model.CustomerDlrTel);
+                    $("#txtCustomerDlrDz").val(model.CustomerDlrDz);
+                    $("#ddlCustomerDlrGx").val(model.CustomerDlrGx);
+                    $("#txtCustomerDlrYb").val(model.CustomerDlrYb);
+                    $("#ddlCustomerHJDQ_dic").val(model.CustomerHJDQ_dic);
+                    $("#txtRemark").val(model.Remark);
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                },
+                complete: function (xmlHttpRequest, textStatus) {
+                    MISSY.iHideLoading(layerLoadIndex);
+                }
+            });
+        }
+
+        function ClickSubmit() //Add、Update
+        {
+            var ID = $("#txtId").val();
+            var OrgMindUserId = $('#txtOrgMindUserId').val();
+            var code = "";
+            var bedNum = "";
+
+            if (!CheckForm()) return;
+            var ID = $("#txtId").val();
+            var layerLoadIndex;
+            $.ajax({
+                url: "AddOrUpdate",
+                data: {
+                    NodeId: _iNodeId,
+                    ID: ID,
+                    CustomerName: $("#txtName").val(),
+                    ddlOrgID: $("#ddlOrgID").val(),
+                    Floor: $("#ddlFloor").val(),
+                    Room: $("#ddlRoom").val(),
+                    bednoID: $("#ddlbednoID").val(),
+                    bednoText: ($("#ddlbednoID").find("option:selected").text()).replace("床", ""),
+                    oldBednoID: $("#txtOldbednoID").val(),
+                    CustomerGender: $("input[name='rbCustomerGender']:checked").val(),
+                    CustomerWedlock: $("input[name='rbCustomerWedlock']:checked").val(),
+                    Age: $("#txtAge").val(),
+                    CustomerJG: $("#txtCustomerJG").val(),
+                    Address: $("#txtAddress").val(),
+                    Company: $("#txtCompany").val(),
+                    Phone: $("#txtPhone").val(),
+                    CustomerGSR: $("#txtCustomerGSR").val(),
+                    AdmissionDate: $("#txtAdmissionDate").val(),
+                    DiagnosticDate: $("#txtDiagnosticDate").val(),
+                    CustomerJJYW: $("#txtCustomerJJYW").val(), //新增字段开始
+                    CustomerJJSW: $("#txtCustomerJJSW").val(),
+                    CustomerYSLX_dic: $("#ddlCustomerYSLX_dic").val(),
+                    CustomerYYBH: $("#txtCustomerYYBH").val(),
+                    CustomerSFWWYY: $("#txtCustomerSFWWYY").val(),
+                    CustomerHLMC_dic: $("#ddlCustomerHLMC_dic").val(),
+                    CustomerCardID: $("#txtCustomerCardID").val(),
+                    CustomerType_dic: $("#ddlCustomerType_dic").val(),
+                    CustomerSBKH: $("#txtCustomerSBKH").val(),
+                    CustomerMZ: $("#txtCustomerMZ").val(),
+                    CustomerWHCD_dic: $("#ddlCustomerWHCD_dic").val(),
+                    CustomerZW: $("#txtCustomerZW").val(),
+                    CustomerYLJSR: $("#txtCustomerYLJSR").val(),
+                    CustomerZZDH: $("#txtCustomerZZDH").val(),
+                    CustomerYYZT: $("#ddlCustomerYYZT").val(),
+                    CustomerSFBS: $("#ddlCustomerSFBS").val(),
+                    CustomerSX: $("#ddlCustomerSX").val(),
+                    CustomerZYBH: $("#txtCustomerZYBH").val(),
+                    CustomerYYSJ: $("#txtCustomerYYSJ").val(),
+                    CustomerLYSJ: $("#txtCustomerLYSJ").val(),
+                    CustomerLYYY: $("#txtCustomerLYYY").val(),
+                    CustomerYLBZ: $("#txtCustomerYLBZ").val(),
+                    CustomerBrith: $("#txtCustomerBrith").val(),
+                    BedNumberName: $("#txtBedNumberName").val(),
+                    HeadImg: $("#txtHeadImg").val(),
+                    CustomerZZMM: $("#txtCustomerZZMM").val(),
+                    CustomerJYCD: $("input[name='rbCustomerJYCD']:checked").val(),
+                    CustomerDlrXm: $("#txtCustomerDlrXm").val(),
+                    CustomerDlrTel: $("#txtCustomerDlrTel").val(),
+                    CustomerDlrDz: $("#txtCustomerDlrDz").val(),
+                    CustomerDlrGx: $("#ddlCustomerDlrGx").val(),
+                    CustomerDlrYb: $("#txtCustomerDlrYb").val(),
+                    CustomerHJDQ_dic: $("#ddlCustomerHJDQ_dic").val(),
+                    Remark: $("#txtRemark").val()
+                },
+                type: "POST",
+                dataType: "json",
+                ContentType: "application/json;charset=utf-8",
+                beforeSend: function () { layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候..."); },
+                success: function (response) {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType)//标记
+                    {
+                        case 0://错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1://返回正确数据
+                            //MISSY.iSuccessMessage(response.MessageContent, ClickBack);
+                            //if (bedNum != "00" && code != undefined) {
+                            //    GetToken(ID, OrgMindUserId, bedNum, code, response.MessageContent);
+                            //}
+                            //else {
+                            MISSY.iSuccessMessage(response.MessageContent, ClickBack);
+                            //}
+                            break;
+                        case 2://请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3://未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4://无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5://无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                },
+                complete: function (xmlHttpRequest, textStatus) {
+                    MISSY.iHideLoading(layerLoadIndex);
+                }
+            });
+        }
+
+        //获取token
+        function GetToken(cId, uId, bNum, derId, mc) {
+            //var paramWId = $("#welfareCentreId").val();
+            //if (paramWId == "") {
+            //    MISSY.iErrorMessage("机构ID为空！");
+            //    return;
+            //}
+            var paramWId = "5ca57231db0a3ed7e1915b6b";
+            var _url = ParamUrl + "/sessions";
+            var paramData = { "name": "hpqlngy001", "password": "e10adc3949ba59abbe56e057f20f883e" };   //中福院
+
+            $.ajax({
+                type: "post",
+                url: _url,
+                contentType: 'application/json',
+                data: JSON.stringify(paramData),
+                async: false,
+                dataType: "Json",
+                success: function (data) {
+                    var responseList = data == null ? new Array() : data;
+                    if (responseList.length == 0) {
+                        PostCustomer("", uId, bNum, cId);
+                    }
+                    else {
+                        PostCustomer(responseList.token, uId, bNum, derId, mc);
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                }
+            });
+        }
+
+        //床垫-修改设备
+        function PostCustomer(tk, ud, bm, dId, messageContent) {
+            var paramWId = "5ca57231db0a3ed7e1915b6b";
+            var buf = new Array();
+            var _url = ParamUrl + "/guardians/" + paramWId + "/devices/" + dId;
+            var paramData = { "userId": ud, "bedNum": bm };   //中福院
+
+            $.ajax({
+                type: "put",
+                url: _url,
+                contentType: 'application/json',
+                data: JSON.stringify(paramData),
+                async: false,
+                dataType: "Json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + tk);
+                },
+                success: function (data) {
+                    MISSY.iSuccessMessage(messageContent, ClickBack);
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                }
+            });
+        }
+
+        function CheckForm()  //CheckForm
+        {
+            return true;
+        }
+        function ClickBack() //Back
+        {
+            $("#div_detailsBox").hide();
+            $("#div_shearchBox").show();
+            $("#div_shadeBox").removeClass("show");
+            ClickRefresh();
+        }
+        function inputClear() {
+            $("#txtId").val("");
+            $("#txtOrgMindUserId").val("");
+            $("input[name='rbCustomerGender']").attr("checked", false);
+            $("input[name='rbCustomerWedlock']").attr("checked", false);
+            $("input[name='rbCustomerJYCD']").attr("checked", false);
+            $("#txtId").val("");
+            $("#txtName").val("");
+            $("#ddlFloor").val("");
+            $("#ddlRoom").val("");
+            $("#ddlbednoID").val("");
+            $("#txtOldbednoID").val("");
+            $("#txtDevicesId").val("");
+            $("#txtCustomerJG").val("");
+            $("#txtAddress").val("");
+            $("#txtAge").val("");
+            $("#txtCompany").val("");
+            $("#txtPhone").val("");
+            $("#txtCustomerGSR").val("");
+            $("#txtAdmissionDate").val("");
+            $("#txtDiagnosticDate").val("");
+            $("#txtCustomerJJYW").val("");
+            $("#txtCustomerJJSW").val("");
+            $("#txtCustomerYYBH").val("");
+            $("#txtCustomerSFWWYY").val("");
+            $("#txtCustomerCardID").val("");
+            $("#txtCustomerSBKH").val("");
+            $("#txtCustomerMZ").val("");
+            $("#txtCustomerZW").val("");
+            $("#txtCustomerYLJSR").val("");
+            $("#txtCustomerZZDH").val("");
+            $("#txtCustomerSFBS").val("");
+            $("#txtCustomerZYBH").val("");
+            $("#txtCustomerYYSJ").val("");
+            $("#txtCustomerLYSJ").val("");
+            $("#txtCustomerLYYY").val("");
+            $("#txtCustomerYLBZ").val("");
+            $("#txtCustomerBrith").val("");
+            $("#txtBedNumberName").val("");
+            $("#txtHeadImg").val("");
+            $("#customrerImg").attr("src", "/assets_pc/images/NoHeadImg.png");
+            $("#imgHeadImg").attr("src", "/assets_pc/images/NoHeadImg.png");
+            $("#txtCustomerZZMM").val("");
+            $("#txtCustomerDlrXm").val("");
+            $("#txtCustomerDlrTel").val("");
+            $("#txtCustomerDlrDz").val("");
+            $("#txtCustomerDlrYb").val("");
+
+            $("#ddlCustomerYSLX_dic").find("option").first().attr("selected", true);
+            $("#ddlCustomerHLMC_dic").find("option").first().attr("selected", true);
+            $("#ddlCustomerType_dic").find("option").first().attr("selected", true);
+            $("#ddlCustomerWHCD_dic").find("option").first().attr("selected", true);
+            $("#ddlCustomerYYZT").find("option").first().attr("selected", true);
+            $("#ddlCustomerSX").find("option").first().attr("selected", true);
+            $("#ddlCustomerSFBS").find("option").first().attr("selected", true);
+            $("#ddlCustomerDlrGx").find("option").first().attr("selected", true);
+            $("#ddlCustomerHJDQ_dic").find("option").first().attr("selected", true);
+            $("#txtRemark").val("");
+        }
+
+
+    });
+</script>

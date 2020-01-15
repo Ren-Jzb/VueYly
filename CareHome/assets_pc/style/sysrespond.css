@@ -1,0 +1,59 @@
+﻿@charset "utf-8";
+
+@media screen and (min-width:1400px){	
+.WMAuto{width:1380px;}
+.Main{ height:760px;}
+.Main .LeftView{ width:198px; height:742px;}
+.Main .MainView{ width:1178px; height:742px;}
+.Main .Bottom{ width:1380px; height:49px;}
+}
+
+@media screen and (max-width: 1399px) {
+.WMAuto{width:1170px;}
+.Main{  height:600px;}
+.Main .LeftView{ width:198px; height:582px;}
+.Main .MainView{ width:968px; height:582px;}
+.Main .Bottom{ width:1170px; height:49px; }
+
+}
+
+@media screen and (max-width: 1199px) {
+.WMAuto{width:960px;}	
+.Main{height:600px;}
+.Main .LeftView{ width:198px; height:582px;}
+.Main .MainView{ width:758px; height:582px;}
+.Main .Bottom{ width:960px; height:49px;}
+}
+
+@media screen and (max-width: 980px){
+.WMAuto{width:760px;}	
+.Main{height:600px;}
+.Main .LeftView{ width:198px; height:582px;}
+.Main .MainView{ width:558px; height:582px;}
+.Main .Bottom{ width:760px; height:49px; }	
+}
+
+@media screen and (min-width: 767px) and (max-width: 960px){
+.WMAuto{width:760px;}	
+.Main{height:600px;}
+.Main .LeftView{ width:198px; height:582px;}
+.Main .MainView{ width:558px; height:582px;}
+.Main .Bottom{ width:760px; height:49px; }
+}
+
+@media screen and (max-width: 767px){
+.WMAuto{width:600px;}	
+.Main{height:600px;}
+.Main .LeftView{ width:198px; height:582px;}
+.Main .MainView{ width:398px; height:582px;}
+.Main .Bottom{ width:600px; height:49px; }	
+}
+
+@media screen and (max-width: 480px) {	
+.WMAuto{width:480px;}	
+.Main{height:600px;}
+.Main .LeftView{ width:198px; height:582px;}
+.Main .MainView{ width:278px; height:582px;}
+.Main .Bottom{ width:480px; height:49px; }	
+}
+

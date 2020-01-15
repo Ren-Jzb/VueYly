@@ -1,0 +1,250 @@
+@charset "UTF-8";
+.content-body {
+  background-color: #f3f4f8;
+}
+
+.search-wrapper {
+  /* 搜索主容器 */
+  position: relative;
+  padding-bottom: .2rem;
+}
+
+.search-wrapper .line {
+  border-bottom: 2px solid #63c9bb;
+}
+
+.search-input-box {
+  /* 搜索框容器 */
+  font-size: 0;
+  text-align: center;
+  padding: 0.3rem 0;
+  border-top: 1px solid #eeeeee;
+  background-color: #fff;
+}
+
+.search-input-box .search-text-input {
+  /* 搜索文本输入框 */
+  display: inline-block;
+  vertical-align: top;
+  width: 4.8rem;
+  height: .50rem;
+  border: 1px solid #63c9bb;
+  line-height: .50rem;
+  font-size: .18rem;
+  padding-left: .5rem;
+  background: url("../images/icon-green-search.png") left center no-repeat #ffffff;
+  -webkit-background-size: .5rem .5rem;
+  background-size: .5rem .5rem;
+}
+
+.search-input-box .btn-search {
+  /* 搜索按钮 */
+  display: inline-block;
+  vertical-align: top;
+  height: .50rem;
+  padding: 0 .3rem;
+  line-height: .50rem;
+  font-size: .18rem;
+  background: #63c9bb;
+  color: white;
+}
+
+.search-result-box {
+  padding: 0 15px;
+  /* 搜索结果容器 */
+}
+
+.search-result-box .result-title {
+  /* 搜索结果标题 */
+  font-size: .25rem;
+  line-height: .8rem;
+}
+
+.tab-link-box {
+  /* tab栏链接容器 */
+  overflow: visible;
+  height: .3rem;
+  border-bottom: 1px solid #ff9615;
+  margin-bottom: .2rem;
+}
+
+.tab-link-box .tab-link {
+  /* tab栏链接 */
+  display: inline-block;
+  height: .3rem;
+  line-height: .3rem;
+  padding: 0 5px;
+  text-align: center;
+  font-size: .2rem;
+  position: relative;
+}
+
+.tab-link-box .tab-link.active {
+  /*  激活状态 */
+  color: #ff9615;
+}
+
+.tab-link-box .tab-link.active:before {
+  /* 下边线 */
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: #ff9615;
+}
+
+.tab-link-box .tab-link.active:after {
+  /* 小三角 */
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  margin-left: -6px;
+  border-top: 8px solid #ff9615;
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+}
+
+.tab-content-box {
+  /* tab栏内容容器 */
+  background-color: #fff;
+  width: 80%;
+  float: left;
+  padding-bottom: .4rem;
+}
+
+.tab-content-box .tab-content {
+  /* tab栏内容 */
+  display: none;
+  padding: 0 .2rem;
+}
+
+.tab-content-box .tab-content.active {
+  display: block;
+}
+
+.result-item {
+  /* 搜索结果列表项目 */
+  line-height: .9rem;
+  font-size: 0;
+  background: url("../images/search-underline.png") left top repeat-y;
+  -webkit-background-size: 100% .90rem;
+  background-size: 100% .90rem;
+}
+
+.result-item:last-child {
+  border-bottom: none;
+}
+
+.person-name {
+  /* 人名 */
+  display: inline-block;
+  vertical-align: middle;
+  font-size: .28rem;
+  color: #66c3b5;
+}
+
+.person-identity {
+  /* 身份 */
+  display: inline-block;
+  vertical-align: middle;
+  background-color: #f6f8ff;
+  height: .36rem;
+  line-height: .36rem;
+  padding: 0 .1rem;
+  font-size: .2rem;
+  margin-left: .2rem;
+}
+
+.person-identity .mes-num {
+  /* 消息数量 */
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  width: .24rem;
+  height: .24rem;
+  line-height: .24rem;
+  font-size: .16rem;
+  color: white;
+  background-color: #ff7878;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.check-item {
+  /* 检查项目容器 */
+  display: inline-block;
+  width: 20%;
+  height: .90rem;
+  line-height: .90rem;
+  text-align: center;
+}
+
+.check-item-link {
+  /* 检查项目链接 */
+  display: inline-block;
+  height: .3rem;
+  line-height: .3rem;
+  font-size: .2rem;
+  vertical-align: middle;
+  padding-left: .15rem;
+  position: relative;
+}
+
+.check-item-link:before {
+  /* 小三角 */
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-top: -.05rem;
+  border-left: .08rem solid #cccccc;
+  border-top: .05rem solid transparent;
+  border-bottom: .05rem solid transparent;
+}
+
+.chart-result-box {
+  /*图表搜索结果 */
+  background-color: #fff;
+  width: 18%;
+  float: right;
+}
+
+.title-box {
+  padding: 0 .2rem;
+}
+
+.chart-result-title {
+  height: .9rem;
+  line-height: .9rem;
+  font-size: .24rem;
+  color: #66c3b5;
+  border-bottom: 1px solid #eeeeee;
+  padding-left: .3rem;
+  background: url("../images/icon-green-chart.png") left center no-repeat;
+  -webkit-background-size: .3rem .5rem;
+  background-size: .3rem .5rem;
+}
+
+.chart-link-box {
+  padding: .1rem 0;
+}
+
+.chart-link {
+  display: inline-block;
+  width: 100%;
+  vertical-align: middle;
+  text-align: center;
+  line-height: .6rem;
+  font-size: .2rem;
+}

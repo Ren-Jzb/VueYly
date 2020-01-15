@@ -1,0 +1,298 @@
+.main-wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    font-size: 0;
+}
+
+.scroll-box {
+    display: block;
+    box-sizing: content-box;
+    width: 950px;
+    border: 3px solid #8f6346;
+    position: absolute;
+    left: 100px;
+    top: 84px;
+    overflow: hidden;
+}
+
+.bed {
+    display: inline-block;
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+    .bed.used {
+        background: url("../images/bed-used.png") no-repeat;
+    }
+
+    .bed.unused {
+        background: url("../images/bed-not-used.png") no-repeat;
+    }
+
+.single-room {
+    display: inline-block;
+    vertical-align: top;
+    width: 190px;
+    height: 150px;
+    text-align: center;
+    border: 1px solid black;
+}
+
+    .single-room .bed-wrapper {
+        width: 190px;
+        height: 110px;
+        position: relative;
+    }
+
+    .single-room .bed-box {
+        width: 190px;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+    }
+
+    .single-room .room-num {
+        font-size: 18px;
+        line-height: 2;
+    }
+
+.hallway {
+    width: 100%;
+    padding: 30px 0;
+    border: 1px solid black;
+}
+
+    .hallway .hallway-text {
+        font-size: 20px;
+        line-height: 2;
+        padding-left: 50px;
+    }
+
+.compass-box {
+    width: 40px;
+    height: 180px;
+    background: url("../images/compass-img.png") no-repeat;
+    position: absolute;
+    left: 1100px;
+    top: 89px;
+}
+
+.tag-box {
+    position: absolute;
+    left: 120px;
+    top: 540px;
+}
+
+    .tag-box .bed-type {
+        font-size: 20px;
+        line-height: 50px;
+    }
+
+.beds-wrapper {
+    font-size: 0;
+}
+
+.bed-item-box {
+    display: inline-block;
+    vertical-align: top;
+    width: 25%;
+    padding: 10px;
+}
+
+.bed-item {
+    background-color: #ffffff;
+    padding: 10px 10px 0 10px;
+    position: relative;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 3px #cccccc;
+    overflow: hidden;
+}
+
+    .bed-item:before {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 3px;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .bed-item.top-gray:before {
+        background-color: #ECEFF1;
+    }
+
+    .bed-item.top-grays:before {
+        background-color: #9E9E9E;
+    }
+
+    .bed-item.top-green:before {
+        background-color: #4caf50;
+    }
+
+    .bed-item.top-yellow:before {
+        background-color: #ffab00;
+    }
+
+    .bed-item.top-orange:before {
+        background-color: #ef6c00;
+    }
+
+.patient-info-head {
+    line-height: 30px;
+    font-size: 16px;
+}
+
+    .patient-info-head .patient-avatar-box {
+        display: inline-block;
+        vertical-align: top;
+        width: 30px;
+        height: 30px;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .patient-info-head .patient-avatar-img {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .patient-info-head .room-num-info {
+        float: right;
+    }
+
+.patient-info-body {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 10px;
+}
+
+    .patient-info-body .patient-status-item {
+        display: inline-block;
+        width: 30%;
+        height: 80px;
+        vertical-align: top;
+        padding-top: 60px;
+        text-align: center;
+    }
+
+        .patient-info-body .patient-status-item.hidden {
+            visibility: hidden;
+        }
+
+        .patient-info-body .patient-status-item.heart-1 {
+            background: url("../images/bg-status-heart-1.png") center top no-repeat;
+        }
+
+        .patient-info-body .patient-status-item.heart-2 {
+            background: url("../images/bg-status-heart-2.png") center top no-repeat;
+        }
+
+        .patient-info-body .patient-status-item.heart-3 {
+            background: url("../images/bg-status-heart-3.png") center top no-repeat;
+        }
+
+        .patient-info-body .patient-status-item.bed {
+            background: url("../images/bg-status-bed.png") center top no-repeat;
+        }
+
+        .patient-info-body .patient-status-item.bed-dx {
+            background: url("../images/dx.png") center top no-repeat;
+        }
+
+        .patient-info-body .patient-status-item.bed-lc {
+            background: url("../images/lc.png") center top no-repeat;
+        }
+
+        .patient-info-body .patient-status-item.bed-leave {
+            background: url("../images/bg-status-bed-leave.png") center top no-repeat;
+        }
+
+        .patient-info-body .patient-status-item.bed-orange {
+            background: url("../images/bg-status-bed-orange.png") center top no-repeat;
+        }
+
+        .patient-info-body .patient-status-item.bed-yellow {
+            background: url("../images/bg-status-bed-yellow.png") center top no-repeat;
+        }
+
+        .patient-info-body .patient-status-item.bed-yellow-leave {
+            background: url("../images/bg-status-bed-yellow-leave.png") center top no-repeat;
+        }
+
+        .patient-info-body .patient-status-item.breath-1 {
+            background: url("../images/bg-status-breath-1.png") center top no-repeat;
+        }
+
+        .patient-info-body .patient-status-item.breath-2 {
+            background: url("../images/bg-status-breath-2.png") center top no-repeat;
+        }
+
+        .patient-info-body .patient-status-item.breath-3 {
+            background: url("../images/bg-status-breath-3.png") center top no-repeat;
+        }
+
+.status-text {
+    font-size: 18px;
+    color: #444;
+}
+
+.yellow-text {
+    color: #ffab00;
+}
+
+.orange-text {
+    color: #ef6c00;
+}
+
+.gray-text {
+    color: #ECEFF1;
+}
+
+.grays-text {
+    color: #9E9E9E;
+}
+
+.green-text {
+    color: #4caf50;
+}
+
+.patient-info-foot {
+    font-size: 16px;
+    padding-top: 10px;
+}
+
+    .patient-info-foot .action-btns {
+        display: inline-block;
+        vertical-align: top;
+        float: right;
+    }
+
+    .patient-info-foot .action-btn {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+    }
+
+        .patient-info-foot .action-btn.chart {
+            background: url("../images/action-btns-chart.png") center center no-repeat;
+        }
+
+        .patient-info-foot .action-btn.night {
+            background: url("../images/action-btns-night.png") center center no-repeat;
+        }
+
+        .patient-info-foot .action-btn.more {
+            background: url("../images/action-btns-more.png") center center no-repeat;
+        }

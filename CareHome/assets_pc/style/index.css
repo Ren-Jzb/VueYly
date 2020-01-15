@@ -1,0 +1,476 @@
+﻿@charset "UTF-8";
+
+.head {
+    /* 顶部标题栏 */
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    color: white;
+    background-color: #2e3236;
+    position: relative;
+    z-index: 5;
+}
+
+    .head .title {
+        /* 标题 */
+        display: inline-block;
+        font-size: 18px;
+        padding-left: 65px;
+        background: url("../images/icon-hosp.png") left center no-repeat;
+    }
+
+    .head .time {
+        /* 时间 */
+        display: inline-block;
+        position: absolute;
+        left: 48%;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .head .btn-operation {
+        /* 操作按钮 */
+        float: right;
+        display: inline-block;
+        height: 100%;
+        padding-left: 30px;
+        padding-right: 30px;
+        color: white;
+        font-size: 14px;
+        position: relative;
+    }
+
+        .head .btn-operation.lock {
+            background: url(../images/icon-lock.png) left center no-repeat;
+        }
+
+        .head .btn-operation.quit {
+            background: url(../images/icon-quit.png) left center no-repeat;
+        }
+
+        .head .btn-operation.current-user {
+            background: url("../images/icon-user.png") left center no-repeat;
+        }
+
+        .head .btn-operation .message-num {
+            display: inline-block;
+            height: 14px;
+            line-height: 14px;
+            min-width: 14px;
+            font-size: 12px;
+            padding: 0 5px;
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            background: red;
+            color: white;
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+            border-radius: 6px;
+        }
+
+    .head .home-search-box {
+        display: inline-block;
+        float: right;
+        padding-right: 15px;
+    }
+
+        .head .home-search-box .home-search-input {
+            display: inline-block;
+            width: 240px;
+            height: 24px;
+            line-height: 24px;
+            font-size: 14px;
+            padding-left: 24px;
+            -webkit-border-radius: 12px;
+            -moz-border-radius: 12px;
+            border-radius: 12px;
+            border: 1px solid #8184ff;
+            background: url("../images/icon-home-search.png") left center no-repeat #ffffff;
+        }
+
+    .head .btn-select-hosp {
+        display: inline-block;
+        vertical-align: top;
+        width: 40px;
+        height: 60px;
+        background: url("../images/btn-select-hosp.png") no-repeat;
+    }
+
+    .head .hosp-select-box {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #26292c;
+        padding: 10px 20px;
+        overflow-y: auto;
+        height: 650px;
+    }
+
+        .head .hosp-select-box.show {
+            display: block;
+        }
+
+    .head .hosp-item {
+        display: block;
+        line-height: 50px;
+        font-size: 16px;
+        color: #ffffff;
+    }
+
+    .head .hosp-link {
+        display: inline-block;
+        color: #9992c0;
+        font-size: 14px;
+        line-height: 24px;
+        padding: 0 10px;
+        background-color: #33373b;
+        float: right;
+        margin-top: 13px;
+        margin-left: 10px;
+    }
+
+.content {
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-left: 60px;
+    background-color: #363a3c;
+}
+
+    .content .iframe-box {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 62px;
+        right: 0;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        background-color: #ffffff;
+    }
+
+    .content .list-iframe {
+        width: 100%;
+        height: 100%;
+    }
+
+    .content .detail-iframe {
+        width: 500px;
+        border: 1px solid #eaeaed;
+        border-radius: 5px;
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        bottom: 5px;
+        background-color: #fff;
+    }
+
+    .content iframe {
+        width: 100%;
+        height: 100%;
+    }
+
+.left-menu {
+    /* 左侧菜单 */
+    width: 60px;
+    height: 100%;
+    color: #42445c;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+    .left-menu .part-line {
+        height: 1px;
+        padding: 0 10px;
+        position: relative;
+    }
+
+        .left-menu .part-line:before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 1px;
+            background-color: #bbbbbb;
+        }
+
+    .left-menu .menu {
+        position: relative;
+    }
+
+        .left-menu .menu .menu-link {
+            /* 菜单链接 */
+            display: block;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            color: #42445c;
+            background-color: #363a3c;
+            position: relative;
+        }
+
+            .left-menu .menu .menu-link.active {
+                background: url("../images/tag-menu-active.png") left center no-repeat;
+            }
+
+            .left-menu .menu .menu-link:before {
+                /* 图标 */
+                content: '';
+                display: block;
+                height: 20px;
+                width: 20px;
+                position: absolute;
+                top: 50%;
+                margin-top: -12px;
+                left: 20px;
+                background: url("../images/icon-menu.png") no-repeat;
+                -webkit-background-size: 20px 200px;
+                background-size: 20px 200px;
+            }
+
+            .left-menu .menu .menu-link.comm-info:before {
+                /*综合信息 */
+                background-position: 0 0;
+            }
+
+            .left-menu .menu .menu-link.medical-manage:before {
+                /*医务信息管理 */
+                background-position: 0 -20px;
+            }
+
+            .left-menu .menu .menu-link.staff-manage:before {
+                /*业务管理 */
+                background-position: 0 -40px;
+            }
+
+            .left-menu .menu .menu-link.care-manage:before {
+                /*护理管理 */
+                background-position: 0 -60px;
+            }
+            .left-menu .menu .menu-link.Inspection-manage:before {
+                /*90项检查 */
+                background-position: 0 -60px;
+            }
+            .left-menu .menu .menu-link.houqin-manage:before {
+                /*后勤管理 */
+                background-position: 0 -80px;
+            }
+
+            .left-menu .menu .menu-link.xingzheng-manage:before {
+                /*行政管理 */
+                background-position: 0 -100px;
+            }
+
+            .left-menu .menu .menu-link.food-manage:before {
+                /*明厨亮灶 */
+                background-position: 0 -120px;
+            }
+
+            .left-menu .menu .menu-link.system-manage:before {
+                /*系统信息 */
+                background-position: 0 -140px;
+            }
+
+            .left-menu .menu .menu-link.care-insurance:before {
+                /* 护理保险 */
+                background-position: 0 -160px;
+            }
+
+            .left-menu .menu .menu-link.org-manage:before {
+                /* 机构管理 */
+                background-position: 0 -180px;
+            }
+
+            .left-menu .menu .menu-link.bed-manage:before {
+                /* 智能床垫 */
+                background: url(../images/mindbed.png) no-repeat;
+            }
+
+            .left-menu .menu .menu-link.Inspection-manage:before {
+                /* 智能床垫 */
+                background: url('../images/Inspection.png') no-repeat;
+            }
+        .left-menu .menu .second-menus {
+            /* 二级菜单 */
+            display: none;
+        }
+
+            .left-menu .menu .second-menus.show {
+                display: block;
+                width: 200px;
+                max-height: 350px;
+                border: 1px solid #eeeeee;
+                -webkit-border-radius: 7px;
+                -moz-border-radius: 7px;
+                border-radius: 7px;
+                position: absolute;
+                left: 60px;
+                top: 0;
+                background: #fff;
+                z-index: 20;
+                overflow-y: scroll;
+            }
+
+            .left-menu .menu .second-menus .second-menu-title {
+                font-size: 16px;
+                line-height: 36px;
+                color: #42445c;
+                padding-left: 10px;
+                border-bottom: 1px solid #cccccc;
+            }
+
+            .left-menu .menu .second-menus .second-menu {
+                width: 100%;
+            }
+
+                .left-menu .menu .second-menus .second-menu .second-menu-link {
+                    display: block;
+                    height: 34px;
+                    line-height: 34px;
+                    font-size: 14px;
+                    color: #42445c;
+                    padding-left: 25px;
+                }
+
+                    .left-menu .menu .second-menus .second-menu .second-menu-link:hover {
+                        background-color: #efecf8;
+                    }
+
+                    .left-menu .menu .second-menus .second-menu .second-menu-link.active {
+                        color: #696dff;
+                        background: url("../images/s-menu-active.png") center center no-repeat;
+                        -webkit-background-size: 100% 100%;
+                        background-size: 100% 100%;
+                    }
+
+.wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: url(../images/bg-login.png) no-repeat;
+    background-size: 100%;
+}
+
+.ta-r {
+    text-align: right;
+}
+
+.login-title-box {
+    width: 480px;
+    position: absolute;
+    top: 25%;
+    left: 150px;
+}
+
+    .login-title-box .hospital-title {
+        font-family: 黑体;
+        font-weight: bold;
+        color: #7764bc;
+        font-size: 70px;
+    }
+
+    .login-title-box .spec-title {
+        font-size: 90px;
+        color: #ffffff;
+    }
+
+.container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    margin: 0 auto;
+    padding-left: 30px;
+}
+
+.login-box {
+    width: 607px;
+    height: 781px;
+    padding: 0 140px;
+    padding-top: 120px;
+    position: absolute;
+    top: 50%;
+    margin-top: -390px;
+    right: 150px;
+    background: url("../images/bg-login-box.png") no-repeat;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+    overflow: hidden;
+}
+
+    .login-box .login-title {
+        font-size: 24px;
+        line-height: 1.5;
+        padding-left: 10px;
+        color: #7737ff;
+    }
+
+.input-item {
+    padding: 15px 0;
+    position: relative;
+    font-size: 0;
+}
+
+.input-title {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 0;
+    left: 0;
+}
+
+.text-input {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    height: 36px;
+    padding-left: 15px;
+    font-size: 14px;
+    font-family: "微软雅黑";
+    color: #666;
+    background: rgba(226, 226, 226, 0.149);
+    border: solid 1px #afafaf;
+    border-radius: 18px;
+}
+
+    .text-input:focus {
+        border-color: #9285ff;
+    }
+
+    .text-input.code {
+        vertical-align: top;
+        width: 175px;
+    }
+
+.code-img {
+    display: inline-block;
+    float: right;
+    vertical-align: top;
+    width: 100px;
+    height: 36px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.regular-check-label {
+    color: #7764bc;
+}
+
+.btn-login {
+    display: block;
+    margin: 0 auto;
+    width: 320px;
+    height: 40px;
+    background: #a696ff;
+    color: white;
+    font-size: 16px;
+    font-family: "微软雅黑";
+    cursor: pointer;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}

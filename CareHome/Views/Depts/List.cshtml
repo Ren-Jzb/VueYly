@@ -1,0 +1,587 @@
+﻿@{Layout = null;}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title id="title">部门管理 </title>
+    <link href="/assets_pc/style/reset.css?v=1.1.3" rel="stylesheet" type="text/css" />
+    <link href="/assets_pc/style/common.css?v=1.1.3" rel="stylesheet" type="text/css" />
+    <link href="/assets_pc/vendor/perfect-scrollbar/perfect-scrollbar.css?v=1.1.3" rel="stylesheet" />
+
+
+    <script src="/assets_pc/script/setFontSize.js?v=1.1.3"></script>
+    <script src="/assets_pc/vendor/perfect-scrollbar/perfect-scrollbar.js?v=1.1.3"></script>
+
+    <script src="/assets_pc/js/My97/WdatePicker.js?v=1.1.3" type="text/javascript"></script>
+
+</head>
+<body>
+    <div class="main-content">
+        <div class="content-head">
+            <!--OperateButton End-->
+            <div class="title-box">
+                <h2 class="content-title">部门管理</h2>
+            </div>
+            <div id="OperateButton" class="add-btn-box">
+                @Html.Raw(ViewBag.OperateButton)
+                <a href="javascript:;" id="btnShowSearchBox" class="OperateButton btn-filter">筛选</a>
+            </div>
+        </div>
+
+        <div class="content-body" id="scroll-box">
+            <div class="list-box">
+                <div class="table-box">
+                    <table id="tblist" class="tblist">
+                        <tr class="odd">
+                            @*<th class="thcbAll w50">
+                                    <input type="checkbox" align="absmiddle" id="cbListCheckAll" />
+                                </th>*@
+                            <th class="w150">部门编号</th>
+                            <th>部门名称</th>
+                            <th>备注</th>
+                            <th class="w200">操作时间</th>
+                            <th class="w100">状态</th>
+                        </tr>
+                    </table>
+                    <div class="pagination_main" id="divPagination">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--details页面 begin-->
+    <div class="detail-content" id="detailsBox">
+        <!--search页面 end-->
+        <div class="search-box clearfix" id="div_shearchBox">
+            <h2 class="detail-title">筛选条件</h2>
+            <div class="select-item"><h3 class="select-title">角色名称:</h3><input type="text" class="select-input" id="txtName"></div>
+            <div class="select-item">
+                <h3 class="select-title">状态:</h3>
+                <select id="ddlIsValid" class="select">
+                    <option value="">==全部==</option>
+                    <option value="1" selected="selected">有效</option>
+                    <option value="0">无效</option>
+                </select>
+            </div>
+            <div class="select-item"><a href="javascript:;" class="search-btn" id="BtnSearch">查询</a></div>
+
+        </div>
+        <!--search页面 end-->
+        <!--detail页面 begin-->
+        <div class="detail-box" id="div_detailsBox" style="display:none">
+            <div class="add-btn-box">
+                @Html.Raw(ViewBag.DetailsOperateButton)
+            </div>
+            <input type="hidden" id="txtId" />
+            <div class="info-item"><h3 class="info-title">部门名称:</h3><input type="text" class="text-input" id="txtDeptName"></div>
+            <div class="info-item"><h3 class="info-title">部门编号:</h3><input type="text" class="text-input" id="txtDeptCode"></div>
+            <div class="info-item"><h3 class="info-title">备注:</h3><input type="text" class="text-input" id="txtRemark"></div>
+
+        </div>
+        <!--detail页面 end-->
+    </div>
+    <!--details页面 end-->
+    <!--新增页面遮罩层-->
+    <div class="shade-box" id="div_shadeBox"></div>
+    <!--新增页面遮罩层 end-->
+    <!--PageNodeId Begin-->
+    <input type="hidden" id="txtAddPageNodeId" value="@ViewBag.AddPageNodeId" />
+    <input type="hidden" id="txtEditPageNodeId" value="@ViewBag.EditPageNodeId" />
+    <input type="hidden" id="txtDetailPageNodeId" value="@ViewBag.DetailPageNodeId" />
+    <!--PageNodeId End-->
+</body>
+</html>
+<script>
+  var scroll_box = document.getElementById('scroll-box');
+  Ps.initialize(scroll_box);
+  //    初始化自定义滚动条
+</script>
+<script src="/assets_pc/js/require/require/2.2.0/require.js?v=1.1.3"></script>
+<script src="/assets_pc/js/require/config/1.0.1/require.config.js?v=1.1.3"></script>
+<script type="text/javascript">
+    require(["jquery", "MISSY", "jquery.layui"], function () {
+        var _iAddPageNodeId = $("#txtAddPageNodeId").val();
+        var _iEditPageNodeId = $("#txtEditPageNodeId").val();
+        var _iDetailPageNodeId = $("#txtDetailPageNodeId").val();
+        var _iNodeId = MISSY.getQueryString("NodeId");
+        var _iPageSize = 10; //PAGE NUMBER
+        var _iCurrentPage = 1; //CurrentPage
+        var _iPageCount = 5;
+        $(function () {
+            initPage();
+        });
+
+        function initPage() //initPage
+        {
+            $("#BtnAddOperate").click(function () { ClickAdd(); });
+            $("#BtnUpdateOperate").click(function () { ClickUpdate(); });
+            $("#BtnDeleteOperate").click(function () { ClickDelete(); });
+            $("#BtnPhyDeleteOperate").click(function () { ClickPhyDelete(); });
+            $("#BtnEnableOperate").click(function () { ClickEnable(); });
+            $("#BtnDisableOperate").click(function () { ClickDisable(); });
+            $("#btnShowSearchBox").click(function () { ClickShowSearchBox(); });//显示搜索box
+            $("#BtnSaveOperate").click(function () { ClickSubmit(); });//保存
+            $("#BtnCancelOperate").click(function () { ClickBack(); });//隐藏添加页面box
+            $("#BtnSearch").click(function () { ClickSearch(); });
+            $("#cbListCheckAll").click(function () { MISSY.setClickCheckAll(this, "nameCbox"); });
+            $("body").keydown(function (event) {
+                var e = document.all ? window.event : event;
+                var keycode = (e.keyCode ? e.keyCode : e.which);
+                if (keycode === 13) {
+                    ClickSearch();
+                }
+            });
+            ChangePage(1, _iPageSize);
+        }
+
+        function ChangePage(paramCurrentPage, paramPageSize) //ChangePage
+        {
+            var colNumber = $("#tblist tr th").length;
+            $.ajax({
+                type: "post",
+                url: "SearchList",
+                data: {
+                    Name: $("#txtName").val(),
+                    IsValid: $("#ddlIsValid").val(),
+                    NodeId: _iNodeId,
+                    currentPage: paramCurrentPage,
+                    pageSize: paramPageSize
+                },
+                dataType: "json",
+                beforeSend: function () {
+                    $("#tblist tr:gt(0)").remove();
+                    $("#tblist").append("<tr><td align=\"center\" colspan=\"" + colNumber + "\">加载中，请稍等．．．</td></tr>");
+                },
+                success: function (response) {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType)//标记
+                    {
+                        case 0://错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1://返回正确数据
+                            break;
+                        case 2://请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3://未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4://无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5://无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+
+                    var buf = new Array();
+                    var responseList = response.Data == null ? new Array() : response.Data;
+                    for (var i = 0; i < responseList.length; i++) {
+                        var model = responseList[i];
+                        buf.push("<tr class=\"view\" data-val=\"" + model.DeptID + "\"  >");
+                       // buf.push("<td><input type=\"checkbox\" name=\"nameCbox\" value=\"" + model.DeptID + "\" /></td>");
+                        buf.push("<td>" + (MISSY.isEmpty(model.DeptCode) == true ? "" : model.DeptCode) + "</td>");
+                        buf.push("<td>" + model.DeptName + "</td>");
+                        buf.push("<td>" + (MISSY.isEmpty(model.Remark) == true ? "" : model.Remark) + "</td>");
+                        buf.push("<td>" + MISSY.formatDate(model.OperateDate, 4) + "</td>");
+                        buf.push("<td>" + MISSY.formatIsValid(model.IsValid) + "</td>");
+                       // buf.push("<td><a href=\"Details?NodeId=" + _iDetailPageNodeId + "&ID=" + model.DeptID + "\">查看</a></td>");
+                        buf.push("</tr>");
+                    }
+                    if (buf.length <= 0)
+                        buf.push("<tr><td align=\"center\" colspan=\"" + colNumber + "\">暂无数据．</td></tr>");
+                    $("#tblist tr:gt(0)").remove();
+                    $("#tblist").append(buf.join(""));
+                    $(".view").click(function ()
+                    {
+                        $("#tblist .view").removeClass("selected");
+                        $(this).addClass("selected");
+                        getInitSingle($(this).attr("data-val"));
+                    });
+                    var responseTotalRecord = response.TotalRecord;
+                    var responsePageSize = response.PageSize;
+                    var responseCurrentPage = response.CurrentPage;
+                    _iCurrentPage = responseCurrentPage;
+                    var responsePageCount = response.PageCount;
+                    _iPageCount = responsePageCount;
+                    if (responsePageCount > 1)
+                    {
+                        layui.use(['laypage'], function ()
+                        {
+                            var laypage = layui.laypage;
+                            //完整功能
+                            laypage.render({
+                                elem: 'divPagination'
+                                , count: responseTotalRecord
+                                , curr: responseCurrentPage
+                                , limit: _iPageSize
+                                , layout: ['prev', 'page', 'next', 'count']
+                                , jump: function (obj, first)
+                                {
+                                    console.log(obj)
+                                    if (first != true)
+                                    { //一定要加此判断，否则初始时会无限刷新
+                                        ClickPageChange(obj.curr);
+                                    }
+                                }
+                            });
+                        });
+                    } else
+                    {
+                        $("#divPagination").html("");
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    $("#tblist tr:gt(0)").remove();
+                    $("#tblist").append("<tr><td align=\"center\" colspan=\"" + colNumber + "\">系统性错误，请稍后再试.或点击<a href=\"ClickRefresh()\">刷新</a></td></tr>");
+                }
+            });
+        }
+        function ClickPageChange(tempGoPage) //PageChange
+        {
+            ChangePage(tempGoPage, _iPageSize);
+        }
+        function ClickRefresh()//Refresh
+        {
+            ChangePage(_iCurrentPage, _iPageSize);
+        }
+        function ClickSearch()//Serach
+        {
+            ChangePage(1, _iPageSize);
+        }
+
+        function ClickAdd() //Add
+        {
+            inputClear();
+            $("#div_shadeBox").addClass("show");
+            $("#div_detailsBox").show();
+            $("#div_shearchBox").hide();
+            $("#BtnDeleteOperate").hide();
+            $("#BtnPhyDeleteOperate").hide();
+        }
+
+        function ClickUpdate() //Update
+        {
+            var id = "";
+            var paramIds = $("#txtId").val();
+            var checkboxLength = 0;
+            for (var j = 0; j < checkboxlist.length; j++) {
+                if (checkboxlist[j].type === "checkbox") {
+                    if (checkboxlist[j].checked) {
+                        checkboxLength++;
+                    }
+                }
+            }
+            if (checkboxLength > 1) {
+                MISSY.iErrorMessage("请只选择一项数据.");
+                return;
+            }
+            for (var i = 0; i < checkboxlist.length; i++) {
+                if (checkboxlist[i].type === "checkbox") {
+                    if (checkboxlist[i].checked) {
+                        id = checkboxlist[i].value;
+                        break;
+                    }
+                }
+            }
+            if (id !== "")
+                location.href = "Details?NodeId=" + _iEditPageNodeId + "&ID=" + id + "&_r=" + Math.random();
+            else
+                MISSY.iErrorMessage("请选择一项数据.");
+        }
+
+        function ConfirmOperateStatus(paramButtonId, paramIds)//OperateStatus操作状态
+        {
+            var layerLoadIndex;
+            $.ajax({
+                url: "ListOperateStatus",
+                data: { NodeId: _iAddPageNodeId, oButtonId: paramButtonId, ids: paramIds },
+                type: "post",
+                dataType: "json",
+                beforeSend: function () { layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候"); },
+                ContentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType)//标记
+                    {
+                        case 0://错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1://返回正确数据
+                            MISSY.iSuccessMessage(response.MessageContent, ClickBack);
+                            return;
+                        case 2://请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3://未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4://无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5://无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                },
+                complete: function (xmlHttpRequest, textStatus) {
+                    MISSY.iHideLoading(layerLoadIndex);
+                }
+            });
+        }
+
+        function ClickDisable()//Disable禁用
+        {
+            var paramIds = $("#txtId").val();
+            if (paramIds !== "") {
+                MISSY.iConfirmMessage("您确定要禁用吗？", function () { ConfirmOperateStatus(22, paramIds); });
+            } else {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+
+        function ClickEnable()//Enable启用
+        {
+            var paramIds = $("#txtId").val();
+            if (paramIds !== "") {
+                MISSY.iConfirmMessage("您确定要启用吗？", function () { ConfirmOperateStatus(21, paramIds); });
+            } else {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+
+        function ClickDelete() //Delete
+        {
+            var paramIds = $("#txtId").val();
+            if (paramIds !== "") {
+                MISSY.iConfirmMessage("您确定要删除吗？", function () { ConfirmOperateStatus(3, paramIds); });
+            } else {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+        function ClickPhyDelete() //PhyDelete
+        {
+            var paramIds = $("#txtId").val();
+            if (paramIds !== "") {
+                MISSY.iConfirmMessage("请谨慎操作，删除后数据不可恢复，您确定要删除吗？", function () {
+                    var layerLoadIndex;
+                    $.ajax({
+                        url: "ListPhyDel",
+                        data: { NodeId: _iAddPageNodeId, ids: paramIds },
+                        type: "post",
+                        dataType: "json",
+                        beforeSend: function () { layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候"); },
+                        ContentType: "application/json;charset=utf-8",
+                        success: function (response) {
+                            if (!response) {
+                                MISSY.iErrorReturnNull();
+                                return;
+                            }
+                            switch (response.ErrorType) //标记
+                            {
+                                case 0: //错误
+                                    MISSY.iErrorMessage(response.MessageContent);
+                                    return;
+                                case 1: //返回正确数据
+                                    MISSY.iSuccessMessage(response.MessageContent, ClickBack);
+                                    return;
+                                case 2: //请求地址不正确
+                                    MISSY.iNoFound(response.MessageContent);
+                                    return;
+                                case 3: //未登录
+                                    MISSY.iNoLogin(response.MessageContent);
+                                    return;
+                                case 4: //无页面权限
+                                    MISSY.iNoPageAuth(response.MessageContent);
+                                    return;
+                                case 5: //无操作权限
+                                    MISSY.iNoOperateAuth(response.MessageContent);
+                                    return;
+                                default:
+                                    MISSY.iErrorMessage(response.MessageContent);
+                                    return;
+                            }
+                        },
+                        error: function (xmlHttpRequest, textStatus, errorThrown) {
+                            MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                            MISSY.iSystemAjaxError();
+                        },
+                        complete: function (xmlHttpRequest, textStatus) {
+                            MISSY.iHideLoading(layerLoadIndex);
+                        }
+                    });
+                });
+            } else {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+        //显示搜索box  普通页面
+        function ClickShowSearchBox()
+        {
+            $("#div_detailsBox").hide();
+            $("#div_shearchBox").show();
+        }
+        //Back
+        function ClickBack()
+        {
+            $("#div_detailsBox").hide();
+            $("#div_shearchBox").show();
+            $("#div_shadeBox").removeClass("show");
+            ClickRefresh();
+        }
+
+        function inputClear()
+        {
+            $("#txtId").val("");
+            $("#txtDeptCode").val("");
+            $("#txtDeptName").val("");
+            $("#txtRemark").val("");
+        }
+        //点击单条数据 修改时绑定数据方法
+        function getInitSingle(ID)
+        {
+            $("#BtnDeleteOperate").show();
+            $("#BtnPhyDeleteOperate").show();
+            $("#div_detailsBox").show();
+            $("#div_shearchBox").hide();
+            if (MISSY.isEmpty(ID)) return;
+            $.ajax({
+                url: "InitSingle",
+                data: { NodeId: _iAddPageNodeId, ID: ID },
+                type: "POST",
+                dataType: "json",
+                ContentType: "application/json;charset=utf-8",
+                success: function (response)
+                {
+                    if (!response)
+                    {
+                        MISSY.iErrorReturnNull();
+                        return;
+                    }
+                    switch (response.ErrorType) //标记
+                    {
+                        case 0: //错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1: //返回正确数据
+                            break;
+                        case 2: //请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3: //未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4: //无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5: //无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                    var model = response.Entity;
+                    $("#txtId").val(model.DeptID);
+                    $("#txtDeptCode").val(model.DeptCode);
+                    $("#txtDeptName").val(model.DeptName);
+                    $("#txtRemark").val(model.Remark);
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown)
+                {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                }
+            });
+        }
+        function ClickSubmit() //Add、Update
+        {
+            if (!CheckForm()) return;
+            var ID = MISSY.getQueryString("ID");
+            var layerLoadIndex;
+            $.ajax({
+                url: "AddOrUpdate",
+                data: {
+                    NodeId: _iAddPageNodeId,
+                    ID: $("#txtId").val(),
+                    DeptCode: $("#txtDeptCode").val(),
+                    DeptName: $("#txtDeptName").val(),
+                    Remark: $("#txtRemark").val()
+                },
+                type: "POST",
+                dataType: "json",
+                ContentType: "application/json;charset=utf-8",
+                beforeSend: function () { layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候..."); },
+                success: function (response)
+                {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType) //标记
+                    {
+                        case 0: //错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1: //返回正确数据
+                            MISSY.iSuccessMessage(response.MessageContent, ClickBack);
+                            break;
+                        case 2: //请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3: //未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4: //无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5: //无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown)
+                {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                },
+                complete: function (xmlHttpRequest, textStatus)
+                {
+                    MISSY.iHideLoading(layerLoadIndex);
+                }
+            });
+        }
+
+        function CheckForm() //CheckForm
+        {
+            var txtDeptName = document.getElementById("txtDeptName");
+            if (MISSY.isEmpty(txtDeptName.value))
+            {
+                MISSY.iErrorMessage("部门名称不能为空.");
+                txtDeptName.value = "";
+                txtDeptName.focus();
+                return false;
+            }
+            return true;
+        }
+
+    });
+</script>

@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+    <div id="app">
+        {{name}}：{{message}}
+        <p v-html="rawHtml">{{rawHtml}}</p>
+        <div v-bind:class="color">Test...</div>
+        <p>{{ number + 1 }}</p>
+        <p>{{ ok ? 'YES' : 'NO' }}</p>
+        <p>{{ message.split(' ').reverse().join('') }}</p>
+        <p v-if="seen">现在你看到我了</p>
+        <a v-bind:href="url">...</a>
+
+        <div v-bind:class="lineColor" @click="click1">
+            <div @click.stop="click2">
+                click me
+            </div>
+        </div>
+
+        <!--<div v-bind:class="{active:isActive,green:isGreen}" style="width:200px;height:200px;text-align:center;line-height:200px;">
+            hi vue!
+        </div>-->
+        <div v-bind:class="[isActive ? 'active':'','green']" style="width:200px;height:200px;text-align:center;line-height:200px;">
+            hi vue!
+        </div>
+
+        <div :style="{color:color,fontSize:size}">
+            hi vue!
+        </div>
+        <div>
+            <div v-if="state==='A'">
+                A
+            </div>
+            <div v-else-if="state==='B'">
+                B
+            </div>
+            <div v-else-if="state==='C'">
+                C
+            </div>
+            <div v-else>
+                D
+            </div>
+        </div>
+        <h1 v-show="ok">Hello!</h1>
+        <ul>
+            <li v-for="item,index in items" :key="index">
+                {{index}}：{{item.name}} - {{item.content}}
+            </li>
+        </ul>
+        <ul>
+            <li v-for="value,key in object" :key="key">
+                {{key}}：{{value}}
+            </li>
+        </ul>
+        <div id="example-1">
+            <!--<button v-on:click="counter+=1"> 数值：{{counter}}</button><br />-->
+            <button v-on:click="counters"> 数值：{{counter}}</button><br />
+            <h1>{{counter}}</h1><br />
+            <button v-on:click="greet('aaa',$event)"> Greet</button> 
+        </div>
+        <br />
+        <div id='example-3'>
+            <input v-model="nm" placeholder="edit me">
+            <p>Name is: {{ nm }}</p>
+            <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+            <label for="jack">Jack</label>
+            <input type="checkbox" id="john" value="John" v-model="checkedNames">
+            <label for="john">John</label>
+            <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+            <label for="mike">Mike</label>
+            <br>
+            <span>Checked names: {{ checkedNames }}</span>
+            <br />
+            <input type="radio" id="one" value="One" v-model="picked">
+            <label for="one">One</label>
+            <br>
+            <input type="radio" id="two" value="Two" v-model="picked">
+            <label for="two">Two</label>
+            <br>
+            <span>Picked: {{ picked }}</span>
+            <br />
+            <textarea v-model="messages" placeholder="add multiple lines"></textarea>
+            <br>
+            <span>Multiline messages is:</span>
+            <p style="white-space: pre-line;">{{ messages }}</p>
+            <br>
+            <select v-model="selected">
+                <option disabled value="">Please select one</option>
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+            </select>
+            <span>Selected: {{ selected }}</span>
+            <br />
+            <button v-on:click="submit">Submit</button>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: "Sam",
+                message: "Hello Vue!",
+                rawHtml: "<span style='color:red'>Word!</span>",
+                color: "blue",
+                lineColor: "line",
+                number: 9,
+                ok: 2 > 1,
+                message: "ha ha",
+                seen: true,
+                url: "http://www.2345.com",
+                isActive: true,
+                isGreen: true,
+                size: "50px",
+                state: "C",
+                ok: true,
+                object: {
+                    title: "测试",
+                    text: "123",
+                    date: "2019-10-16"
+                },
+                items: [
+                    { name: "1", content: "11" },
+                    { name: "2", content: "22" },
+                    { name: "3", content: "33" }
+                ],
+                counter: 0,
+                nm: "",
+                checkedNames: ["Jack", "Mike"],
+                picked: "Two",
+                messages: "",
+                selected: ""
+            },
+            methods: {
+                click1: function () {
+                    console.log("1");
+                },
+                click2: function () {
+                    console.log("2");
+                },
+                counters: function () {
+                    this.counter += 1;
+                },
+                greet: function (str, e) {
+                    alert(str);
+                    alert(e);
+                },
+                submit: function () {
+                    var postObj = {
+                        name: this.nm,
+                        ck: this.checkedNames,
+                        rd: this.picked,
+                        msg: this.messages,
+                        st: this.selected,
+                    };
+                    alert(postObj);
+                }
+            }
+        });
+    </script>
+    <style type="text/css">
+        .black {
+            color: black;
+        }
+
+        .blue {
+            color: blue;
+            font-size: 50px;
+        }
+
+        .line {
+            line-height: 20px;
+        }
+
+        .active {
+            background-color: aqua;
+        }
+
+        .green {
+            color: green;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,204 @@
+@charset "UTF-8";
+.main-content {
+  /*内容 */
+  background: center center no-repeat;
+  -webkit-background-size: 100% 100%;
+  background-size: 100% 100%;
+  background-image: url(../images/bg-main-content.png);
+}
+
+.content-head {
+  /*内容头部 */
+}
+
+.content-head .OperateButton {
+  /*按钮 */
+}
+
+.content-head .OperateButton.yellow-bg {
+  background-color: #ff9615;
+}
+
+.content-head .OperateButton.blue-bg {
+  color: #54b6ff;
+  background-color: #3277ae;
+}
+
+.content-head .title-box .content-title {
+  /*内容标题 */
+  color: white;
+}
+
+.assessment-wrapper {
+  width: 100%;
+  padding: 0 .20rem;
+}
+
+.assessment-wrapper .manage-title {
+  /*大标题 */
+  font-size: .24rem;
+  line-height: .60rem;
+  color: #54d2ff;
+}
+
+.assessment-wrapper .assessment-title-box {
+  /*考核标题容器 */
+  background-color: #438ecc;
+  margin-bottom: .10rem;
+  line-height: .60rem;
+  font-size: .22rem;
+  padding: 0 .10rem;
+  position: relative;
+  z-index: 5;
+}
+
+.assessment-wrapper .assessment-title {
+  color: #54b6ff;
+  display: inline-block;
+  float: left;
+}
+
+.assessment-wrapper .basic-score {
+  display: inline-block;
+  float: right;
+  color: #ff9615;
+  padding-right: .10rem;
+}
+
+.assessment-wrapper .basic-score .toggle-standard {
+  padding: 0 .10rem;
+  color: #54b6ff;
+  cursor: pointer;
+}
+
+.assessment-wrapper .standard-box {
+  display: none;
+  position: absolute;
+  right: 10px;
+  top: 80%;
+}
+
+.assessment-wrapper .standard-box.show {
+  display: block;
+  width: 3.00rem;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.assessment-wrapper .standard-box:before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: -.16rem;
+  right: .20rem;
+  border: .08rem solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.assessment-wrapper .standard-box .assessment-standard {
+  font-size: 12px;
+  line-height: 20px;
+  color: white;
+}
+
+.assessment-wrapper .assessment-detail {
+  /*考核详情容器 */
+  background-color: #3479af;
+  padding: .20rem;
+  padding-top: 0;
+  margin-bottom: .20rem;
+  position: relative;
+}
+
+.assessment-wrapper .assessment-rule {
+  /*考核规则文字 */
+  font-size: .22rem;
+  color: #ffffff;
+  line-height: .50rem;
+  position: relative;
+  padding-left: .20rem;
+}
+
+.assessment-wrapper .assessment-rule:after {
+  /*小方块 */
+  content: '';
+  display: block;
+  width: .08rem;
+  height: .08rem;
+  position: absolute;
+  left: 0;
+  top: .2rem;
+  background-color: #3f88c5;
+}
+
+.assessment-wrapper .score-input {
+  /*分数输入框 */
+  display: block;
+  width: 2rem;
+  height: .40rem;
+  line-height: .40rem;
+  color: #ffffff;
+  background-color: #3f88c5;
+  padding-left: .10rem;
+  margin: .1rem 0;
+}
+
+.assessment-wrapper .text-area {
+  display: block;
+  width: 5rem;
+  line-height: .40rem;
+  color: #ffffff;
+  background-color: #3f88c5;
+  padding-left: .10rem;
+  margin: .1rem 0;
+}
+
+.assessment-wrapper .remark-box {
+  position: absolute;
+  top: .20rem;
+  right: .20rem;
+  text-align: right;
+}
+
+.assessment-wrapper .remark-box .btn-remark {
+  display: inline-block;
+  font-size: .16rem;
+  line-height: .20rem;
+  padding-left: .15rem;
+  color: #ff9615;
+  background: url("../images/btn-remark.png") left center no-repeat;
+  -webkit-background-size: .10rem .20rem;
+  background-size: .10rem .20rem;
+}
+
+.assessment-wrapper .remark-box .remark-input {
+  display: none;
+}
+
+.assessment-wrapper .remark-box .remark-input.show {
+  display: block;
+  width: 3rem;
+  height: 1.2rem;
+  background: rgba(0, 0, 0, 0.1);
+  color: white;
+  font-size: .16rem;
+  line-height: .20rem;
+  padding: .10rem;
+}
+
+::-moz-placeholder {
+  color: #54b6ff;
+  opacity: 1;
+}
+
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color: #54b6ff;
+  opacity: 1;
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #54b6ff;
+  opacity: 1;
+}

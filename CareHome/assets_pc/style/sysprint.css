@@ -1,0 +1,91 @@
+﻿@charset "utf-8";
+/*CSS Document
+* {margin: 0;padding: 0;outline: 0;font-size: 12px;font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif,"SimSun";}
+html{color:#000;height:100%;font-size:14px;}
+html, html body{_background-image:url(about:blank); _background-attachment:fixed;_overflow-x:hidden;_overflow-y:auto;}
+body{ }
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;}
+audio, canvas, video {display: inline-block;*display:inline;*zoom:1;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}
+del,ins{text-decoration:none;}
+ul,li{list-style:none;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+q:before,q:after{content:'';}
+abbr,acronym{border:0;font-variant:normal;}
+sup{vertical-align:baseline;}
+sub{vertical-align:baseline;}
+legend{color:#000;}
+input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}
+input,button,textarea,select{*font-size:100%;}
+a {blr:expression(this.onFocus=this.blur());outline:none;}
+a:focus{ -moz-outline-style: none; }
+*/
+/*文字排版*/
+.wsto{white-space:nowrap;text-overflow:ellipsis;}/*文字超出显示省略号*/
+.f12{font-size:12px;}
+.f13{font-size:13px;}
+.f14{font-size:14px;}
+.f16{font-size:16px;}
+.f20{font-size:20px;}
+.fb{font-weight:bold}
+.fn{font-weight:normal;}
+.t2{text-indent:2em;}
+.lh150{line-height:150%;}
+.lh180{line-height:180%;}
+.lh200{line-height:200%;}
+.unl{text-decoration:underline;}
+.no_unl{text-decoration:none;}
+/*定位*/
+.tl{text-align:left;}
+.tc{text-align:center;}
+.tr{text-align:right;}
+.bc{margin-left:0;margin-right:0;}
+.fl{float:left;display:inline;}
+.fr{float:right;display:inline;}
+.cb{clear:both;}
+.cl{clear:left;}
+.cr{clear:right;}
+.clear {clear:both;height:0;visibility:hidden;overflow:hidden;}
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;overflow:hidden;}
+*html .clearfix {height: 1%;}
+.clearfix {display: inline-block;}
+.clearfix {display: block;}
+.vm{vertical-align:middle;}
+.pr{position:relative;}
+.pa{position:absolute;}
+.abs-right{position:absolute;right:0}
+.zoom{zoom:1;}
+.hidden{visibility:hidden;}
+.none{display:none;}
+
+/*操作按钮样式*/
+.OperateButtonArea {height: 50px;line-height: 50px;background:#fff;}
+.OperateButtonArea .OTitle {float:left;font-size:20px;text-align: center;position: absolute;left: 40%;top: 0;}
+.OperateButtonArea .OOperateButton {float:right;}
+.OperateButtonArea .OperateButton{display:inline-block;height: 26px;min-width: 32px;line-height: 26px;_overflow-y: hidden;text-decoration:none;margin: 5px 10px 5px 0px;cursor: pointer;padding: 0 8px;text-align: center;text-decoration: none;outline: none;vertical-align: middle;-moz-border-radius: 2px;-webkit-border-radius: 2px;border-radius: 2px;font-size:14px;letter-spacing:2px;border: 1px solid #63c9bb;background: #63c9bb;color: #FFF;}
+.OperateButtonArea .OperateButton:hover{}
+
+.print_area {padding:20px;padding-top:0px;}
+.print-title {font-size: 18px;text-align: center;line-height: 36px;}
+.print-right-title {font-size: 12px;text-align: right;line-height:24px;}
+.print-left-title {font-size: 10px;line-height: 24px;}
+
+.tableArea {*zoom: 1;}
+.tblist{table-layout:fixed;word-wrap:break-word;width: 100%;border-collapse:collapse;border-spacing:0;}
+.tblist tr th{font-size:11px;border: 1px solid #000;line-height:24px;text-align:center;}
+.tblist tr td{font-size:11px;border: 1px solid #000;line-height:24px;text-align:center;}
+.tblist .trbg1{}
+.tblist .trbg2{}
+.tblist tr:hover{ }
+.tblist tr td.left{text-align:left;padding:0 5px;}
+.tblist tr td.right{text-align:right;padding:0 5px;}
+.tblist tr td a {color:#3ea3ff;}
+.tblist tr td a:hover {text-decoration:underline;}
+
+
+/*内容通用样式*/
+.tbdetail{width: 100%;border-collapse:collapse;border-spacing:0;margin:10px auto;}
+.tbdetail tr td{padding:5px;}

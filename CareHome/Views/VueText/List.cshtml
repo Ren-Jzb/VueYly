@@ -1,0 +1,156 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Vue测试</title>
+    <script src="/Scripts/vue.js" type="text/javascript" charset="utf-8"></script>
+
+    <link href="/assets_pc/style/reset.css?v=1.1.3" rel="stylesheet" type="text/css" />
+    <link href="/assets_pc/style/common.css?v=1.1.3" rel="stylesheet" type="text/css" />
+    <link href="/assets_pc/vendor/perfect-scrollbar/perfect-scrollbar.css?v=1.1.3" rel="stylesheet" />
+    <script src="/assets_pc/js/jquery/jquery/1.11.3/jquery.js"></script>
+</head>
+<body>
+    <div id="appTest">
+        <div id='example-3'>
+            <input type="hidden" v-model="id" />
+            <label v-bind:class="color">姓名：</label>
+            <input v-model="name" placeholder="请输入姓名">
+            <br />
+            @*<p>Name is: {{ name }}</p>*@
+            <br />
+            <label v-bind:class="color">年龄：</label>
+            <input v-model.number="age" placeholder="请输入年龄">
+            <br />
+            <br />
+            <label v-bind:class="color">性别：</label>
+            <input type="radio" id="one" value="1" v-model="sex">
+            <label for="one">男</label>
+            <input type="radio" id="two" value="0" v-model="sex">
+            <label for="two">女</label>
+            <br />
+            <br />
+            <label v-bind:class="color">爱好：</label>
+            <input type="checkbox" id="jack" value="羽毛球" v-model="checkedNames">
+            <label for="jack">羽毛球</label>
+            <input type="checkbox" id="john" value="乒乓球" v-model="checkedNames">
+            <label for="john">乒乓球</label>
+            <input type="checkbox" id="mike" value="排球" v-model="checkedNames">
+            <label for="mike">排球</label>
+            <br />
+            @*<span>Checked names: {{ checkedNames }}</span>*@
+            <br />
+            <label v-bind:class="color">住址：</label>
+            <select v-model="selected">
+                <option disabled value="">请选择</option>
+                <option>黄埔</option>
+                <option>浦东</option>
+                <option>青浦</option>
+            </select>
+            <br />
+            @*<span>Selected: {{ selected }}</span>*@
+            <br />
+            @*<span>Picked: {{ sex }}</span>*@
+            <br />
+            <label v-bind:class="color">备注：</label>
+            <textarea v-model="messages" placeholder="备注"></textarea>
+            <br />
+            @*<span>Multiline messages is:</span>
+                <p style="white-space: pre-line;">{{ messages }}</p>*@
+            <br />
+            <br />
+            <button v-on:click="submit">提交</button>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<script type="text/javascript">
+    $(function () {
+        initPage();
+    });
+    function initPage() //initPage
+    {
+        var vm = new Vue({
+            el: '#appTest',
+            data: {
+                id: "1bcd7c3a-563f-440b-8911-7e6d92bf8d3b",
+                name: "张三",
+                age: "30",
+                checkedNames: ["羽毛球", "排球"],
+                sex: "0",
+                messages: "测试数据显示的效果！",
+                selected: "青浦",
+                color: "red"
+            }
+            mounted: function () {
+                this.name = "1";
+            },
+            methods: {
+                submit: function () {
+                    $.ajax({
+                        url: "AddOrUpdate",
+                        data: {
+                            id: this.id,
+                            name: this.name,
+                            ck: this.checkedNames,
+                            age: this.age,
+                            rd: this.sex,
+                            msg: this.messages,
+                            st: this.selected
+                        },
+                        type: "POST",
+                        dataType: "json",
+                        ContentType: "application/json;charset=utf-8",
+                        success: function (response) {
+                            if (!response) { MISSY.iErrorReturnNull(); return; }
+                            switch (response.ErrorType) //标记
+                            {
+                                case 0: //错误
+                                    alert(response.MessageContent);
+                                    return;
+                                case 1: //返回正确数据
+                                    alert(response.MessageContent);
+                                    break;
+                                case 2: //请求地址不正确
+                                    alert(response.MessageContent);
+                                    return;
+                                case 3: //未登录
+                                    alert(response.MessageContent);
+                                    return;
+                                case 4: //无页面权限
+                                    alert(response.MessageContent);
+                                    return;
+                                case 5: //无操作权限
+                                    alert(response.MessageContent);
+                                    return;
+                                default:
+                                    alert(response.MessageContent);
+                                    return;
+                            }
+                        },
+                        error: function (xmlHttpRequest, textStatus, errorThrown) {
+                            alert("操作失败：" + textStatus);
+                        }
+                    });
+                }
+            }
+        });
+    }
+</script>
+<style type="text/css">
+    .red {
+        color: red;
+    }
+</style>

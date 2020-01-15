@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="44d764668bc2453cb45514f09ed21e13" Name="Diagram1" ZoomLevel="11">
+        <EntityTypeShape EntityType="MISDB.Attachments" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MISDB.AuthNode" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MISDB.AuthNodeButton" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="MISDB.AuthRoleNode" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MISDB.AuthRoleNodeButton" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="MISDB.Buttons" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MISDB.Depts" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="MISDB.Log4net" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="MISDB.NodeButton" Width="1.5" PointX="6.75" PointY="4.75" />
+        <EntityTypeShape EntityType="MISDB.Nodes" Width="1.5" PointX="4.75" PointY="7.75" />
+        <EntityTypeShape EntityType="MISDB.OperateLog" Width="1.5" PointX="6.75" PointY="7.75" />
+        <EntityTypeShape EntityType="MISDB.Roles" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MISDB.tbBed" Width="1.5" PointX="8.75" PointY="4.75" />
+        <EntityTypeShape EntityType="MISDB.tbCall" Width="1.5" PointX="8.75" PointY="9.75" />
+        <EntityTypeShape EntityType="MISDB.tbCallHg" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MISDB.tbCustomer" Width="1.5" PointX="10.75" PointY="3.75" />
+        <EntityTypeShape EntityType="MISDB.tbDictionary" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="MISDB.tbDrugBasic" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MISDB.tbEvaluate" Width="1.5" PointX="12.75" PointY="6.75" />
+        <EntityTypeShape EntityType="MISDB.tbFamilyCustomer" Width="1.5" PointX="12.75" PointY="11.75" />
+        <EntityTypeShape EntityType="MISDB.tbFamilyTooken" Width="1.5" PointX="2.75" PointY="13.75" />
+        <EntityTypeShape EntityType="MISDB.tbFamilyUsers" Width="1.5" PointX="4.75" PointY="13.75" />
+        <EntityTypeShape EntityType="MISDB.tbLaoRenFanShenJiLu" Width="1.5" PointX="6.75" PointY="13.75" />
+        <EntityTypeShape EntityType="MISDB.tbMessage" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MISDB.tbMessageShiftInfo" Width="1.5" PointX="14.75" PointY="5.75" />
+        <EntityTypeShape EntityType="MISDB.tbNodesPad" Width="1.5" PointX="14.75" PointY="11.75" />
+        <EntityTypeShape EntityType="MISDB.tbNursingCustomer" Width="1.5" PointX="16.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MISDB.tbNursingInfo" Width="1.5" PointX="0.75" PointY="16.75" />
+        <EntityTypeShape EntityType="MISDB.tbNursingMessage" Width="1.5" PointX="16.75" PointY="4.75" />
+        <EntityTypeShape EntityType="MISDB.tbNursingPer" Width="1.5" PointX="16.75" PointY="9.75" />
+        <EntityTypeShape EntityType="MISDB.tbNursingPerExt" Width="1.5" PointX="16.75" PointY="14.75" />
+        <EntityTypeShape EntityType="MISDB.tbNursingPerLedger" Width="1.5" PointX="2.75" PointY="17.75" />
+        <EntityTypeShape EntityType="MISDB.tbNursingRank" Width="1.5" PointX="4.75" PointY="17.75" />
+        <EntityTypeShape EntityType="MISDB.tbNursingTooken" Width="1.5" PointX="6.75" PointY="17.75" />
+        <EntityTypeShape EntityType="MISDB.tbOrganization" Width="1.5" PointX="12.75" PointY="17.75" />
+        <EntityTypeShape EntityType="MISDB.tbOrgTLJGCongYe" Width="1.5" PointX="18.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MISDB.tbPaymentPlan" Width="1.5" PointX="18.75" PointY="7.75" />
+        <EntityTypeShape EntityType="MISDB.tbRoom" Width="1.5" PointX="18.75" PointY="13.75" />
+        <EntityTypeShape EntityType="MISDB.tbSyncUpTable" Width="1.5" PointX="18.75" PointY="18.75" />
+        <EntityTypeShape EntityType="MISDB.tbTLJGCongYe" Width="1.5" PointX="14.75" PointY="19.75" />
+        <EntityTypeShape EntityType="MISDB.tbUserWelfareCentre" Width="1.5" PointX="20.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MISDB.tbWelfareCentre" Width="1.5" PointX="20.75" PointY="4.75" />
+        <EntityTypeShape EntityType="MISDB.Users" Width="1.5" PointX="6.75" PointY="20.75" />
+        <EntityTypeShape EntityType="MISDB.Vm" Width="1.5" PointX="20.75" PointY="8.75" />
+        <EntityTypeShape EntityType="MISDB.vAuthRoleNode" Width="1.5" PointX="20.75" PointY="12.75" />
+        <EntityTypeShape EntityType="MISDB.vAuthRoleNodeButton" Width="1.5" PointX="20.75" PointY="15.75" />
+        <EntityTypeShape EntityType="MISDB.vCustomer" Width="1.5" PointX="20.75" PointY="19.75" />
+        <EntityTypeShape EntityType="MISDB.vFamilyCustomerInfo" Width="1.5" PointX="22.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MISDB.vFamilyPerLedger" Width="1.5" PointX="16.75" PointY="22.75" />
+        <EntityTypeShape EntityType="MISDB.vLeftAuthRoleNode" Width="1.5" PointX="0.75" PointY="23.75" />
+        <EntityTypeShape EntityType="MISDB.vNodeButton" Width="1.5" PointX="2.75" PointY="23.75" />
+        <EntityTypeShape EntityType="MISDB.vNursingPerLedger" Width="1.5" PointX="22.75" PointY="23.75" />
+        <EntityTypeShape EntityType="MISDB.vPaymentPlan" Width="1.5" PointX="24.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MISDB.vUsers" Width="1.5" PointX="24.75" PointY="8.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

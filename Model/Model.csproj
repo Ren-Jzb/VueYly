@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CFB7B615-7889-468F-BF5F-88CD24CDBC76}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Model</RootNamespace>
+    <AssemblyName>Model</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attachments.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AuthNode.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AuthNodeButton.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AuthRoleNode.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AuthRoleNodeButton.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConditionModel.cs" />
+    <Compile Include="Depts.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Log4net.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MISDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MISDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MISDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MISDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MISDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="NodeButton.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Nodes.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OperateLog.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROC_Spec_NursingCustomerDay_Result.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultDetail.cs" />
+    <Compile Include="ResultList.cs" />
+    <Compile Include="ResultMessage.cs" />
+    <Compile Include="Roles.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbBed.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbCall.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbCallHg.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbCustomer.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbDictionary.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbDrugBasic.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbEvaluate.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbFamilyCustomer.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbFamilyTooken.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbFamilyUsers.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbLaoRenFanShenJiLu.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbMessage.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbMessageShiftInfo.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbNodesPad.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbNursingCustomer.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbNursingInfo.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbNursingMessage.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbNursingPer.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbNursingPerExt.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbNursingPerLedger.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbNursingRank.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbNursingTooken.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbOrganization.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbOrgTLJGCongYe.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbPaymentPlan.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbRoom.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbSyncUpTable.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbTLJGCongYe.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbUserWelfareCentre.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbWelfareCentre.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TreeModel.cs" />
+    <Compile Include="UploadParameter.cs" />
+    <Compile Include="Users.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vAuthRoleNode.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vAuthRoleNodeButton.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vCustomer.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vFamilyCustomerInfo.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vFamilyPerLedger.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vLeftAuthRoleNode.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Vm.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vNodeButton.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vNursingPerLedger.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vPaymentPlan.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vUsers.cs">
+      <DependentUpon>MISDB.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="MISDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MISDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="MISDB.edmx.diagram">
+      <DependentUpon>MISDB.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MISDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MISDB.edmx</DependentUpon>
+      <LastGenOutput>MISDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="MISDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MISDB.edmx</DependentUpon>
+      <LastGenOutput>MISDB.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CommonLib\CommonLib.csproj">
+      <Project>{4314d6da-bcd1-4739-b2b7-45b5e39db352}</Project>
+      <Name>CommonLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

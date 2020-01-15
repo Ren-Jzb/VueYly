@@ -1,0 +1,775 @@
+﻿@{Layout = null;}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title id="title">派单计划管理</title>
+    <link href="/assets_pc/style/reset.css?v=1.1.3" rel="stylesheet" type="text/css" />
+    <link href="/assets_pc/style/common.css?v=1.1.3" rel="stylesheet" type="text/css" />
+    <link href="/assets_pc/vendor/perfect-scrollbar/perfect-scrollbar.css?v=1.1.3" rel="stylesheet" />
+
+    <script src="/assets_pc/script/setFontSize.js?v=1.1.3"></script>
+    <script src="/assets_pc/vendor/perfect-scrollbar/perfect-scrollbar.js?v=1.1.3"></script>
+    <script src="/assets_pc/js/My97/WdatePicker.js?v=1.1.3" type="text/javascript"></script>
+</head>
+<body>
+    <div class="main-content">
+        <div class="content-head">
+            <div class="title-box">
+                <h2 class="content-title">派单计划管理</h2>
+            </div>
+            <div id="OperateButton" class="add-btn-box">
+                @Html.Raw(ViewBag.OperateButton)
+                <a href="javascript:;" id="btnShowSearchBox" class="OperateButton btn-filter">筛选</a>
+            </div>
+        </div>
+        <div class="content-body" id="scroll-box">
+            <div class="list-box">
+                <div class="table-box">
+                    <table id="tblist" class="tblist">
+                        <tr class="odd">
+                            @*<th class="thcbAll w50">
+            <input type="checkbox" align="absmiddle" id="cbListCheckAll" />
+        </th>*@
+                            <th class="w50">序号</th>
+                            <th>老人姓名<i id="UserName" class=""></i></th>
+                            <th>家政姓名</th>
+                            <th>开始日期</th>
+                            <th>结束日期</th>
+                            <th>服务时长</th>
+                            <th>操作日期</th>
+                            <th class="w200">备注</th>
+                            <th>状态</th>
+                        </tr>
+                    </table>
+                    <div class="pagination_main" id="divPagination">
+
+                    </div>
+                </div>
+                <input type="hidden" id="sortfield" value="" />
+                <input type="hidden" id="sorttype" value="" />
+            </div>
+        </div>
+    </div>
+    <!--Content End-->
+    <!--details页面 begin-->
+    <div class="detail-content" id="detailsBox">
+        <!--search页面 end-->
+        <div class="search-box clearfix" id="div_shearchBox">
+            <h2 class="detail-title">筛选条件</h2>
+
+            <div class="select-item">
+                <h3 class="select-title">家政姓名:</h3>
+                <input type="text" class="select-input" id="txtUserName">
+            </div>
+            <div class="select-item"><a href="###" class="search-btn" id="BtnSearch">查询</a></div>
+        </div>
+        <!--search页面 end-->
+        <!--detail页面 begin-->
+        <div class="detail-box" id="div_detailsBox" style="display:none">
+            <div class="add-btn-box">
+                @Html.Raw(ViewBag.DetailsOperateButton)
+            </div>
+            <input type="hidden" id="txtId" />
+            <div class="info-item">
+                <h3 class="info-title required">老人姓名:</h3>
+                <select class="inputnull select" id="ddlCustomerName" style="width:120px;">
+                    @Html.Raw(ViewBag.GetCustomerName)
+                </select>
+            </div>
+            <div class="info-item">
+                <h3 class="info-title required">家政姓名:</h3>
+                <select class="inputnull select" id="ddlCareName" style="width:120px;">
+                    @Html.Raw(ViewBag.GetCareName)
+                </select>
+            </div>
+            <div class="info-item half-item">
+                <h3 class="info-title">服务开始日期:</h3>
+                <input class="text-input" type="text" id="txtStartDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})">
+            </div>
+            <div class="info-item half-item">
+                <h3 class="info-title">服务结束日期:</h3>
+                <input class="text-input" type="text" id="txtEntDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})">
+            </div>
+            <div class="info-item half-item">
+                <h3 class="info-title">服务时长:</h3>
+                <input class="text-input" type="text" id="txtServetTime">
+            </div>
+            <div class="split-line"></div>
+            <div class="info-item  half-item">
+                <h3 class="info-title">星期一:</h3>
+                <input class="text-input" type="text" id="txtOne" onfocus="WdatePicker({dateFmt:'HH:mm'})">
+            </div>
+            <div class="info-item  half-item">
+                <h3 class="info-title">星期二:</h3>
+                <input class="text-input" type="text" id="txtTwo" onfocus="WdatePicker({dateFmt:'HH:mm'})">
+            </div>
+            <div class="info-item  half-item">
+                <h3 class="info-title">星期三:</h3>
+                <input class="text-input" type="text" id="txtThree" onfocus="WdatePicker({dateFmt:'HH:mm'})">
+            </div>
+            <div class="info-item  half-item">
+                <h3 class="info-title">星期四:</h3>
+                <input class="text-input" type="text" id="txtFour" onfocus="WdatePicker({dateFmt:'HH:mm'})">
+            </div>
+            <div class="info-item  half-item">
+                <h3 class="info-title">星期五:</h3>
+                <input class="text-input" type="text" id="txtFive" onfocus="WdatePicker({dateFmt:'HH:mm'})">
+            </div>
+            <div class="info-item  half-item">
+                <h3 class="info-title">星期六:</h3>
+                <input class="text-input" type="text" id="txtSix" onfocus="WdatePicker({dateFmt:'HH:mm'})">
+            </div>
+            <div class="info-item  half-item">
+                <h3 class="info-title">星期日:</h3>
+                <input class="text-input" type="text" id="txtSeven" onfocus="WdatePicker({dateFmt:'HH:mm'})">
+            </div>
+            <div class="split-line"></div>
+            <div class="info-item">
+                <h3 class="info-title">备注:</h3>
+                <textarea id="txtRemark"></textarea>
+            </div>
+
+        </div>
+        <!--detail页面 end-->
+    </div>
+    <!--details页面 end-->
+    <!--新增页面遮罩层-->
+    <div class="shade-box" id="div_shadeBox"></div>
+    <!--新增页面遮罩层 end-->
+    <!--PageNodeId Begin-->
+    <input type="hidden" id="txtAddPageNodeId" value="@ViewBag.AddPageNodeId" />
+    <input type="hidden" id="txtEditPageNodeId" value="@ViewBag.EditPageNodeId" />
+    <input type="hidden" id="txtDetailPageNodeId" value="@ViewBag.DetailPageNodeId" />
+    <!--PageNodeId End-->
+    <input type="hidden" id="txtWelfareCentreID" value="@ViewBag.WelfareCentreID" />
+
+</body>
+</html>
+
+<script src="/assets_pc/js/require/require/2.2.0/require.js?v=1.1.3"></script>
+<script src="/assets_pc/js/require/config/1.0.1/require.config.js?v=1.1.3"></script>
+<script type="text/javascript">
+    require(["jquery", "MISSY", "jquery.layui"], function () {
+        var _iAddPageNodeId = $("#txtAddPageNodeId").val();
+        var _iEditPageNodeId = $("#txtEditPageNodeId").val();
+        var _iDetailPageNodeId = $("#txtDetailPageNodeId").val();
+        var _iNodeId = MISSY.getQueryString("NodeId");
+        var _iWelfareCentreID = $("#txtWelfareCentreID").val();
+        var _iPageSize = 10; //PAGE NUMBER
+        var _iCurrentPage = 1; //CurrentPage
+        var _iPageCount = 5;
+        $(function () {
+            InitResizeWindow();
+            initPage();
+        });
+
+        function InitResizeWindow() {
+            ResizeWindowContentArea();
+            $(window).resize(function () {
+                ResizeWindowContentArea();
+            });
+        }
+
+        function ResizeWindowContentArea() {
+            $(".ContentArea").height($(window).height() - $(".OperateButtonArea").height() - 3);
+        }
+
+        function initPage() //initPage
+        {
+            $("#BtnAddOperate").click(function () { ClickAdd(); });
+            $("#BtnUpdateOperate").click(function () { ClickUpdate(); });
+            $("#BtnDeleteOperate").click(function () { ClickDelete(); });
+            $("#BtnPhyDeleteOperate").click(function () { ClickPhyDelete(); });
+            $("#BtnExportOperate").click(function () { ClickExport(); });
+            $("#BtnSearch").click(function () { ClickSearch(); });
+            $("#cbListCheckAll").click(function () { MISSY.setClickCheckAll(this, "nameCbox"); });
+            $("#btnShowSearchBox").click(function () { ClickShowSearchBox(); });//显示搜索box
+            $("#BtnSaveOperate").click(function () { ClickSubmit(); });//保存
+            $("#BtnCancelOperate").click(function () { ClickBack(); });//隐藏添加页面box
+            var pageType = MISSY.getQueryString("pageType");
+            if (pageType == "5") {
+                var PC_CustomerName2 = MISSY.getQueryString("PC_CustomerName");
+                $("#txtRealName").val(PC_CustomerName2);
+            }
+            $("body").keydown(function (event) {
+                var e = document.all ? window.event : event;
+                var keycode = (e.keyCode ? e.keyCode : e.which);
+                if (keycode === 13) {
+                    ClickSearch();
+                }
+            });
+            ChangePage(1, _iPageSize);
+        }
+
+        function ChangePage(paramCurrentPage, paramPageSize) //ChangePage
+        {
+            var colNumber = $("#tblist tr th").length;
+            $.ajax({
+                type: "post",
+                url: "SearchList",
+                data: {
+                    UserName: $("#txtUserNameBySearch").val(),
+                    RealName: $("#txtRealNameBySearch").val(),
+                    IsValid: $("#ddlIsValid").val(),
+                    sortfield: $("#sortfield").val(),
+                    sorttype: $("#sorttype").val(),
+                    NodeId: _iNodeId,
+                    currentPage: paramCurrentPage,
+                    pageSize: paramPageSize
+                },
+                dataType: "json",
+                beforeSend: function () {
+                    $("#tblist tr:gt(0)").remove();
+                    $("#tblist").append("<tr><td align=\"center\" colspan=\"" + colNumber + "\">加载中，请稍等．．．</td></tr>");
+                },
+                success: function (response) {
+                    //var response = JSON.parse(responseText);
+                    if (!response) {
+                        MISSY.iErrorReturnNull();
+                        return;
+                    }
+                    switch (response.ErrorType) //标记
+                    {
+                        case 0: //错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1: //返回正确数据
+                            break;
+                        case 2: //请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3: //未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4: //无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5: //无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                    var buf = new Array();
+                    var responseList = response.Data == null ? new Array() : response.Data;
+                    for (var i = 0; i < responseList.length; i++) {
+                        var model = responseList[i];
+                        buf.push("<tr class=\"view\" data-val=\"" + model.UserID + "\"  >");
+                        //buf.push("<td class=\"select-box\"><input type=\"checkbox\" name=\"nameCbox\" value=\"" + model.UserID + "\" /></td>");
+                        buf.push("<td class=\"index-num\">" + (i + 1) + "</td>");
+                        //buf.push("<td>" + MISSY.formatString(model.UserCode) + "</td>");
+                        buf.push("<td>" + MISSY.formatString(model.UserName) + "</td>");
+                        buf.push("<td>" + MISSY.formatString(model.RealName) + "</td>");
+                        buf.push("<td>" + MISSY.formatDate(model.ServerStart, 4) + "</td>");
+                        buf.push("<td>" + MISSY.formatDate(model.ServerEnd, 4) + "</td>");
+                        buf.push("<td>" + MISSY.formatString(model.ServerTime) + "</td>");
+                        buf.push("<td>" + MISSY.formatDate(model.OperateDate, 4) + "</td>");
+                        buf.push("<td>" + MISSY.formatString(model.Remark) + "</td>");
+                        buf.push("<td>" + MISSY.formatIsValid(model.IsValid) + "</td>");
+                        buf.push("</tr>");
+                    }
+                    if (buf.length <= 0)
+                        buf.push("<tr><td align=\"center\" colspan=\"" + colNumber + "\">暂无数据．</td></tr>");
+                    $("#tblist tr:gt(0)").remove();
+                    $("#tblist").append(buf.join(""));
+                    $(".view").click(function () {
+                        $("#tblist .view").removeClass("selected");
+                        $(this).addClass("selected");
+                        getInitSingle($(this).attr("data-val"));
+                    });
+
+                    var responseTotalRecord = response.TotalRecord;
+                    var responsePageSize = response.PageSize;
+                    var responseCurrentPage = response.CurrentPage;
+                    _iCurrentPage = responseCurrentPage;
+                    var responsePageCount = response.PageCount;
+                    _iPageCount = responsePageCount;
+                    if (responsePageCount > 1) {
+                        layui.use(['laypage'], function () {
+                            var laypage = layui.laypage;
+                            //完整功能
+                            laypage.render({
+                                elem: 'divPagination'
+                                , count: responseTotalRecord
+                                , curr: responseCurrentPage
+                                , limit: _iPageSize
+                                , layout: ['prev', 'page', 'next', 'count']
+                                , jump: function (obj, first) {
+                                    console.log(obj)
+                                    if (first != true) { //一定要加此判断，否则初始时会无限刷新
+                                        ClickPageChange(obj.curr);
+                                    }
+                                }
+                            });
+                        });
+                    } else {
+                        $("#divPagination").html("");
+                    }
+
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    $("#tblist tr:gt(0)").remove();
+                    $("#tblist").append("<tr><td align=\"center\" colspan=\"" + colNumber + "\">系统性错误，请稍后再试.或点击<a href=\"ClickRefresh()\">刷新</a></td></tr>");
+                }
+            });
+        }
+
+        function ClickPageChange(tempGoPage) //PageChange
+        {
+            ChangePage(tempGoPage, _iPageSize);
+        }
+
+        function ClickRefresh() //Refresh
+        {
+            ChangePage(_iCurrentPage, _iPageSize);
+        }
+
+        function ClickSearch() //Serach
+        {
+            ChangePage(1, _iPageSize);
+        }
+
+        function ClickAdd() //Add
+        {
+            inputClear();
+            $("#div_shadeBox").addClass("show");
+            $(".info-item").addClass("add-food");
+            $("#div_detailsBox").show();
+            $("#div_shearchBox").hide();
+            $("#BtnDeleteOperate").hide();
+            $("#BtnPhyDeleteOperate").hide();
+        }
+
+        function ClickUpdate() //Update
+        {
+            var id = "";
+            var checkboxlist = document.getElementsByName("nameCbox");
+            var checkboxLength = 0;
+            for (var j = 0; j < checkboxlist.length; j++) {
+                if (checkboxlist[j].type === "checkbox") {
+                    if (checkboxlist[j].checked) {
+                        checkboxLength++;
+                    }
+                }
+            }
+            if (checkboxLength > 1) {
+                MISSY.iErrorMessage("请只选择一项数据.");
+                return;
+            }
+            for (var i = 0; i < checkboxlist.length; i++) {
+                if (checkboxlist[i].type === "checkbox") {
+                    if (checkboxlist[i].checked) {
+                        id = checkboxlist[i].value;
+                        break;
+                    }
+                }
+            }
+            if (id !== "") {
+                location.href = "Details?ID=" + id + "&NodeId=" + _iEditPageNodeId + "&_r=" + Math.random();
+            } else {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+
+        function ConfirmOperateStatus(paramButtonId, paramIds) //OperateStatus操作状态
+        {
+            var layerLoadIndex;
+            $.ajax({
+                url: "ListOperateStatus",
+                data: { NodeId: _iAddPageNodeId, oButtonId: paramButtonId, ids: paramIds },
+                type: "post",
+                dataType: "json",
+                beforeSend: function () {
+                    layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候");
+                },
+                ContentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    if (!response) {
+                        MISSY.iErrorReturnNull();
+                        return;
+                    }
+                    switch (response.ErrorType) //标记
+                    {
+                        case 0: //错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1: //返回正确数据
+                            MISSY.iSuccessMessage(response.MessageContent, ClickBack);
+                            return;
+                        case 2: //请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3: //未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4: //无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5: //无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                },
+                complete: function (xmlHttpRequest, textStatus) {
+                    MISSY.iHideLoading(layerLoadIndex);
+                }
+            });
+        }
+
+        function ClickDelete() //Delete
+        {
+            var paramIds = $("#txtId").val();
+            if (paramIds !== "") {
+                MISSY.iConfirmMessage("您确定要删除吗？", function () {
+                    ConfirmOperateStatus(3, paramIds);
+                });
+            } else {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+
+        function ClickPhyDelete() //PhyDelete
+        {
+            var paramIds = $("#txtId").val();
+            if (paramIds !== "") {
+                MISSY.iConfirmMessage("请谨慎操作，删除后数据不可恢复，您确定要删除吗？", function () {
+                    var layerLoadIndex;
+                    $.ajax({
+                        url: "ListPhyDel",
+                        data: { NodeId: _iAddPageNodeId, ids: paramIds },
+                        type: "post",
+                        dataType: "json",
+                        beforeSend: function () {
+                            layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候");
+                        },
+                        ContentType: "application/json;charset=utf-8",
+                        success: function (response) {
+                            if (!response) {
+                                MISSY.iErrorReturnNull();
+                                return;
+                            }
+                            switch (response.ErrorType) //标记
+                            {
+                                case 0: //错误
+                                    MISSY.iErrorMessage(response.MessageContent);
+                                    return;
+                                case 1: //返回正确数据
+                                    MISSY.iSuccessMessage(response.MessageContent, ClickBack);
+                                    return;
+                                case 2: //请求地址不正确
+                                    MISSY.iNoFound(response.MessageContent);
+                                    return;
+                                case 3: //未登录
+                                    MISSY.iNoLogin(response.MessageContent);
+                                    return;
+                                case 4: //无页面权限
+                                    MISSY.iNoPageAuth(response.MessageContent);
+                                    return;
+                                case 5: //无操作权限
+                                    MISSY.iNoOperateAuth(response.MessageContent);
+                                    return;
+                                default:
+                                    MISSY.iErrorMessage(response.MessageContent);
+                                    return;
+                            }
+                        },
+                        error: function (xmlHttpRequest, textStatus, errorThrown) {
+                            MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                            MISSY.iSystemAjaxError();
+                        },
+                        complete: function (xmlHttpRequest, textStatus) {
+                            MISSY.iHideLoading(layerLoadIndex);
+                        }
+                    });
+                });
+            } else {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+
+        function ClickExport() //导出
+        {
+            var layerLoadIndex;
+            $.ajax({
+                url: "ExportReport",
+                data: {
+                    NodeId: _iAddPageNodeId,
+                    currentPage: _iCurrentPage,
+                    pageSize: _iPageSize
+                },
+                type: "POST",
+                dataType: "json",
+                async: false,
+                beforeSend: function () {
+                    layerLoadIndex = MISSY.iShowLoading("数据导出中...");
+                },
+                ContentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    if (!response) {
+                        MISSY.iErrorReturnNull();
+                        return;
+                    }
+                    switch (response.ErrorType) //标记
+                    {
+                        case 0: //错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1: //返回正确数据
+                            var elementA = document.createElement("a");
+                            elementA.setAttribute("href", "/Upload/temp/" + response.MessageContent);
+                            elementA.setAttribute("style", "display:none;");
+                            elementA.innerHTML = response.MessageContent;
+                            document.body.appendChild(elementA);
+                            elementA.click();
+                            MISSY.iSuccessMessage("导出成功.");
+                            return;
+                        case 2: //请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3: //未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4: //无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5: //无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                },
+                complete: function (xmlHttpRequest, textStatus) {
+                    MISSY.iHideLoading(layerLoadIndex);
+                }
+            });
+        }
+
+        function ClickTreeExpandNode(treeName, isZk) {
+            $.fn.zTree.getZTreeObj(treeName).expandAll(isZk);
+        }
+
+        function ClickTreeCheckedAll(treeName, isChecked) {
+            $.fn.zTree.getZTreeObj(treeName).checkAllNodes(isChecked);
+        }
+
+        function zTreeCheckedVal(objName, separator) {
+            var zTreeCheckedNodes = $.fn.zTree.getZTreeObj(objName).getCheckedNodes(true);
+            var array = new Array();
+            for (var i = 0; i < zTreeCheckedNodes.length; i++) {
+                array[i] = zTreeCheckedNodes[i].Id;
+            }
+            return array.join(separator);
+        }
+
+        //显示搜索box  普通页面
+        function ClickShowSearchBox() {
+            $("#div_detailsBox").hide();
+            $("#div_shearchBox").show();
+        }
+        //Back
+        function ClickBack() {
+            $("#div_detailsBox").hide();
+            $("#div_shearchBox").show();
+            $("#div_shadeBox").removeClass("show");
+            $(".info-item").removeClass("add-food");
+            ClickRefresh();
+        }
+        function inputClear() {
+            $("#ddlCustomerName").find("option").first().attr("selected", true);
+            $("#ddlCareName").find("option").first().attr("selected", true);
+
+            $("#txtId").val("");
+            $("#txt_RePwd").val("");
+        }
+
+        //姓名模糊
+        function AutoUserName() {
+            $("#ddlCustomerName").autocomplete({
+                type: "post",
+                serviceUrl: "AutoUserName",
+                paramName: "q",
+                params: { limit: 10 },
+                dataType: "json",
+                minChars: 0,
+                transformResult: function (response) {
+                    return {
+                        suggestions: $.map(response, function (dataItem) {
+                            return { value: dataItem.StaffName, data: dataItem };
+                        })
+                    };
+                },
+                onSelect: function (suggestion) {
+                    var model = suggestion.data;
+                    $("#ddlCustomerName").val(suggestion.value);
+                    $("#ddlCustomerID").val(model.ID);
+                }
+            });
+        }
+
+        //点击单条数据 修改时绑定数据方法
+        function getInitSingle(ID) {
+            $("#BtnDeleteOperate").show();
+            $("#BtnPhyDeleteOperate").show();
+            $("#div_detailsBox").show();
+            $("#div_shearchBox").hide();
+            $(".info-item").removeClass("add-food");
+            if (MISSY.isEmpty(ID))
+                return;
+            $.ajax({
+                url: "InitSingle",
+                data: { NodeId: _iAddPageNodeId, ID: ID },
+                type: "POST",
+                dataType: "json",
+                ContentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType)//标记
+                    {
+                        case 0: //错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1: //返回正确数据
+                            break;
+                        case 2: //请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3: //未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4: //无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5: //无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                    var model = response.Entity;
+                    $("#txtId").val(model.UserID);
+                    $("#txtUserCode").val(model.UserCode);
+                    $("#txtUserName").val(model.UserName);
+                    $("#ddlRealName").val(model.RealName);
+                    $("#ddlDept").val(model.DeptID);
+                    $("#ddlRole").val(model.RoleID);
+                    $("#txtRemark").val(model.Remark);
+                    $("#ddlUserType").val(model.UserType);
+                    $("#txtIcCardNO").val(model.IcCardNo);
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                }
+            });
+        }
+
+        function ClickSubmit() //Add、Update
+        {
+            if (!CheckForm()) return;
+            var ID = MISSY.getQueryString("ID");
+            var Password = $("#txt_Pwd").val();
+            if (!MISSY.isEmpty(Password)) {
+                Password = $.md5(Password);
+            }
+            var layerLoadIndex;
+            $.ajax({
+                url: "AddOrUpdate",
+                data: {
+                    NodeId: _iAddPageNodeId,
+                    ID: $("#txtId").val(),
+                    UserCode: $("#txtUserCode").val(),
+                    UserName: $("#txtUserName").val(),
+                    //RealName: $("#txtRealName").val(),
+                    RealName: $("#ddlRealName").val(),
+                    UserType: $("#ddlUserType").val(),
+                    Password: Password,
+                    DeptId: $("#ddlDept").val(),
+                    RoleId: $("#ddlRole").val(),
+                    Remark: $("#txtRemark").val(),
+                    IcCardNO: $("#txtIcCardNO").val()
+                },
+                type: "POST",
+                dataType: "json",
+                ContentType: "application/json;charset=utf-8",
+                beforeSend: function () { layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候..."); },
+                success: function (response) {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType)//标记
+                    {
+                        case 0://错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1://返回正确数据
+                            MISSY.iSuccessMessage(response.MessageContent, ClickBack);
+                            break;
+                        case 2://请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3://未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4://无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5://无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                },
+                complete: function (xmlHttpRequest, textStatus) {
+                    MISSY.iHideLoading(layerLoadIndex);
+                }
+            });
+        }
+
+        function CheckForm()  //CheckForm
+        {
+            var ddlCustomerName = $("#ddlCustomerName").val();
+            if (ddlCustomerName == "请选择") {
+                MISSY.iErrorMessage("老人姓名不能为空！");
+                txtUserName.focus();
+                return false;
+            }
+            var ddlRealName = $("#ddlCareName").val();
+            if (ddlRealName == "请选择") {
+                MISSY.iErrorMessage("家政姓名不能为空！");
+                txtRealName.focus();
+                return false;
+            }
+            return true;
+        }
+    });
+</script>
+<script>
+    var scroll_box = document.getElementById('scroll-box')
+    Ps.initialize(scroll_box);
+  //    初始化自定义滚动条
+</script>

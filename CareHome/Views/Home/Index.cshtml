@@ -1,0 +1,597 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title id="title">@ViewBag.WelfareCentreName</title>
+    <link href="/assets_pc/style/reset.css?v=1.1.3" rel="stylesheet" type="text/css" />
+    <link href="~/assets_pc/style/index.css" rel="stylesheet" type="text/css" />
+    <link href="/assets_pc/style/common.css?v=1.1.3" rel="stylesheet" type="text/css" />
+    <link href="/assets_pc/vendor/perfect-scrollbar/perfect-scrollbar.css?v=1.1.3" rel="stylesheet" />
+
+
+    <script src="/assets_pc/vendor/perfect-scrollbar/perfect-scrollbar.js?v=1.1.3"></script>
+
+    <script src="/assets_pc/js/My97/WdatePicker.js?v=1.1.3" type="text/javascript"></script>
+    <script>
+        (function () {
+            function setFontSize() {
+                document.documentElement.style.fontSize = window.innerWidth / 19.2 + 'px';
+                //根据浏览器窗口大小设置rem大小，设计图中内容宽度为1920px，1920宽度下，1rem=100px，其他宽度等比缩放
+            }
+
+            setFontSize();
+
+            window.onresize = function () {
+                setTimeout(setFontSize(), 200)
+            }
+
+        })();
+    </script>
+
+    <style>
+        /* 智能床垫 */
+        /*.left-menu .menu .menu-link.bed-manage:before {
+            background: url(../images/mindbed.png) no-repeat;
+        }*/
+
+        #div_ModifyPassword {
+            padding-top: 10px;
+        }
+
+        .tbdetail {
+            margin: 0 auto;
+        }
+
+        .input {
+            display: inline-block;
+            z-index: 99;
+            height: 36px;
+            width: 230px;
+            padding-left: 10px;
+            border: 1px solid #8184ff;
+            border-radius: 05px;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .tbdetail .button {
+            display: inline-block;
+            padding: 10px 20px;
+            color: white;
+            background-color: #8184ff;
+            font-size: 16px;
+            border-radius: 05px;
+            text-align: center;
+            margin-top: 15px;
+            margin-left: 40px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!--实现登录及获取电脑IP(2019.04.12)-->
+    <!--BEGIN-->
+    <input type="hidden" id="YlyClientIP" value="127.0.0.1" />
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script>
+        //document.write(returnCitySN["cip"]);  //外网IP
+        var RTCPeerConnection = window.RTCPeerConnection || window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
+
+        if (RTCPeerConnection) (function () {
+            var rtc = new RTCPeerConnection({ iceServers: [] });
+            if (1 || window.mozRTCPeerConnection) {
+                rtc.createDataChannel('', { reliable: false });
+            };
+            rtc.onicecandidate = function (evt) {
+                if (evt.candidate)
+                    grepSDP("a=" + evt.candidate.candidate);
+            };
+            rtc.createOffer(function (offerDesc) {
+                grepSDP(offerDesc.sdp);
+                rtc.setLocalDescription(offerDesc);
+            },
+                function (e) { console.warn("offer failed", e); });
+            var addrs = Object.create(null);
+            addrs["0.0.0.0"] = false;
+
+            function updateDisplay(newAddr) {
+                if (newAddr in addrs) return;
+                else addrs[newAddr] = true;
+                var displayAddrs = Object.keys(addrs).filter(function (k) { return addrs[k]; });
+                for (var i = 0; i < displayAddrs.length; i++) {
+
+                    if (displayAddrs[i].length > 16) {
+                        displayAddrs.splice(i, 1);
+                        i--;
+                    }
+                }
+                console.log(displayAddrs[0]);      //内网ip
+                document.getElementById('YlyClientIP').value = displayAddrs[0].toString();
+            }
+
+            function grepSDP(sdp) {
+                var hosts = [];
+                sdp.split('\r\n').forEach(function (line, index, arr) {
+                    if (~line.indexOf("a=candidate")) {
+                        var parts = line.split(' '),
+                            addr = parts[4],
+                            type = parts[7];
+                        if (type === 'host') updateDisplay(addr);
+                    } else if (~line.indexOf("c=")) {
+                        var parts = line.split(' '),
+                            addr = parts[2];
+                        updateDisplay(addr);
+                    }
+                });
+            }
+        })();
+        else {
+            console.log("请使用主流浏览器：chrome,firefox,opera,safari");
+        }
+    </script>
+    <!--END-->
+
+    <div class="head">
+        <h1 class="title">@ViewBag.WelfareCentreName</h1>
+        <a href="javascript:;" class="btn-select-hosp" style="display:@ViewBag.IsShowUserWelfareCentre"></a>
+
+        <div class="hosp-select-box">
+            @Html.Raw(ViewBag.UserWelfareCentre)
+        </div>
+
+        <div class="time">
+            <span id="div_Date"></span>
+            <span id="div_RunningTime"></span>
+        </div>
+        <a href="javascript:;" class="btn-operation quit" id="BtnQuit">退出系统</a>
+        <a href="javascript:;" class="btn-operation lock" id="BtnShowPassword">修改密码</a>
+        <p class="btn-operation current-user">
+            <a href="../NursingWarn/Index?NodeId=7110&_r=0.8869010737662144" target="mainFrame" @*class="message-num"*@ style="@ViewBag.GetIsRoleByHlyj">@ViewBag.GetHlyjCount</a>
+            欢迎您，@ViewBag.CurrentRealName
+        </p>
+
+        @*<div class="home-search-box">
+                <input type="text" id="CustomerBy" placeholder="老人档案查询" class="home-search-input">
+            </div>*@
+    </div>
+    <div class="content">
+        <div class="left-menu" id="menu-scroll-box" style="padding-bottom:  50px">
+            <!--<h2 class="menu-title">功能菜单</h2>-->
+            <ul class="menus" id="LeftMenu"></ul>
+        </div>
+        <!--<div class="iframe-box">-->
+        <!--<iframe height="100%" width="100%" frameborder="0" src="../Home/Main?NodeId=3" name="mainFrame" id="mainFrame"-->
+        <!--scrolling="No" style="z-index: 1;"></iframe>-->
+        <!--</div>-->
+        <div class="iframe-box">
+            <iframe height="100%" width="100%" frameborder="0" src="../Home/hello" name="mainFrame" id="mainFrame"
+                    scrolling="No" style="z-index: 1;"></iframe>
+        </div>
+
+    </div>
+    @*
+        <div class="holle-box">
+            <div class="avatar-box">
+                <img src="/assets_pc/images/avatar.png">
+            </div>
+            <span class="welcome-text">欢迎您，@ViewBag.CurrentRealName</span>
+        </div>
+    *@
+    @*
+        <div class="alert-box">
+            <a href="javascript:;" class="alert new-alert"></a>
+        </div>
+    *@
+
+    <div id="div_ModifyPassword" style="display: none; width: 400px;height:240px;">
+        <table class="tbdetail">
+            <tr>
+                <td style="text-align:right;">旧密码：</td>
+                <td>
+                    <input type="password" id="OldPassword" class="input" />
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:right;">新密码：</td>
+                <td>
+                    <input type="password" id="Password" class="input" />
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:right;">确认新密码：</td>
+                <td>
+                    <input type="password" class="input" id="ConfirmPassword" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center;">
+                    <input type="button" class="button" value="确定" id="BtnConfirmModifyPassword" />
+                    <input type="button" class="button" value="取消" id="BtnCancelModifyPassword" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>
+<script src="~/assets_pc/script/jquery.min.js"></script>
+<script src="~/assets_pc/vendor/perfect-scrollbar/perfect-scrollbar.js?v=1.1.3"></script>
+<script>
+    //    初始化左侧自定义滚动条
+    // var menu_scroll_box = document.getElementById('')
+    // Ps.initialize(menu_scroll_box);
+    $(function () {
+        var menu_link = $('.menu-link');
+        menu_link.on('click', function () {
+            menu_link.removeClass('active');
+            $(this).toggleClass('active');
+            $(this).parent().children('ul').toggleClass('show')
+        });
+
+        $('.btn-select-hosp').on('click', function () {
+            $('.hosp-select-box').toggleClass('show')
+        });
+    });
+</script>
+<script src="/assets_pc/js/require/require/2.2.0/require.js?v=1.1.3"></script>
+<script src="/assets_pc/js/require/config/1.0.1/require.config.js?v=1.1.3"></script>
+<script type="text/javascript">
+    require(["jquery", "MISSY", "jquery.autocomplete", "jquery.scrollUp", "jquery.md5"], function () {
+        $(function () {
+            initPage();
+        });
+
+        function initPage() {
+            CustomerDrugName();
+            $("#BtnQuit").click(function () {
+                ClickQuit();
+            });
+            $("#BtnShowPassword").click(function () {
+                ClickChangePassword();
+            });
+            $("#BtnConfirmModifyPassword").click(function () {
+                ClickModifyPassword();
+            });
+            $("#BtnCancelModifyPassword").click(function () {
+                ClickCloseModifyPassword();
+            });
+            $(".hosp-link").click(function () { ClickReload($(this).attr("data-val")); });//是否切换养老院
+            InitRunTime();
+            InitScrollUp();
+            AchieveAuthMenuTree();
+            InitGunDongTiao();
+
+        }
+
+        function CustomerDrugName() {
+            $("#CustomerBy").autocomplete({
+                width: 240,
+                type: "post",
+                serviceUrl: "CustomerName",
+                paramName: "q",
+                params: { limit: 10 },
+                dataType: "json",
+                minChars: 0,
+                transformResult: function (response) {
+                    return {
+                        suggestions: $.map(response, function (dataItem) {
+                            return { value: dataItem.CustomerName + "(" + dataItem.CustomerCardID + ")", data: dataItem };
+                        })
+                    };
+                },
+                onSelect: function (suggestion) {
+                    var model = suggestion.data;
+                    $("#mainFrame").attr("src", "../CustomerDetails/Details?id=" + model.ID);
+
+                }
+            });
+
+        }
+        function InitScrollUp() {
+            $.scrollUp({ scrollText: '返回顶部', scrollDistance: 0 });
+        }
+
+        function InitGunDongTiao() {
+            // var scroll_box = document.getElementById('LeftMenu');
+            //var scroll_box = document.getElementById('menu-scroll-box');
+            // Ps.initialize(scroll_box);
+            //    初始化自定义滚动条
+        }
+
+        function InitRunTime() {
+            var objRunTime1 = new MISSY.setRunTime(document.getElementById("div_RunningTime"), false);
+            objRunTime1.StartClock();
+            MISSY.getOutputDate(document.getElementById("div_Date"), 1, true);
+        }
+
+        function AchieveAuthMenuTree() //权限菜单
+        {
+            var YlyClientIP = $("#YlyClientIP").val();
+            $.ajax({
+                url: 'AchieveLeftAuthNode',
+                type: "POST",
+                data: { YlyClientIP: YlyClientIP },
+                dataType: "json",
+                beforeSend: function () {
+                    $("#LeftMenu").html("<div style='width:120px;margin: 0 auto;'><img src='/assets_pc/images/loading.gif' width='32px' height='32px' align='absmiddle' /> 正加载...</div>");
+                },
+                ContentType: "application/json;charset=utf-8",
+                success: function (responseList) {
+                    var buf = [];
+                    var temp_main_url = "";
+                    for (var i = 0; i < responseList.length; i++) {
+                        var modelParent = responseList[i];
+                        if (i == 0) {
+                            if (!MISSY.isEmpty(modelParent.Url)) {
+                                temp_main_url = modelParent.Url ? modelParent.Url + (modelParent.Url.indexOf("?") > 0 ? "&" : "?") + "NodeId=" + modelParent.Id + "&_r=" + Math.random() : "";
+                            }
+                        }
+                        if (modelParent.Pid === 0) {
+                            var childList = new Array();
+                            var tempchildi = 0;
+                            for (var k = 0; k < responseList.length; k++) {
+                                if (responseList[k].Pid === 0) continue;
+                                if (responseList[k].Pid === modelParent.Id) {
+                                    childList[tempchildi] = responseList[k];
+                                    tempchildi++;
+                                }
+                            }
+
+                            buf.push("<li class=\"menu\">");
+                            if (!MISSY.isEmpty(modelParent.Url)) {
+                                buf.push("<a  class=\"menu-link " + modelParent.NodeClassName + "\" href=\"");
+                                buf.push(modelParent.Url ? modelParent.Url + (modelParent.Url.indexOf("?") > 0 ? "&" : "?") + "NodeId=" + modelParent.Id + "&_r=" + Math.random() : "javascript:void(0);");
+                                buf.push("\" target=\"" + modelParent.Target + "\" title='" + modelParent.Name + "'></a>");
+                            } else
+                                buf.push("<a class=\"menu-link " + modelParent.NodeClassName + "\" title=" + modelParent.Name + "></a>");
+                            if (childList.length > 0) {
+                                buf.push("<ul class=\"second-menus\">");
+                                var ord = 0;
+                                for (var j = 0; j < childList.length; j++) {
+                                    if (childList[j].Remark != "查询") {
+                                        buf.push("<li class=\"second-menu\">");
+                                        buf.push("<a class=\"second-menu-link\" href=\"");
+                                        buf.push(childList[j].Url ? childList[j].Url + (childList[j].Url.indexOf("?") > 0 ? "&" : "?") + "NodeId=" + childList[j].Id + "&_r=" + Math.random() : "javascript:void(0);");
+                                        buf.push("\" target=\"" + childList[j].Target + "\">" + childList[j].Name + "</a>");
+                                        buf.push("</li>");
+                                    }
+                                    else {
+                                        if (ord == 0) {
+                                            ord = 1;
+                                            buf.push("<li class=\"part-line\"></li>");   //分隔符
+
+                                            buf.push("<li class=\"second-menu\">");
+                                            buf.push("<a class=\"second-menu-link\" href=\"");
+                                            buf.push(childList[j].Url ? childList[j].Url + (childList[j].Url.indexOf("?") > 0 ? "&" : "?") + "NodeId=" + childList[j].Id + "&_r=" + Math.random() : "javascript:void(0);");
+                                            buf.push("\" target=\"" + childList[j].Target + "\">" + childList[j].Name + "</a>");
+                                            buf.push("</li>");
+                                        }
+                                        else {
+                                            buf.push("<li class=\"second-menu\">");
+                                            buf.push("<a class=\"second-menu-link\" href=\"");
+                                            buf.push(childList[j].Url ? childList[j].Url + (childList[j].Url.indexOf("?") > 0 ? "&" : "?") + "NodeId=" + childList[j].Id + "&_r=" + Math.random() : "javascript:void(0);");
+                                            buf.push("\" target=\"" + childList[j].Target + "\">" + childList[j].Name + "</a>");
+                                            buf.push("</li>");
+                                        }
+                                    }
+                                }
+                                buf.push("</ul>");
+                            }
+                            buf.push("</li>");
+                        }
+                    }
+                    $("#LeftMenu").html(buf.join(""));
+
+                    $("#LeftMenu .menu-link:first").addClass("active");
+                    $("#mainFrame").attr("src", temp_main_url);
+
+                    //$("#LeftMenu .second-menus").removeClass('show');
+                    $("#LeftMenu .menu-link").click(function () {
+                        if ($(this).attr("class") && $(this).attr("class").indexOf("active") >= 0) //当前选中-则还原
+                        {
+                            $(this).removeClass("active"); //移出选中标识
+                            $("#LeftMenu .second-menus").removeClass('show');
+                            //$(this).siblings().slideUp(); //隐藏当前对象
+                        } else //当前没有选中-则选中
+                        {
+                            $("#LeftMenu .menu-link").removeClass("active"); //移出其它选中项标识
+                            $(this).addClass("active"); //添加选中标识
+                            $("#LeftMenu .second-menus").removeClass('show');
+                            $(this).parent().children('ul').addClass('show')
+                            //$("#LeftMenu .second-menus").slideUp(); //隐藏所有
+                            //$(this).siblings().slideDown(); //显示当前对象
+                        }
+                    });
+                    $("#LeftMenu .second-menu-link").click(function () {
+                        $("#LeftMenu .second-menu-link").removeClass("active");
+                        if ($(this).attr("class") && $(this).attr("class").indexOf("active") >= 0) {
+
+                        } else {
+                            $(this).addClass("active"); //添加选中标识
+                        }
+                        $("#LeftMenu .second-menus").removeClass('show');
+                        $(".menu-link").removeClass('active');
+                    });
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    $("#LeftMenu").html("数据加载失败,请稍后再试.");
+                }
+            });
+        }
+
+        function ClickModifyPassword() //操作修改密码
+        {
+            var objOldPassword = document.getElementById("OldPassword");
+            var objPassword = document.getElementById("Password");
+            var objConfirmPassword = document.getElementById("ConfirmPassword");
+            if (!MISSY.isLimitLen(objOldPassword.value, 3, 32)) {
+                MISSY.iErrorMessage("旧密码长度为3-32个字符，请重新输入");
+                objOldPassword.focus();
+                return;
+            }
+            if (!MISSY.isLimitLen(objPassword.value, 3, 32)) {
+                MISSY.iErrorMessage("新密码长度为3-32个字符，请重新输入");
+                objPassword.focus();
+                return;
+            }
+            if (!MISSY.isLimitLen(objConfirmPassword.value, 3, 32)) {
+                MISSY.iErrorMessage("确认密码长度为3-32个字符，请重新输入");
+                objConfirmPassword.focus();
+                return;
+            }
+            if (MISSY.trim(objPassword.value) !== MISSY.trim(objConfirmPassword.value)) {
+                MISSY.iErrorMessage("新密码与确认密码不一致");
+                objConfirmPassword.focus();
+                return;
+            }
+            var layerLoadIndex;
+            $.ajax({
+                url: "ModifyPassword",
+                data: { OldPassword: $.md5(objOldPassword.value), NewPassword: $.md5(objPassword.value) },
+                type: "POST",
+                dataType: "json",
+                beforeSend: function () {
+                    layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候...");
+                },
+                success: function (response) {
+                    if (!response) {
+                        MISSY.iErrorReturnNull();
+                        return;
+                    }
+                    switch (response.ErrorType) //标记
+                    {
+                        case 0: //错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1: //返回正确数据
+                            MISSY.iSuccessMessage(response.MessageContent, ClickCloseModifyPassword);
+                            break;
+                        case 2: //请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3: //未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4: //无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5: //无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                },
+                complete: function (xmlHttpRequest, textStatus) {
+                    MISSY.iHideLoading(layerLoadIndex);
+                }
+            });
+        }
+
+        var layerModifyPasswordIndex = 0;
+
+        function ClickChangePassword() //修改密码
+        {
+            layerModifyPasswordIndex = MISSY.iShowDialog("div_ModifyPassword", "修改密码");
+        }
+
+        function ClickCloseModifyPassword() //取消修改密码
+        {
+            MISSY.iHideDialog(layerModifyPasswordIndex);
+            document.getElementById("OldPassword").value = "";
+            document.getElementById("Password").value = "";
+            document.getElementById("ConfirmPassword").value = "";
+        }
+
+        function ClickQuit() {
+            MISSY.iConfirmMessage('是否安全退出？', function () {
+                var layerLoadIndex;
+                $.ajax({
+                    type: "POST",
+                    url: "QuitLogin",
+                    async: false,
+                    beforeSend: function () {
+                        layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候...");
+                    },
+                    success: function () {
+                        location.href = "../Login/Index";
+                    },
+                    error: function (xmlHttpRequest, textStatus, errorThrown) {
+                        MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                        MISSY.iSystemAjaxError();
+                    },
+                    complete: function (xmlHttpRequest, textStatus) {
+                        MISSY.iHideLoading(layerLoadIndex);
+                    }
+                });
+            });
+        }
+
+        function ClickReload(welfareCentreId) {
+            MISSY.iConfirmMessage('确定切换养老院？', function () {
+                var layerLoadIndex;
+                $.ajax({
+                    type: "POST",
+                    url: "ChangeWelfareCentre",
+                    data: { ID: welfareCentreId },
+                    beforeSend: function () {
+                        layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候...");
+                    },
+                    success: function (response) {
+                        if (!response) {
+                            MISSY.iErrorReturnNull();
+                            return;
+                        }
+                        switch (response.ErrorType) //标记
+                        {
+                            case 0: //错误
+                                MISSY.iErrorMessage(response.MessageContent);
+                                return;
+                            case 1: //返回正确数据
+                                window.location.reload();
+                                break;
+                            case 2: //请求地址不正确
+                                MISSY.iNoFound(response.MessageContent);
+                                return;
+                            case 3: //未登录
+                                MISSY.iNoLogin(response.MessageContent);
+                                return;
+                            case 4: //无页面权限
+                                MISSY.iNoPageAuth(response.MessageContent);
+                                return;
+                            case 5: //无操作权限
+                                MISSY.iNoOperateAuth(response.MessageContent);
+                                return;
+                            default:
+                                MISSY.iErrorMessage(response.MessageContent);
+                                return;
+                        }
+
+                    },
+                    error: function (xmlHttpRequest, textStatus, errorThrown) {
+                        MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                        MISSY.iSystemAjaxError();
+                    },
+                    complete: function (xmlHttpRequest, textStatus) {
+                        MISSY.iHideLoading(layerLoadIndex);
+                    }
+                });
+            });
+
+        }
+    });
+</script>

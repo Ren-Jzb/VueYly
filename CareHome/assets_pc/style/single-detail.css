@@ -1,0 +1,434 @@
+.shadow-box {
+  box-shadow: 0 0 3px #cccccc;
+}
+
+.single-wrapper {
+  padding: 20px;
+}
+
+.detail-item {
+  margin-bottom: 20px;
+}
+
+.detail-item .detail-title {
+  border-bottom: 1px solid #eeeeee;
+  font-size: 18px;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 12px;
+  font-weight: bold;
+}
+
+.detail-item .detail-title .sub-title {
+  font-size: 16px;
+  font-weight: normal;
+  color: #888;
+}
+
+.left-detail {
+  display: inline-block;
+  vertical-align: top;
+  width: 350px;
+  padding-top: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: 0;
+  border-right: 1px solid #eeeeee;
+}
+
+.info-item {
+  display: inline-block;
+  vertical-align: top;
+  width: 33.333%;
+  margin-bottom: 30px;
+}
+
+.info-item.w66 {
+  width: 66.666%;
+}
+
+.info-item .avatar-box {
+  display: inline-block;
+  vertical-align: top;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+
+.info-item .avatar-box img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.info-item .person-name {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 20px;
+  height: 40px;
+  line-height: 40px;
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+.info-item .person-name .detail-link {
+  font-size: 16px;
+  font-weight: normal;
+  color: #8184ff;
+  cursor: pointer;
+}
+
+.info-item .room-detail-text {
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+  height: 24px;
+  line-height: 24px;
+  font-size: 14px;
+  color: #888;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.info-item .sex-info {
+  font-size: 30px;
+  line-height: 40px;
+  color: #f16934;
+  text-align: center;
+}
+
+.info-item .age-info {
+  font-size: 26px;
+  text-align: center;
+  color: #8184ff;
+}
+
+.info-item .birth-info, .info-item .care-level-text {
+  font-size: 14px;
+  text-align: center;
+  color: #888;
+}
+
+.info-item .care-level-num {
+  font-size: 24px;
+  text-align: center;
+  color: #ff0f0f;
+}
+
+.other-info {
+  margin: 15px 0;
+  font-size: 14px;
+}
+
+.other-info .other-info-detail {
+  padding-left: 10px;
+  color: #888;
+}
+
+.right-detail {
+  flex: 1;
+  padding: 15px;
+}
+
+.charge-title {
+  font-size: 16px;
+  color: #333;
+}
+
+.charge-title .charge-detail-link {
+  font-size: 14px;
+  color: #8184ff;
+  text-decoration: underline;
+}
+
+.charge-wrapper {
+  font-size: 0;
+}
+
+.charge-item {
+  display: inline-block;
+  width: 16.2857%;
+  margin-top: 40px;
+  margin-bottom: 50px;
+  padding-bottom: 10px;
+}
+
+.charge-item .charge-info {
+  text-align: center;
+  font-size: 14px;
+  color: #888;
+}
+
+.charge-item .charge-num {
+  font-size: 20px;
+}
+
+.charge-item .charge-num.blue-text {
+  color: #8184ff;
+}
+
+.charge-item .charge-num.yellow-text {
+  color: #f16934;
+}
+
+.charge-item .charge-num.red-text {
+  color: #f00;
+}
+
+.charge-item .charge-num.green-text {
+  color: #3bb276;
+}
+
+.charge-item .charge-date {
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+}
+
+.charge-item .charge-type {
+  padding-top: 40px;
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+}
+
+.charge-detail {
+  font-size: 14px;
+  color: #888;
+}
+
+.chart-box {
+  font-size: 0;
+}
+
+.chart-box .left-chart {
+  display: inline-block;
+  vertical-align: top;
+  width: 35%;
+  padding-right: 10px;
+}
+
+.chart-box .right-chart {
+  display: inline-block;
+  vertical-align: top;
+  width: 65%;
+  padding-left: 10px;
+}
+
+.detail-item-title {
+  font-size: 18px;
+  line-height: 40px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.detail-item-title .new-record-link {
+  display: inline-block;
+  font-weight: normal;
+  float: right;
+  font-size: 16px;
+  height: 34px;
+  line-height: 34px;
+  padding: 0 10px;
+  color: #ffffff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-image: -webkit-linear-gradient(0deg, #fc7175, #8484fb);
+}
+
+.icon-type {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  vertical-align: top;
+}
+
+.icon-type.care {
+  background: url("../images/icon-type-care.png") center center no-repeat;
+  -webkit-background-size: 30px 30px;
+  background-size: 30px 30px;
+}
+
+.icon-type.medical {
+  background: url("../images/icon-type-medical.png") center center no-repeat;
+  -webkit-background-size: 30px 30px;
+  background-size: 30px 30px;
+}
+
+.icon-type.business {
+  background: url("../images/icon-type-business.png") center center no-repeat;
+  -webkit-background-size: 30px 30px;
+  background-size: 30px 30px;
+}
+
+.link-wrapper {
+  padding: 10px;
+}
+
+.link-wrapper .link-item {
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  font-size: 16px;
+  padding: 0 7px;
+  margin: 10px;
+  color: #8184ff;
+  background-color: #f7f8fb;
+  border: 1px solid #8184ff;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+}
+
+.medical-box {
+  display: flex;
+  padding: 20px;
+}
+
+.medical-item {
+  display: inline-block;
+  vertical-align: top;
+  width: 250px;
+  padding: 10px;
+}
+
+.medical-item .medical-title {
+  font-size: 18px;
+  line-height: 2;
+  font-weight: bold;
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 5px;
+}
+
+.medical-item .m-date {
+  font-size: 14px;
+  margin-top: 10px;
+  font-weight: normal;
+  float: right;
+}
+
+.medical-item .illness-item {
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #ff7171;
+  padding: 0 10px;
+  margin: 5px;
+}
+
+.medical-item .medical-menu {
+  display: block;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  color: #ffffff;
+  background-color: #8184ff;
+  margin-bottom: 20px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.m-info-item {
+  font-size: 14px;
+  line-height: 24px;
+  color: #888;
+  position: relative;
+  padding-left: 40px;
+}
+
+.m-info-item .m-info-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.m-split {
+  display: inline-block;
+  width: 48%;
+  vertical-align: top;
+  padding-right: 20px;
+}
+
+.status-text {
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.business-menu-wrapper {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0;
+}
+
+.business-menu-wrapper .business-menu-item {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+  line-height: 100px;
+  font-size: 20px;
+  color: #ffffff;
+  text-align: center;
+  background-color: #dddddd;
+}
+
+.business-box {
+  padding: 20px;
+}
+
+.business-item {
+  padding: 10px;
+}
+
+.nav-box {
+  position: fixed;
+  top: 120px;
+  right: 0;
+}
+
+.nav-box .nav-link {
+  display: block;
+  width: 41px;
+  height: 121px;
+  margin-top: -23px;
+  position: relative;
+}
+
+.nav-box .nav-link:nth-child(1) {
+  z-index: 5;
+}
+
+.nav-box .nav-link:nth-child(2) {
+  z-index: 4;
+}
+
+.nav-box .nav-link:nth-child(3) {
+  z-index: 3;
+}
+
+.nav-box .nav-link:nth-child(4) {
+  z-index: 2;
+}
+
+.nav-box .nav-link.active {
+  z-index: 10;
+}
+
+.nav-box .nav-link .nav-text {
+  position: absolute;
+  width: 20px;
+  z-index: 3;
+  top: 45%;
+  right: 5px;
+  transform: translateY(-50%);
+}

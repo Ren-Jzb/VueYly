@@ -1,0 +1,902 @@
+﻿@{Layout = null;}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title id="title">角色管理 </title>
+    <link href="/assets_pc/style/reset.css?v=1.1.3" rel="stylesheet" type="text/css" />
+    <link href="/assets_pc/style/common.css?v=1.1.3" rel="stylesheet" type="text/css" />
+    <link href="/assets_pc/vendor/perfect-scrollbar/perfect-scrollbar.css?v=1.1.3" rel="stylesheet" />
+
+
+    <script src="/assets_pc/script/setFontSize.js?v=1.1.3"></script>
+    <script src="/assets_pc/vendor/perfect-scrollbar/perfect-scrollbar.js?v=1.1.3"></script>
+
+    <script src="/assets_pc/js/My97/WdatePicker.js?v=1.1.3" type="text/javascript"></script>
+
+</head>
+<body>
+    <div class="main-content">
+        <div class="content-head">
+            <!--OperateButton End-->
+            <div class="title-box">
+                <h2 class="content-title">角色管理</h2>
+            </div>
+            <div id="OperateButton" class="add-btn-box">
+                @Html.Raw(ViewBag.OperateButton)
+                <a href="javascript:;" id="btnShowSearchBox" class="OperateButton btn-filter">筛选</a>
+            </div>
+        </div>
+
+        <div class="content-body" id="scroll-box">
+            <div class="list-box">
+                <div class="table-box">
+                    <table id="tblist" class="tblist">
+                        <tr class="odd">
+                            @*<th class="thcbAll w50">
+                                    <input type="checkbox" align="absmiddle" id="cbListCheckAll" />
+                                </th>*@
+                            <th class="w50" style="width: 60px">序号</th>
+                            <th>角色编号</th>
+                            <th>角色名称</th>
+                            <th>备注</th>
+                            <th class="w200">操作时间</th>
+                            <th class="w100">状态</th>
+                        </tr>
+                    </table>
+                    <div class="pagination_main" id="divPagination">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--details页面 begin-->
+    <div class="detail-content" id="detailsBox">
+        <!--search页面 end-->
+        <div class="search-box clearfix" id="div_shearchBox">
+            <h2 class="detail-title">筛选条件</h2>
+            <div class="select-item"><h3 class="select-title">角色名称:</h3><input type="text" class="select-input" id="txtName"></div>
+            <div class="select-item">
+                <h3 class="select-title">状态:</h3>
+                <select id="ddlIsValid" class="select">
+                    <option value="">==全部==</option>
+                    <option value="1" selected="selected">有效</option>
+                    <option value="0">无效</option>
+                </select>
+            </div>
+            <div class="select-item"><a href="javascript:;" class="search-btn" id="BtnSearch">查询</a></div>
+
+        </div>
+        <!--search页面 end-->
+        <!--detail页面 begin-->
+        <div class="detail-box" id="div_detailsBox" style="display:none">
+            <div class="add-btn-box">
+                @Html.Raw(ViewBag.DetailsOperateButton)
+            </div>
+            <input type="hidden" id="txtId" />
+            <div class="info-item"><h3 class="info-title">角色名称:</h3><input type="text" class="text-input" id="txtRoleName"></div>
+            <div class="info-item"><h3 class="info-title">角色编号:</h3><input type="text" class="text-input" id="txtRoleCode"></div>
+            <div class="info-item"><h3 class="info-title">备注:</h3><input type="text" class="text-input" id="txtRemark"></div>
+
+        </div>
+        <!--detail页面 end-->
+    </div>
+    <!--details页面 end-->
+    <!--新增页面遮罩层-->
+    <div class="shade-box" id="div_shadeBox"></div>
+    <!--新增页面遮罩层 end-->
+    <!--角色节点权限设置 Begin-->
+    <div id="divAuthRoleNode" style="display: none; width: 270px;">
+        <div style="margin-top: 6px;">
+            <span style="font-size: 16px;"><label><input type="checkbox" id="cbAuthRoleNodeTreeAll" style="height: 16px; width: 16px; vertical-align: middle;" /></label><label style="font-size: 16px; cursor: pointer;" for="cbAuthRoleNodeTreeAll">全选</label></span>
+            <span>|</span>
+            <span>
+                <a href="javascript:void(0);" id="btnAuthRoleNodeTreeExpand" style="font-size: 16px;color: #000;letter-spacing: 2px;">折叠</a>
+            </span>
+        </div>
+        <div id="Content_AuthRoleNodeTree" class="ztree" style="height: 320px; overflow: auto;">
+        </div>
+        <div style="text-align: center; margin-top: 10px; padding-bottom: 10px;">
+            <input type="button" class="button" value="确定" id="btnConfirmAuthRoleNode" />
+            &nbsp;&nbsp;<input type="button" class="button" value="取消" id="btnCancelAuthRoleNode" />
+        </div>
+    </div>
+    <!--角色节点权限设置 End-->
+    <!--角色节点按钮权限设置 Begin-->
+    <div id="divAuthRoleNodeButton" style="display: none; width: 270px;">
+        <div style="margin-top: 6px;">
+            <span style="font-size: 16px;"><label><input type="checkbox" id="cbAuthRoleNodeButtonTreeAll" style="height: 16px; width: 16px; vertical-align: middle;" /></label><label style="font-size: 16px; cursor: pointer;" for="cbAuthRoleNodeButtonTreeAll">全选</label></span>
+            <span>|</span>
+            <span>
+                <a href="javascript:void(0);" id="btnAuthRoleNodeButtonTreeExpand" style="font-size: 16px;color: #000;letter-spacing: 2px;">折叠</a>
+            </span>
+        </div>
+        <div id="Content_AuthRoleNodeButtonTree" class="ztree" style="height: 320px; overflow-y: auto;">
+        </div>
+        <div style="text-align: center; margin-top: 10px; padding-bottom: 10px;">
+            <input type="button" class="button" value="确定" id="btnConfirmAuthRoleNodeButton" />
+            &nbsp;&nbsp;<input type="button" class="button" value="取消" id="btnCancelAuthRoleNodeButton" />
+        </div>
+    </div>
+    <!--角色节点按钮权限设置 End-->
+    <!--PageNodeId Begin-->
+    <input type="hidden" id="txtAddPageNodeId" value="@ViewBag.AddPageNodeId" />
+    <input type="hidden" id="txtEditPageNodeId" value="@ViewBag.EditPageNodeId" />
+    <input type="hidden" id="txtDetailPageNodeId" value="@ViewBag.DetailPageNodeId" />
+    <!--PageNodeId End-->
+</body>
+</html>
+<script>
+  var scroll_box = document.getElementById('scroll-box')
+  Ps.initialize(scroll_box);
+  //    初始化自定义滚动条
+</script>
+<script src="/assets_pc/js/require/require/2.2.0/require.js?v=1.1.3"></script>
+<script src="/assets_pc/js/require/config/1.0.1/require.config.js?v=1.1.3"></script>
+<script type="text/javascript">
+    require(["jquery", "MISSY", "jquery.ztree", "jquery.layui"], function () {
+        var _iAddPageNodeId = $("#txtAddPageNodeId").val();
+        var _iEditPageNodeId = $("#txtEditPageNodeId").val();
+        var _iDetailPageNodeId = $("#txtDetailPageNodeId").val();
+        var _iNodeId = MISSY.getQueryString("NodeId");
+        var _iPageSize = 10; //PAGE NUMBER
+        var _iCurrentPage = 1; //CurrentPage
+        var _iPageCount = 5;
+        $(function () {
+            initPage();
+        });
+
+        function initPage() //initPage
+        {
+            $("#BtnAddOperate").click(function () { ClickAdd(); });
+            $("#BtnUpdateOperate").click(function () { ClickUpdate(); });
+            $("#BtnDeleteOperate").click(function () { ClickDelete(); });
+            $("#BtnPhyDeleteOperate").click(function () { ClickPhyDelete(); });
+            $("#BtnEnableOperate").click(function () { ClickEnable(); });
+            $("#BtnDisableOperate").click(function () { ClickDisable(); });
+            $("#BtnSearch").click(function () { ClickSearch(); });
+            $("#cbListCheckAll").click(function () { MISSY.setClickCheckAll(this, "nameCbox"); });
+
+            $("#btnShowSearchBox").click(function () { ClickShowSearchBox(); });//显示搜索box
+            $("#BtnSaveOperate").click(function () { ClickSubmit(); });//保存
+            $("#BtnCancelOperate").click(function () { ClickBack(); });//隐藏添加页面box
+            $("#BtnAuthRoleNodeOperate").click(function () { ClickAuthRoleNode(); });
+            //AuthRoleNode
+            $("#cbAuthRoleNodeTreeAll").click(function () { ClickTreeCheckedAll('Content_AuthRoleNodeTree', this.checked) });
+            $("#btnAuthRoleNodeTreeExpand").attr("data-val", "0");
+            $("#btnAuthRoleNodeTreeExpand").click(function () {
+                var tempVal = $(this).attr("data-val");
+                var isChecked = false;
+                if (tempVal == "1") {
+                    isChecked = true;
+                    $(this).text("折叠");
+                    $(this).attr("data-val", "0");
+                } else {
+                    isChecked = false;
+                    $(this).text("展开");
+                    $(this).attr("data-val", "1");
+                }
+                ClickTreeExpandNode("Content_AuthRoleNodeTree", isChecked);
+            });
+            $("#btnConfirmAuthRoleNode").click(function () { ChangeAuthRoleNode(); });
+            $("#btnCancelAuthRoleNode").click(function () { HiddenAuthRoleNode(); });
+
+            $("#BtnAuthRoleNodeButtonOperate").click(function () { ClickAuthRoleNodeButton(); });
+            //AuthRoleNodeButton
+            $("#cbAuthRoleNodeButtonTreeAll").click(function () { ClickTreeCheckedAll('Content_AuthRoleNodeButtonTree', this.checked) });
+            $("#btnAuthRoleNodeButtonTreeExpand").attr("data-val", "0");
+            $("#btnAuthRoleNodeButtonTreeExpand").click(function () {
+                var tempVal = $(this).attr("data-val");
+                var isChecked = false;
+                if (tempVal == "1") {
+                    isChecked = true;
+                    $(this).text("折叠");
+                    $(this).attr("data-val", "0");
+               } else {
+                    isChecked = false;
+                    $(this).text("展开");
+                    $(this).attr("data-val", "1");
+                }
+                ClickTreeExpandNode("Content_AuthRoleNodeButtonTree", isChecked);
+            });
+            $("#btnConfirmAuthRoleNodeButton").click(function () { ChangeAuthRoleNodeButton(); });
+            $("#btnCancelAuthRoleNodeButton").click(function () { HiddenAuthRoleNodeButton(); });
+            $("body").keydown(function (event) {
+                var e = document.all ? window.event : event;
+                var keycode = (e.keyCode ? e.keyCode : e.which);
+                if (keycode === 13) {
+                    ClickSearch();
+                }
+            });
+            ChangePage(1, _iPageSize);
+        }
+
+        function ChangePage(paramCurrentPage, paramPageSize) //ChangePage
+        {
+            var colNumber = $("#tblist tr th").length;
+            $.ajax({
+                type: "post",
+                url: "SearchList",
+                data: {
+                    Name: $("#txtName").val(),
+                    IsValid: $("#ddlIsValid").val(),
+                    NodeId: _iNodeId,
+                    currentPage: paramCurrentPage,
+                    pageSize: paramPageSize
+                },
+                dataType: "json",
+                beforeSend: function () {
+                    $("#tblist tr:gt(0)").remove();
+                    $("#tblist").append("<tr><td align=\"center\" colspan=\"" + colNumber + "\">加载中，请稍等．．．</td></tr>");
+                },
+                success: function (response) {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType)//标记
+                    {
+                        case 0://错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1://返回正确数据
+                            break;
+                        case 2://请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3://未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4://无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5://无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                    var buf = new Array();
+                    var responseList = response.Data == null ? new Array() : response.Data;
+                    for (var i = 0; i < responseList.length; i++) {
+                        var model = responseList[i];
+                        buf.push("<tr class=\"view\" data-val=\"" + model.RoleID + "\"  >");
+                        //buf.push("<td><input type=\"checkbox\" name=\"nameCbox\" value=\"" + model.RoleID + "\" /></td>");
+                        buf.push("<td>" + (i + 1) + "</td>");
+                        buf.push("<td>" + (MISSY.isEmpty(model.RoleCode) == true ? "" : model.RoleCode)+ "</td>");
+                        buf.push("<td>" + model.RoleName + "</td>");
+                        buf.push("<td>" + (MISSY.isEmpty(model.Remark) == true ? "" : model.Remark) + "</td>");
+                        buf.push("<td>" + MISSY.formatDate(model.OperateDate, 4) + "</td>");
+                        buf.push("<td>" + MISSY.formatIsValid(model.IsValid) + "</td>");
+                        //buf.push("<td><a href=\"Details?NodeId=" + _iDetailPageNodeId + "&ID=" + model.RoleID + "\">查看</a></td>");
+                        buf.push("</tr>");
+                    }
+                    if (buf.length <= 0)
+                        buf.push("<tr><td align=\"center\" colspan=\"" + colNumber + "\">暂无数据．</td></tr>");
+                    $("#tblist tr:gt(0)").remove();
+                    $("#tblist").append(buf.join(""));
+                    $(".view").click(function ()
+                    {
+                        $("#tblist .view").removeClass("selected");
+                        $(this).addClass("selected");
+                        getInitSingle($(this).attr("data-val"));
+                    });
+
+                    var responseTotalRecord = response.TotalRecord;
+                    var responsePageSize = response.PageSize;
+                    var responseCurrentPage = response.CurrentPage;
+                    _iCurrentPage = responseCurrentPage;
+                    var responsePageCount = response.PageCount;
+                    _iPageCount = responsePageCount;
+                    if (responsePageCount > 1)
+                    {
+                        layui.use(['laypage'], function ()
+                        {
+                            var laypage = layui.laypage;
+                            //完整功能
+                            laypage.render({
+                                elem: 'divPagination'
+                                , count: responseTotalRecord
+                                , curr: responseCurrentPage
+                                , limit: _iPageSize
+                                , layout: ['prev', 'page', 'next', 'count']
+                                , jump: function (obj, first)
+                                {
+                                    console.log(obj)
+                                    if (first != true)
+                                    { //一定要加此判断，否则初始时会无限刷新
+                                        ClickPageChange(obj.curr);
+                                    }
+                                }
+                            });
+                        });
+                    } else
+                    {
+                        $("#divPagination").html("");
+                    }
+
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    $("#tblist tr:gt(0)").remove();
+                    $("#tblist").append("<tr><td align=\"center\" colspan=\"" + colNumber + "\">系统性错误，请稍后再试.或点击<a href=\"ClickRefresh()\">刷新</a></td></tr>");
+                }
+            });
+        }
+        function ClickPageChange(tempGoPage) //PageChange
+        {
+            ChangePage(tempGoPage, _iPageSize);
+        }
+
+
+        function ClickRefresh()//Refresh
+        {
+            ChangePage(_iCurrentPage, _iPageSize);
+        }
+
+        function ClickSearch()//Serach
+        {
+            ChangePage(1, _iPageSize);
+        }
+
+        function ClickAdd() //Add
+        {
+            inputClear();
+            $("#div_shadeBox").addClass("show");
+            $("#div_detailsBox").show();
+            $("#div_shearchBox").hide();
+            $("#BtnDeleteOperate").hide();
+            $("#BtnPhyDeleteOperate").hide();
+        }
+
+        function ClickUpdate() //Update
+        {
+            var id = "";
+            var checkboxlist = document.getElementsByName("nameCbox");
+            var checkboxLength = 0;
+            for (var j = 0; j < checkboxlist.length; j++) {
+                if (checkboxlist[j].type === "checkbox") {
+                    if (checkboxlist[j].checked) {
+                        checkboxLength++;
+                    }
+                }
+            }
+            if (checkboxLength > 1) {
+                MISSY.iErrorMessage("请只选择一项数据.");
+                return;
+            }
+            for (var i = 0; i < checkboxlist.length; i++) {
+                if (checkboxlist[i].type === "checkbox") {
+                    if (checkboxlist[i].checked) {
+                        id = checkboxlist[i].value;
+                        break;
+                    }
+                }
+            }
+            if (id !== "")
+                location.href = "Details?NodeId=" + _iEditPageNodeId + "&ID=" + id + "&_r=" + Math.random();
+            else
+                MISSY.iErrorMessage("请选择一项数据.");
+        }
+
+        function ConfirmOperateStatus(paramButtonId, paramIds)//OperateStatus操作状态
+        {
+            var layerLoadIndex;
+            $.ajax({
+                url: "ListOperateStatus",
+                data: { NodeId: _iAddPageNodeId, oButtonId: paramButtonId, ids: paramIds },
+                type: "post",
+                dataType: "json",
+                beforeSend: function () { layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候"); },
+                ContentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType)//标记
+                    {
+                        case 0://错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1://返回正确数据
+                            MISSY.iSuccessMessage(response.MessageContent, ClickBack);
+                            return;
+                        case 2://请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3://未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4://无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5://无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                },
+                complete: function (xmlHttpRequest, textStatus) {
+                    MISSY.iHideLoading(layerLoadIndex);
+                }
+            });
+        }
+
+        function ClickDisable()//Disable禁用
+        {
+            var paramIds = $("#txtId").val();
+            if (paramIds !== "") {
+                MISSY.iConfirmMessage("您确定要禁用吗？", function () { ConfirmOperateStatus(22, paramIds); });
+            } else {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+
+        function ClickEnable()//Enable启用
+        {
+            var paramIds = $("#txtId").val();
+            if (paramIds !== "") {
+                MISSY.iConfirmMessage("您确定要启用吗？", function () { ConfirmOperateStatus(21, paramIds); });
+            } else {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+
+        function ClickDelete() //Delete
+        {
+            var paramIds = $("#txtId").val();
+            if (paramIds !== "") {
+                MISSY.iConfirmMessage("您确定要删除吗？", function () { ConfirmOperateStatus(3, paramIds); });
+            } else {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+        function ClickPhyDelete() //PhyDelete
+        {
+            var paramIds = $("#txtId").val();
+            if (paramIds !== "") {
+                MISSY.iConfirmMessage("请谨慎操作，删除后数据不可恢复，您确定要删除吗？", function () {
+                    var layerLoadIndex;
+                    $.ajax({
+                        url: "ListPhyDel",
+                        data: { NodeId: _iAddPageNodeId, ids: paramIds },
+                        type: "post",
+                        dataType: "json",
+                        beforeSend: function () { layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候"); },
+                        ContentType: "application/json;charset=utf-8",
+                        success: function (response) {
+                            if (!response) {
+                                MISSY.iErrorReturnNull();
+                                return;
+                            }
+                            switch (response.ErrorType) //标记
+                            {
+                                case 0: //错误
+                                    MISSY.iErrorMessage(response.MessageContent);
+                                    return;
+                                case 1: //返回正确数据
+                                    MISSY.iSuccessMessage(response.MessageContent, ClickBack);
+                                    return;
+                                case 2: //请求地址不正确
+                                    MISSY.iNoFound(response.MessageContent);
+                                    return;
+                                case 3: //未登录
+                                    MISSY.iNoLogin(response.MessageContent);
+                                    return;
+                                case 4: //无页面权限
+                                    MISSY.iNoPageAuth(response.MessageContent);
+                                    return;
+                                case 5: //无操作权限
+                                    MISSY.iNoOperateAuth(response.MessageContent);
+                                    return;
+                                default:
+                                    MISSY.iErrorMessage(response.MessageContent);
+                                    return;
+                            }
+                        },
+                        error: function (xmlHttpRequest, textStatus, errorThrown) {
+                            MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                            MISSY.iSystemAjaxError();
+                        },
+                        complete: function (xmlHttpRequest, textStatus) {
+                            MISSY.iHideLoading(layerLoadIndex);
+                        }
+                    });
+                });
+            } else {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+
+
+        var _roleID = "";
+        function ClickAuthRoleNode() //节点权限设置
+        {
+            var id = $("#txtId").val();
+            if (id.length > 0) {
+                MISSY.iShowDialog("divAuthRoleNode", "节点权限设置");
+                _roleID = id;
+                $.ajax({
+                    url: 'TreeAuthRoleNode',
+                    data: { NodeId: _iAddPageNodeId, roleID: _roleID },
+                    type: "POST",
+                    dataType: "json",
+                    async: false,
+                    beforeSend: function() {
+                        $("#Content_AuthRoleNodeTree").html("<div style='width:120px;margin: 0 auto;'><img src='/assets_pc/images/loading.gif' width='32px' height='32px' align='absmiddle' /> 正在加载．．．</div>");
+                    },
+                    ContentType: "application/json;charset=utf-8",
+                    success: function (responseList) {
+                        var treeSetting = {
+                            view: {
+                                showIcon: false
+                            },
+                            check: {
+                                enable: true
+                            },
+                            data: {
+                                key: {
+                                    checked: "Checked",
+                                    name: "Name",
+                                    title: ""
+                                },
+                                simpleData: {
+                                    enable: true,
+                                    idKey: "Id",
+                                    pIdKey: "Pid",
+                                    rootPId: 0
+                                }
+                            }
+                        };
+                        $.fn.zTree.init($("#Content_AuthRoleNodeTree"), treeSetting, responseList);
+                    },
+                    error: function (xmlHttpRequest, textStatus, errorThrown) {
+                        MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                        $("#Content_AuthRoleNodeTree").html("数据加载失败,请稍后再试！");
+                    }
+                });
+            } else {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+
+        function HiddenAuthRoleNode() {
+            MISSY.iHideDialog();
+            _roleID = "";
+        }
+
+        function ChangeAuthRoleNode() //改变角色节点（页面）权限
+        {
+            if (_roleID === "") {
+                MISSY.iErrorMessage("不能为空！");
+                return;
+            }
+            var roleId = _roleID;
+            var menuIds = zTreeCheckedVal("Content_AuthRoleNodeTree", ",");
+            var layerLoadIndex;
+            $.ajax({
+                type: "POST",
+                url: 'ChangeAuthRoleNode',
+                data: { NodeId: _iAddPageNodeId, roleId: roleId, menuIds: menuIds },
+                dataType: "json",
+                beforeSend: function () { layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候"); },
+                ContentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType)//标记
+                    {
+                        case 0://错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1://返回正确数据
+                            MISSY.iSuccessMessage(response.MessageContent, HiddenAuthRoleNode);
+                            return;
+                        case 2://请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3://未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4://无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5://无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                },
+                complete: function (xmlHttpRequest, textStatus) {
+                    MISSY.iHideLoading(layerLoadIndex);
+                }
+            });
+            _roleID = "";
+        }
+
+        function ClickAuthRoleNodeButton() //节点按钮权限设置
+        {
+            var id = $("#txtId").val();
+            if (id.length > 0) {
+                MISSY.iShowDialog("divAuthRoleNodeButton", "节点按钮权限设置");
+                _roleID = id;
+                $.ajax({
+                    url: 'TreeAuthRoleNodeButton',
+                    data: { NodeId: _iAddPageNodeId, roleID: _roleID },
+                    type: "POST",
+                    dataType: "json",
+                    beforeSend: function() {
+                        $("#Content_AuthRoleNodeButtonTree").html("<div style='width:120px;margin: 0 auto;'><img src='/assets_pc/images/loading.gif' width='32px' height='32px' align='absmiddle' /> 正在加载．．．</div>");
+                    },
+                    ContentType: "application/json;charset=utf-8",
+                    success: function (responseList) {
+                        var treeSetting = {
+                            view: {
+                                showIcon: false
+                            },
+                            check: {
+                                enable: true
+                            },
+                            data: {
+                                key: {
+                                    checked: "Checked",
+                                    name: "Name",
+                                    title: ""
+                                },
+                                simpleData: {
+                                    enable: true,
+                                    idKey: "Id",
+                                    pIdKey: "Pid",
+                                    rootPId: 0
+                                }
+                            }
+                        };
+                        $.fn.zTree.init($("#Content_AuthRoleNodeButtonTree"), treeSetting, responseList);
+
+                    },
+                    error: function (xmlHttpRequest, textStatus, errorThrown) {
+                        MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                        $("#Content_AuthRoleNodeButtonTree").html("数据加载失败,请稍后再试！");
+                    }
+                });
+            } else {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+
+        function HiddenAuthRoleNodeButton() {
+            MISSY.iHideDialog();
+            _roleID = "";
+        }
+
+        function ChangeAuthRoleNodeButton() //改变角色菜单权限
+        {
+            if (_roleID === "") {
+                MISSY.iErrorMessage("不能为空！");
+                return;
+            }
+            var roleId = _roleID;
+            var menuIds = zTreeCheckedVal("Content_AuthRoleNodeButtonTree", ",");
+            var layerLoadIndex;
+            $.ajax({
+                type: "POST",
+                url: 'ChangeAuthRoleNodeButton',
+                data: { NodeId: _iAddPageNodeId, roleId: roleId, menuIds: menuIds },
+                dataType: "json",
+                beforeSend: function () { layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候"); },
+                ContentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType)//标记
+                    {
+                        case 0://错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1://返回正确数据
+                            MISSY.iSuccessMessage(response.MessageContent, HiddenAuthRoleNodeButton);
+                            return;
+                        case 2://请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3://未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4://无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5://无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                },
+                complete: function (xmlHttpRequest, textStatus) {
+                    MISSY.iHideLoading(layerLoadIndex);
+                }
+            });
+            _roleID = "";
+        }
+
+        function ClickTreeExpandNode(treeName, isZk) {
+            $.fn.zTree.getZTreeObj(treeName).expandAll(isZk);
+        }
+        function ClickTreeCheckedAll(treeName, isChecked) {
+            $.fn.zTree.getZTreeObj(treeName).checkAllNodes(isChecked);
+        }
+        function zTreeCheckedVal(objName, separator) {
+            var zTreeCheckedNodes = $.fn.zTree.getZTreeObj(objName).getCheckedNodes(true);
+            var array = new Array();
+            for (var i = 0; i < zTreeCheckedNodes.length; i++) {
+                array[i] = zTreeCheckedNodes[i].Id;
+            }
+            return array.join(separator);
+        }
+
+        //显示搜索box  普通页面
+        function ClickShowSearchBox()
+        {
+            $("#div_detailsBox").hide();
+            $("#div_shearchBox").show();
+        }
+        //Back
+        function ClickBack()
+        {
+            $("#div_detailsBox").hide();
+            $("#div_shearchBox").show();
+            $("#div_shadeBox").removeClass("show");
+            ClickRefresh();
+        }
+
+        function inputClear()
+        {
+            $("#txtId").val("");
+            $("#txtRoleCode").val("");
+            $("#txtRoleName").val("");
+            $("#txtRemark").val("");
+        }
+        //点击单条数据 修改时绑定数据方法
+        function getInitSingle(ID)
+        {
+            $("#BtnDeleteOperate").show();
+            $("#BtnPhyDeleteOperate").show();
+            $("#div_detailsBox").show();
+            $("#div_shearchBox").hide();
+            if (MISSY.isEmpty(ID))
+                return;
+            $.ajax({
+                url: "InitSingle",
+                data: { NodeId: _iAddPageNodeId, ID: ID },
+                type: "POST",
+                dataType: "json",
+                ContentType: "application/json;charset=utf-8",
+                success: function (response)
+                {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType)//标记
+                    {
+                        case 0://错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1://返回正确数据
+                            break;
+                        case 2://请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3://未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4://无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5://无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                    var model = response.Entity;
+                    $("#txtId").val(model.RoleID);
+                    $("#txtRoleCode").val(model.RoleCode);
+                    $("#txtRoleName").val(model.RoleName);
+                    $("#txtRemark").val(model.Remark);
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown)
+                {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                }
+            });
+        }
+
+        function ClickSubmit() //Add、Update
+        {
+            if (!CheckForm()) return;
+            var ID = MISSY.getQueryString("ID");
+            var layerLoadIndex;
+            $.ajax({
+                url: "AddOrUpdate",
+                data: {
+                    NodeId: _iAddPageNodeId,
+                    ID: $("#txtId").val(),
+                    RoleCode: $("#txtRoleCode").val(),
+                    RoleName: $("#txtRoleName").val(),
+                    Remark: $("#txtRemark").val()
+                },
+                type: "POST",
+                dataType: "json",
+                ContentType: "application/json;charset=utf-8",
+                beforeSend: function () { layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候..."); },
+                success: function (response)
+                {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType)//标记
+                    {
+                        case 0://错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1://返回正确数据
+                            MISSY.iSuccessMessage(response.MessageContent, ClickBack);
+                            break;
+                        case 2://请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3://未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4://无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5://无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown)
+                {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                },
+                complete: function (xmlHttpRequest, textStatus)
+                {
+                    MISSY.iHideLoading(layerLoadIndex);
+                }
+            });
+        }
+
+        function CheckForm() //CheckForm
+        {
+            var txtRoleName = document.getElementById("txtRoleName");
+            if (MISSY.isEmpty(txtRoleName.value))
+            {
+                MISSY.iErrorMessage("角色名称不能为空！");
+                txtRoleName.value = "";
+                txtRoleName.focus();
+                return false;
+            }
+            return true;
+        }
+    });
+</script>

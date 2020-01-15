@@ -1,0 +1,123 @@
+@charset "UTF-8";
+.tab-link-box {
+  /* tab栏链接容器 */
+  width: 30px;
+  height: 100%;
+  position: absolute;
+  right: 10px;
+  border: 1px solid #f8f8f8;
+}
+
+.tab-link-box .tab-link {
+  /* tab栏链接 */
+  display: block;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  padding: 10px 5px;
+  color: #666;
+  background: no-repeat;
+  background-image: url(../images/tab-link.png);
+  -webkit-background-size: 100% 100%;
+  background-size: 100% 100%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.tab-link-box .tab-link.active {
+  /*  激活状态 */
+  color: #ffffff;
+  padding: 20px 5px;
+  z-index: 5;
+  background-image: url("../images/tab-link-active.png");
+  height: auto;
+}
+
+.data-title {
+  font-size: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid #cccccc;
+}
+
+.tab-content {
+  /* tab栏内容 */
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.detail-box .info-item.long-title {
+  padding-left: 200px;
+}
+
+.detail-box .info-item.half-item {
+  width: 100%;
+}
+
+.detail-box .info-item.middle-item {
+  /* 两列的 */
+  width: 66.6666%;
+}
+
+.detail-box .info-item.large-item {
+  /* 一列的 */
+  width: 100%;
+}
+
+.detail-box .info-item .other-input {
+  display: inline-block;
+  vertical-align: top;
+  height: 24px;
+  font-size: 14px;
+  width: 80px;
+  padding-left: 5px;
+  background-color: #f2f6ff;
+  border: 01px solid #e3edff;
+  position: relative;
+  margin-right: 10px;
+}
+
+.medical-box {
+  border: 1px solid #eeeeee;
+  background-color: #fbfbfb;
+  text-align: center;
+  padding: 0 15px;
+}
+
+.medical-box .inside-medical {
+  font-size: 14px;
+  color: #aaaaaa;
+  line-height: 30px;
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 2px;
+}
+
+.price-input-box {
+  display: inline-block;
+  width: 50%;
+  padding-left: 40px;
+  position: relative;
+}
+
+.price-input-box .price-tag {
+  display: inline-block;
+  font-size: 14px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  padding: 0 5px;
+}
+
+.price-input-box .price-tag:after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 16px;
+  background-color: #dddddd;
+  position: absolute;
+  right: 0;
+  top: 4px;
+}

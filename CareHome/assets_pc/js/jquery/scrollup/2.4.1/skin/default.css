@@ -1,0 +1,2 @@
+#scrollUp {overflow: hidden;display: block;text-indent: -300px;width: 35px;height: 37px;padding: 9px;margin-bottom: -1px;text-align: center;text-decoration: none;background: #fff;color: #fff;background-image: url("default/default.png");bottom: 42px;right: 0px;}
+#scrollUp:hover {text-indent: 0;line-height: 18px;color: #000;background: #fff!important;background-image: none;}

@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>学生列表</title>
+    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+    <style type="text/css">
+        .bg {
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="demo">
+        <label>姓名</label> <input type="text" id="name" v-model="name" />
+        <label>性别</label> <input type="text" id="gender" v-model="gender" />
+        <label>年龄</label> <input type="text" id="age" v-model="age" />
+        <label>爱好</label> <input type="text" id="hobby" v-model="hobby" />
+        <button v-on:click="AddStuList(item.id)">添加</button>
+        <table border="1" cellspacing="5" cellpadding="5" v-show="stuList.length">
+            <caption><h3>学生列表</h3></caption>
+            <tr>
+                <th>状态</th>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>年龄</th>
+                <th>爱好</th>
+                <th colspan="2">操作</th>
+            </tr>
+            <tr v-for="(item,id) in stuList" :key="id" :class="{bg:item.isChecked}">
+                <td><input type="checkbox" name="" id="" value="" v-model="item.isChecked" /></td>
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.gender}}</td>
+                <td>{{item.age}}</td>
+                <td>{{item.hobby}}</td>
+                <td><button v-on:click="upStuList(item)">修改</button></td>
+                <td><button v-on:click="delStuList(item)">删除</button></td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        var list = [
+            {
+                id: 1,
+                name: "张三",
+                gender: "男",
+                age: "12",
+                hobby: "睡觉",
+                isChecked: false
+            },
+            {
+                id: 2,
+                name: "李四",
+                gender: "女",
+                age: "34",
+                hobby: "篮球",
+                isChecked: true
+            }
+        ];
+
+        var vm = new Vue({
+            el: "#demo",
+            data: {
+                stuList: list,
+                id: "",
+                name: "",
+                gender: "",
+                age: "",
+                hobby: "",
+                isChecked: ""
+            },
+            methods: {
+                AddStuList: function (i) {
+                    var stu = {
+                        id: stuList.lenth + 1,
+                        name: this.name,
+                        gender: this.gender,
+                        age: this.age,
+                        hobby: this.hobby,
+                        isChecked: this.isChecked
+                    }
+                    //逻辑处理
+                    if (i) {
+                        alert(i);
+                        this.stuList.splice(i)
+                        this.stuList.push(stu);
+                    }
+                    else {
+                        this.stuList.push(stu);
+                    }
+                    this.name = '';
+                    this.gender = '';
+                    this.age = '';
+                    this.hobby = '';
+                    isChecked = '';
+                },
+                delStuList: function (item) {
+                    var index = this.stuList.indexOf(item);
+                    this.stuList.splice(index);
+                    this.name = '';
+                    this.gender = '';
+                    this.age = '';
+                    this.hobby = '';
+                    isChecked = '';
+                },
+                upStuList: function (item) {
+                    var index = this.stuList.indexOf(item);
+                    var t = this.stuList.slice(index, index + 1);
+                    this.name = t[0].name;
+                    this.gender = t[0].gender;
+                    this.age = t[0].age;
+                    this.hobby = t[0].hobby;
+                    isChecked = t[0].isChecked;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

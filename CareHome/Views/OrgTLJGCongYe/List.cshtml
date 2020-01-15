@@ -1,0 +1,844 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title id="title">员工管理</title>
+    <link href="/assets_pc/style/reset.css?v=1.1.3" rel="stylesheet" type="text/css" />
+    <link href="/assets_pc/style/common.css?v=1.1.3" rel="stylesheet" type="text/css" />
+    <link href="/assets_pc/vendor/perfect-scrollbar/perfect-scrollbar.css?v=1.1.3" rel="stylesheet" />
+
+    <script src="/assets_pc/script/setFontSize.js?v=1.1.3"></script>
+    <script src="/assets_pc/vendor/perfect-scrollbar/perfect-scrollbar.js?v=1.1.3"></script>
+    <script src="/assets_pc/js/My97/WdatePicker.js?v=1.1.3" type="text/javascript"></script>
+
+
+</head>
+
+<body>
+    <!--list页面 begin-->
+    <div class="main-content">
+
+        <div class="content-head">
+            <!--OperateButton End-->
+            <div class="title-box">
+                <h2 class="content-title">员工管理</h2>
+            </div>
+            <div id="OperateButton" class="add-btn-box">
+                @Html.Raw(ViewBag.OperateButton)
+
+                <a href="javascript:;" id="btnShowSearchBox" class="OperateButton btn-filter">筛选</a>
+                <a href="javascript:;" id="btnSortOperate" class="OperateButton btn-sort-down" data-val="desc">排序</a>
+            </div>
+        </div>
+
+        <!--List Content Begin-->
+        <div class="content-body" id="scroll-box">
+            <div class="list-box">
+
+                <!--其他界面有green-line的都去掉-->
+                <!--<div class="green-line"></div>-->
+
+                <div class="table-box">
+                    <table id="tblist">
+                        <tr>
+                            @*<th style="width: 40px ;"><input type="checkbox" align="absmiddle" id="cbListCheckAll" /></th>*@
+                            <th class="w50">序号</th>
+                            <th>从业人员姓名</th>
+                            <th>性别</th>
+                            <th>聘用方式</th>
+                            <th>工种</th>
+                            <th>操作时间</th>
+                        </tr>
+                    </table>
+                    <div class="pagination_main" id="divPagination">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--List Content End-->
+    </div>
+    <!--list页面 end-->
+    <!--detail页面 begin-->
+    <div class="detail-content">
+        <!--search页面 end-->
+        <div class="search-box clearfix" id="div_shearchBox">
+            <h2 class="detail-title">筛选条件</h2>
+            <div class="select-item"><h3 class="select-title">人员姓名:</h3><input type="text" class="select-input" id="txtName"></div>
+
+            <div class="select-item"><a href="javascript:;" class="search-btn" id="BtnSearch">查询</a></div>
+
+        </div>
+        <!--search页面 end-->
+        <!--detail页面 begin-->
+        <div class="detail-box" id="div_detailsBox" style="display:none">
+            <div class="add-btn-box">
+                @Html.Raw(ViewBag.DetailsOperateButton)
+            </div>
+            <input type="hidden" id="txtId" />
+            <div class="info-item small-item">
+                <h3 class="info-title">姓名:</h3><input class="text-input" id="txtStaffName" type="text">
+            </div>
+            <div class="info-item small-item">
+                <h3 class="info-title">所属机构:</h3>
+                <select id="ddlOrgID" class="select">
+                    @Html.Raw(ViewBag.GetOrgID)
+                </select>
+            </div>
+            <div class="info-item small-item">
+                <h3 class="info-title">联系电话:</h3><input class="text-input" id="txtPhone" type="text">
+            </div>
+            <div class="info-item small-item">
+                <h3 class="info-title">性别:</h3>
+                <div class="regular-check-item"><input type="radio" name="rbStaffGender" value="1" class="regular-radio-input" id="StaffGender1"><label for="StaffGender1" class="regular-radio-label">男</label></div>
+                <div class="regular-check-item"><input type="radio" name="rbStaffGender" value="0" class="regular-radio-input" id="StaffGender2"><label for="StaffGender2" class="regular-radio-label">女</label></div>
+            </div>
+            <div class="info-item small-item">
+                <h3 class="info-title">聘用方式:</h3>
+                <div class="regular-check-item"><input type="radio" name="rbEmployType" value="事业合同" class="regular-radio-input" id="EmployType1"><label for="EmployType1" class="regular-radio-label">事业合同</label></div>
+                <div class="regular-check-item"><input type="radio" name="rbEmployType" value="人事代理" class="regular-radio-input" id="EmployType2"><label for="EmployType2" class="regular-radio-label">人事代理</label></div>
+                <div class="regular-check-item"><input type="radio" name="rbEmployType" value="劳动合同" class="regular-radio-input" id="EmployType3"><label for="EmployType3" class="regular-radio-label">劳动合同</label></div>
+                <div class="regular-check-item"><input type="radio" name="rbEmployType" value="其他" class="regular-radio-input" id="EmployType4"><label for="EmployType4" class="regular-radio-label">其他</label></div>
+                <div class="regular-check-item"><input type="radio" name="rbEmployType" value="劳务派遣（劳务合同）" class="regular-radio-input" id="EmployType5"><label for="EmployType5" class="regular-radio-label">劳务派遣（劳务合同）</label></div>
+                <div class="regular-check-item"><input type="radio" name="rbEmployType" value="退休聘用（劳务合同）" class="regular-radio-input" id="EmployType6"><label for="EmployType6" class="regular-radio-label">退休聘用（劳务合同）</label></div>
+            </div>
+            <div class="info-item small-item">
+                <h3 class="info-title">缴金情况:</h3>
+                <div class="regular-check-item"><input type="radio" name="rbSocialSecurity" value="缴金" class="regular-radio-input" id="SocialSecurity1"><label for="SocialSecurity1" class="regular-radio-label">缴金</label></div>
+                <div class="regular-check-item"><input type="radio" name="rbSocialSecurity" value="非缴金" class="regular-radio-input" id="SocialSecurity2"><label for="SocialSecurity2" class="regular-radio-label">非缴金</label></div>
+            </div>
+            <div class="info-item small-item">
+                <h3 class="info-title">工种:</h3>
+                <div class="regular-check-item"><input type="radio" name="rbProfession" value="管理人员" class="regular-radio-input" id="Profession1" checked><label for="Profession1" class="regular-radio-label">管理人员</label></div>
+                <div class="regular-check-item"><input type="radio" name="rbProfession" value="专技人员" class="regular-radio-input" id="Profession2"><label for="Profession2" class="regular-radio-label">专技人员</label></div>
+                <div class="regular-check-item"><input type="radio" name="rbProfession" value="护理人员" class="regular-radio-input" id="Profession3"><label for="Profession3" class="regular-radio-label">护理人员</label></div>
+                <div class="regular-check-item"><input type="radio" name="rbProfession" value="后勤人员" class="regular-radio-input" id="Profession4"><label for="Profession4" class="regular-radio-label">后勤人员</label></div>
+            </div>
+            <!--专技人员-->
+            <div class="info-item large-item" id="ProfessionByZJ" style="display:none;">
+                <h3 class="info-title"></h3>
+                <div>
+                    <p class="info-desc">卫技：</p>
+                    <div class="regular-check-item"><input type="radio" name="rbWeiJi" value="医生" class="regular-radio-input" id="WeiJi1"><label for="WeiJi1" class="regular-radio-label">医生</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbWeiJi" value="护士" class="regular-radio-input" id="WeiJi2"><label for="WeiJi2" class="regular-radio-label">护士</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbWeiJi" value="康复师" class="regular-radio-input" id="WeiJi3"><label for="WeiJi3" class="regular-radio-label">康复师</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbWeiJi" value="营养师" class="regular-radio-input" id="WeiJi4"><label for="WeiJi4" class="regular-radio-label">营养师</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbWeiJi" value="药剂师" class="regular-radio-input" id="WeiJi5"><label for="WeiJi5" class="regular-radio-label">药剂师</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbWeiJi" value="心理咨询师" class="regular-radio-input" id="WeiJi6"><label for="WeiJi6" class="regular-radio-label">心理咨询师</label></div>
+                </div>
+                <div>
+                    <p class="info-desc">社工：</p>
+                    <div class="regular-check-item"><input type="radio" name="rbSheGong" value="初级职称" class="regular-radio-input" id="SheGong1"><label for="SheGong1" class="regular-radio-label">初级职称</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbSheGong" value="中级职称" class="regular-radio-input" id="SheGong2"><label for="SheGong2" class="regular-radio-label">中级职称</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbSheGong" value="管理岗位" class="regular-radio-input" id="SheGong3"><label for="SheGong3" class="regular-radio-label">管理岗位</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbSheGong" value="专职社工岗位" class="regular-radio-input" id="SheGong4"><label for="SheGong4" class="regular-radio-label">专职社工岗位</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbSheGong" value="其他岗位" class="regular-radio-input" id="SheGong5"><label for="SheGong5" class="regular-radio-label">其他岗位</label></div>
+                </div>
+                <div>
+                    <p class="info-desc">其他：</p>
+                    <div class="regular-check-item"><input type="radio" name="rbQiTa" value="会计" class="regular-radio-input" id="QiTa1"><label for="QiTa1" class="regular-radio-label">会计</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbQiTa" value="网管等" class="regular-radio-input" id="QiTa2"><label for="QiTa2" class="regular-radio-label">网管等</label></div>
+                </div>
+
+            </div>
+
+            <!--护理人员-->
+            <div class="info-item large-item" id="ProfessionByHL" style="display:none;">
+                <h3 class="info-title"></h3>
+                <div>
+                    <p class="info-desc">持证：</p>
+                    <div class="regular-check-item"><input type="radio" name="rbHgChiZheng" value="技师及以上" class="regular-radio-input" id="HgChiZheng1"><label for="HgChiZheng1" class="regular-radio-label">技师及以上</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbHgChiZheng" value="高级（三级）" class="regular-radio-input" id="HgChiZheng2"><label for="HgChiZheng2" class="regular-radio-label">高级（三级）</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbHgChiZheng" value="中级（四级）" class="regular-radio-input" id="HgChiZheng3"><label for="HgChiZheng3" class="regular-radio-label">中级（四级）</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbHgChiZheng" value="初级（五级）" class="regular-radio-input" id="HgChiZheng4"><label for="HgChiZheng4" class="regular-radio-label">初级（五级）</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbHgChiZheng" value="上岗证" class="regular-radio-input" id="HgChiZheng5"><label for="HgChiZheng5" class="regular-radio-label">上岗证</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbHgChiZheng" value="其他（护工、家政等）" class="regular-radio-input" id="HgChiZheng6"><label for="HgChiZheng6" class="regular-radio-label">其他（护工、家政等）</label></div>
+                </div>
+                <div>
+                    <p class="info-desc">学历：</p>
+                    <div class="regular-check-item"><input type="radio" name="rbHgXueLi" value="大专及以上" class="regular-radio-input" id="HgXueLi1"><label for="HgXueLi1" class="regular-radio-label">大专及以上</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbHgXueLi" value="高中或中专" class="regular-radio-input" id="HgXueLi2"><label for="HgXueLi2" class="regular-radio-label">高中或中专</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbHgXueLi" value="初中（初职）" class="regular-radio-input" id="HgXueLi3"><label for="HgXueLi3" class="regular-radio-label">初中（初职）</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbHgXueLi" value="小学及以下" class="regular-radio-input" id="HgXueLi4"><label for="HgXueLi4" class="regular-radio-label">小学及以下</label></div>
+                </div>
+                <div>
+                    <p class="info-desc">年龄：</p>
+                    <div class="regular-check-item"><input type="radio" name="rbHgNianLing" value="35周岁以下" class="regular-radio-input" id="HgNianLing1"><label for="HgNianLing1" class="regular-radio-label">35周岁以下</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbHgNianLing" value="35至49周岁" class="regular-radio-input" id="HgNianLing2"><label for="HgNianLing2" class="regular-radio-label">35至49周岁</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbHgNianLing" value="50周岁以上" class="regular-radio-input" id="HgNianLing3"><label for="HgNianLing3" class="regular-radio-label">50周岁以上</label></div>
+                </div>
+                <div>
+                    <p class="info-desc">入职年限：</p>
+                    <div class="regular-check-item"><input type="radio" name="rbHgRuZhiNian" value="满1年不足3年" class="regular-radio-input" id="HgRuZhiNian1"><label for="HgRuZhiNian1" class="regular-radio-label">满1年不足3年</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbHgRuZhiNian" value="满3年不足5年" class="regular-radio-input" id="HgRuZhiNian2"><label for="HgRuZhiNian2" class="regular-radio-label">满3年不足5年</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbHgRuZhiNian" value="5年以上" class="regular-radio-input" id="HgRuZhiNian3"><label for="HgRuZhiNian3" class="regular-radio-label">5年以上</label></div>
+                </div>
+                <div>
+                    <p class="info-desc">户籍：</p>
+                    <div class="regular-check-item"><input type="radio" name="rbHgHuJi" value="本市" class="regular-radio-input" id="HgHuJi1"><label for="HgHuJi1" class="regular-radio-label">本市</label></div>
+                    <div class="regular-check-item"><input type="radio" name="rbHgHuJi" value="外省市" class="regular-radio-input" id="HgHuJi2"><label for="HgHuJi2" class="regular-radio-label">外省市</label></div>
+                </div>
+
+            </div>
+
+            <!--后勤人员-->
+            <div class="info-item large-item" id="ProfessionByHH" style="display:none;">
+                <h3 class="info-title"></h3>
+                <div class="regular-check-item"><input type="radio" name="rbHouQin" value="厨师" class="regular-radio-input" id="HouQin1"><label for="HouQin1" class="regular-radio-label">厨师</label></div>
+                <div class="regular-check-item"><input type="radio" name="rbHouQin" value="电工水暖工" class="regular-radio-input" id="HouQin2"><label for="HouQin2" class="regular-radio-label">电工水暖工</label></div>
+            </div>
+
+            <div class="info-item large-item">
+                <h3 class="info-title">住址:</h3><input class="text-input" id="txtAddress" type="text">
+            </div>
+        </div>
+        <!--detail页面 end-->
+    </div>
+    <!--detail页面 end-->
+    <!--新增页面遮罩层-->
+    <div class="shade-box" id="div_shadeBox"></div>
+
+    <!--Content End-->
+    <input type="hidden" id="sorttype" value="desc" />
+    <input type="hidden" id="sortfield" value="OperateDate" />
+    <input type="hidden" id="txtIsValid" value="1" />
+    <!--PageNodeId Begin-->
+    <input type="hidden" id="txtAddPageNodeId" value="@ViewBag.AddPageNodeId" />
+    <input type="hidden" id="txtEditPageNodeId" value="@ViewBag.EditPageNodeId" />
+    <input type="hidden" id="txtDetailPageNodeId" value="@ViewBag.DetailPageNodeId" />
+    <!--PageNodeId End-->
+</body>
+</html>
+
+<script>
+    var scroll_box = document.getElementById('scroll-box');
+    Ps.initialize(scroll_box);
+    //    初始化自定义滚动条
+
+</script>
+<script src="/assets_pc/js/require/require/2.2.0/require.js?v=1.1.3"></script>
+<script src="/assets_pc/js/require/config/1.0.1/require.config.js?v=1.1.3"></script>
+<script type="text/javascript">
+    require(["jquery", "MISSY", "jquery.layui"], function ()
+    {
+        var _iAddPageNodeId = $("#txtAddPageNodeId").val();
+        var _iEditPageNodeId = $("#txtEditPageNodeId").val();
+        var _iDetailPageNodeId = $("#txtDetailPageNodeId").val();
+        var _iNodeId = MISSY.getQueryString("NodeId");
+        var _iPageSize = 10; //PAGE NUMBER
+        var _iCurrentPage = 1; //CurrentPage
+        var _iPageCount = 5;
+        $(function ()
+        {
+            InitResizeWindow();
+            initPage();
+        });
+        function InitResizeWindow()
+        {
+            ResizeWindowContentArea();
+            $(window).resize(function () { ResizeWindowContentArea(); });
+        }
+        function ResizeWindowContentArea()
+        {
+            $(".ContentArea").height($(window).height() - $(".OperateButtonArea").height() - 3);
+        }
+
+
+        function initPage() //initPage
+        {
+            $("#BtnAddOperate").click(function () { ClickAdd(); });//添加
+            $("#BtnUpdateOperate").click(function () { ClickUpdate(); });//更新，暂时无用
+            $("#BtnDeleteOperate").click(function () { ClickDelete(); });//删除
+            $("#BtnPhyDeleteOperate").click(function () { ClickPhyDelete(); });//彻底删除
+            $("#btnShowSearchBox").click(function () { ClickShowSearchBox(); });//显示搜索框
+            $("#BtnSearch").click(function () { ClickSearch(); });//搜索
+            $("#BtnSaveOperate").click(function () { ClickSubmit(); });//保存
+            $("#BtnCancelOperate").click(function () { ClickBack(); });//返回，取消
+            $("#btnSortOperate").click(function () { ClickSort(); });//排序
+            $("#cbListCheckAll").click(function () { MISSY.setClickCheckAll(this, "nameCbox"); });
+            $('input:radio[name="rbProfession"]').change(function ()
+            {
+                var profession = $("input[name='rbProfession']:checked").val();
+                if (profession == "管理人员")
+                {
+                    $("#ProfessionByZJ").hide();
+                    $("#ProfessionByHL").hide();
+                    $("#ProfessionByHH").hide();
+                } else if (profession == "专技人员")
+                {
+                    $("#ProfessionByZJ").show();
+                    $("#ProfessionByHL").hide();
+                    $("#ProfessionByHH").hide();
+                } else if (profession == "护理人员")
+                {
+                    $("#ProfessionByZJ").hide();
+                    $("#ProfessionByHL").show();
+                    $("#ProfessionByHH").hide();
+                } else if (profession == "后勤人员")
+                {
+                    $("#ProfessionByZJ").hide();
+                    $("#ProfessionByHL").hide();
+                    $("#ProfessionByHH").show();
+                } else
+                {
+                    $("#ProfessionByZJ").hide();
+                    $("#ProfessionByHL").hide();
+                    $("#ProfessionByHH").hide();
+                }
+
+            });
+            ChangePage(1, _iPageSize);
+        }
+
+        function ChangePage(paramCurrentPage, paramPageSize) //ChangePage
+        {
+            var colNumber = $("#tblist tr th").length;
+            $.ajax({
+                type: "post",
+                url: "SearchList",
+                data: {
+                    id: MISSY.getQueryString("ID"),
+                    Name: $("#txtName").val(),
+                    sortfield: $("#sortfield").val(),
+                    sorttype: $("#sorttype").val(),
+                    NodeId: _iNodeId,
+                    currentPage: paramCurrentPage,
+                    pageSize: paramPageSize
+                },
+                dataType: "json",
+                beforeSend: function ()
+                {
+                    $("#tblist tr:gt(0)").remove();
+                    $("#tblist").append("<tr><td align=\"center\" colspan=\"" + colNumber + "\">加载中，请稍等．．．</td></tr>");
+                },
+                success: function (response)
+                {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType)//标记
+                    {
+                        case 0://错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1://返回正确数据
+                            break;
+                        case 2://请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3://未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4://无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5://无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                    var buf = new Array();
+                    var responseList = response.Data == null ? new Array() : response.Data;
+                    for (var i = 0; i < responseList.length; i++)
+                    {
+                        var model = responseList[i];
+                        buf.push("<tr class=\"" + (i % 2 === 0 ? "trbg2" : "trbg1") + " view\" data-val=\"" + model.ID + "\"  >");
+                        //buf.push("<td><input type=\"checkbox\" name=\"nameCbox\" value=\"" + model.ID + "\" /></td>");
+                        buf.push("<td>" + (i + 1) + "</td>");
+                        buf.push("<td><a>" + model.StaffName + "</a></td>");
+                        buf.push("<td>" + (model.StaffGender == 1 ? "男" : "女") + "</td>");
+                        buf.push("<td>" + model.EmployType + "</td>");
+                        buf.push("<td>" + model.Profession + "</td>");
+                        buf.push("<td>" + MISSY.formatDate(model.OperateDate, 4) + "</td>");
+                        buf.push("</tr>");
+                    }
+                    if (buf.length <= 0)
+                        buf.push("<tr><td align=\"center\" colspan=\"" + colNumber + "\">暂无数据．</td></tr>");
+                    $("#tblist tr:gt(0)").remove();
+                    $("#tblist").append(buf.join(""));
+                    $(".view").click(function ()
+                    {
+                        $("#tblist .view").removeClass("selected");
+                        $(this).addClass("selected");
+                        getInitSingle($(this).attr("data-val"));
+                    });
+                    var responseTotalRecord = response.TotalRecord;
+                    var responsePageSize = response.PageSize;
+                    var responseCurrentPage = response.CurrentPage;
+                    _iCurrentPage = responseCurrentPage;
+                    var responsePageCount = response.PageCount;
+                    _iPageCount = responsePageCount;
+                    if (responsePageCount > 1)
+                    {
+                        layui.use(['laypage'], function ()
+                        {
+                            var laypage = layui.laypage;
+                            //完整功能
+                            laypage.render({
+                                elem: 'divPagination'
+                                , count: responseTotalRecord
+                                , curr: responseCurrentPage
+                                , limit: _iPageSize
+                                , layout: ['prev', 'page', 'next', 'count']
+                                , jump: function (obj, first)
+                                {
+                                    console.log(obj)
+                                    if (first != true)
+                                    { //一定要加此判断，否则初始时会无限刷新
+                                        ClickPageChange(obj.curr);
+                                    }
+                                }
+                            });
+                        });
+                    } else
+                    {
+                        $("#divPagination").html("");
+                    }
+
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown)
+                {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    $("#tblist tr:gt(0)").remove();
+                    $("#tblist").append("<tr><td align=\"center\" colspan=\"" + colNumber + "\">系统性错误，请稍后再试.或点击<a href=\"ClickRefresh()\">刷新</a></td></tr>");
+                }
+            });
+        }
+
+        function ClickPageChange(tempGoPage) //PageChange
+        {
+            ChangePage(tempGoPage, _iPageSize);
+        }
+
+        function ClickRefresh()//Refresh
+        {
+            ChangePage(_iCurrentPage, _iPageSize);
+        }
+        function ClickSearch()//Serach
+        {
+            ChangePage(1, _iPageSize);
+        }
+        function ClickAdd() //Add
+        {
+            inputClear();
+            $("#div_shadeBox").addClass("show");
+            $("#div_detailsBox").show();
+            $("#div_shearchBox").hide();
+            $("#BtnDeleteOperate").hide();
+            $("#BtnPhyDeleteOperate").hide();
+            $(".info-item").addClass("add-food");
+            //location.href = "Details?NodeId=" + _iAddPageNodeId + "&_r=" + Math.random();
+        }
+
+        function ClickUpdate() //Update
+        {
+            var id = "";
+            var checkboxlist = document.getElementsByName("nameCbox");
+            var checkboxLength = 0;
+            for (var j = 0; j < checkboxlist.length; j++)
+            {
+                if (checkboxlist[j].type === "checkbox")
+                {
+                    if (checkboxlist[j].checked)
+                    {
+                        checkboxLength++;
+                    }
+                }
+            }
+            if (checkboxLength > 1)
+            {
+                MISSY.iErrorMessage("请只选择一项数据.");
+                return;
+            }
+            for (var i = 0; i < checkboxlist.length; i++)
+            {
+                if (checkboxlist[i].type === "checkbox")
+                {
+                    if (checkboxlist[i].checked)
+                    {
+                        id = checkboxlist[i].value;
+                        break;
+                    }
+                }
+            }
+            if (id !== "")
+                location.href = "Details?NodeId=" + _iEditPageNodeId + "&ID=" + id + "&_r=" + Math.random();
+            else
+                MISSY.iErrorMessage("请选择一项数据.");
+        }
+
+        function ClickDelete() //Delete
+        {
+            var paramIds = $("#txtId").val();
+            if (paramIds !== "")
+            {
+                MISSY.iConfirmMessage("您确定要删除吗？", function () { ConfirmOperateStatus(3, paramIds); });
+            } else
+            {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+
+        function ConfirmOperateStatus(paramButtonId, paramIds)//OperateStatus操作状态
+        {
+            var layerLoadIndex;
+            $.ajax({
+                url: "ListOperateStatus",
+                data: { NodeId: _iNodeId, oButtonId: paramButtonId, ids: paramIds },
+                type: "post",
+                dataType: "json",
+                beforeSend: function () { layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候"); },
+                ContentType: "application/json;charset=utf-8",
+                success: function (response)
+                {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType)//标记
+                    {
+                        case 0://错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1://返回正确数据
+                            MISSY.iSuccessMessage(response.MessageContent, ClickRefresh);
+                            return;
+                        case 2://请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3://未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4://无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5://无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown)
+                {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                },
+                complete: function (xmlHttpRequest, textStatus)
+                {
+                    MISSY.iHideLoading(layerLoadIndex);
+                }
+            });
+        }
+
+
+        function ClickPhyDelete() //PhyDelete
+        {
+            //var paramIds = MISSY.getCheckboxCheckedVal("nameCbox", ",");
+            var paramIds = $("#txtId").val();
+            if (paramIds !== "")
+            {
+                MISSY.iConfirmMessage("请谨慎操作，删除后数据不可恢复，您确定要删除吗？", function ()
+                {
+                    var layerLoadIndex;
+                    $.ajax({
+                        url: "ListPhyDel",
+                        data: { NodeId: _iNodeId, ids: paramIds },
+                        type: "post",
+                        dataType: "json",
+                        beforeSend: function () { layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候"); },
+                        ContentType: "application/json;charset=utf-8",
+                        success: function (response)
+                        {
+                            if (!response)
+                            {
+                                MISSY.iErrorReturnNull();
+                                return;
+                            }
+                            switch (response.ErrorType) //标记
+                            {
+                                case 0: //错误
+                                    MISSY.iErrorMessage(response.MessageContent);
+                                    return;
+                                case 1: //返回正确数据
+                                    MISSY.iSuccessMessage(response.MessageContent, ClickRefresh);
+                                    return;
+                                case 2: //请求地址不正确
+                                    MISSY.iNoFound(response.MessageContent);
+                                    return;
+                                case 3: //未登录
+                                    MISSY.iNoLogin(response.MessageContent);
+                                    return;
+                                case 4: //无页面权限
+                                    MISSY.iNoPageAuth(response.MessageContent);
+                                    return;
+                                case 5: //无操作权限
+                                    MISSY.iNoOperateAuth(response.MessageContent);
+                                    return;
+                                default:
+                                    MISSY.iErrorMessage(response.MessageContent);
+                                    return;
+                            }
+                        },
+                        error: function (xmlHttpRequest, textStatus, errorThrown)
+                        {
+                            MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                            MISSY.iSystemAjaxError();
+                        },
+                        complete: function (xmlHttpRequest, textStatus)
+                        {
+                            MISSY.iHideLoading(layerLoadIndex);
+                        }
+                    });
+                });
+            } else
+            {
+                MISSY.iErrorMessage("请选择一项数据.");
+            }
+        }
+
+
+        //显示搜索box
+        function ClickShowSearchBox()
+        {
+            $("#div_detailsBox").hide();
+            $("#div_shearchBox").show();
+            $("#div_shadeBox").removeClass("show");
+        }
+
+        //详情页 js
+        function getInitSingle(ID)
+        {
+            $("#div_detailsBox").show();
+            $("#div_shearchBox").hide();
+            $(".info-item").removeClass("add-food");
+            if (MISSY.isEmpty(ID))
+                return;
+            $.ajax({
+                url: "InitSingle",
+                data: { NodeId: _iNodeId, ID: ID },
+                type: "POST",
+                dataType: "json",
+                ContentType: "application/json;charset=utf-8",
+                success: function (response)
+                {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType)//标记
+                    {
+                        case 0: //错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1: //返回正确数据
+                            break;
+                        case 2: //请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3: //未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4: //无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5: //无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                    var model = response.Entity;
+                    $("#txtId").val(model.ID);
+                    $("#ddlOrgID").val(model.WelfareId);
+                    $("#txtStaffName").val(model.StaffName);
+                    MISSY.setRadioChecked("rbStaffGender", model.StaffGender);
+                    MISSY.setRadioChecked("rbEmployType", model.EmployType);
+                    MISSY.setRadioChecked("rbSocialSecurity", model.SocialSecurity);
+                    var profession = model.Profession;
+                    MISSY.setRadioChecked("rbProfession", profession);
+                    if (profession == "管理人员")
+                    {
+                        $("#ProfessionByZJ").hide();
+                        $("#ProfessionByHL").hide();
+                        $("#ProfessionByHH").hide();
+                    } else if (profession == "专技人员")
+                    {
+                        $("#ProfessionByZJ").show();
+                        $("#ProfessionByHL").hide();
+                        $("#ProfessionByHH").hide();
+                    } else if (profession == "护理人员")
+                    {
+                        $("#ProfessionByZJ").hide();
+                        $("#ProfessionByHL").show();
+                        $("#ProfessionByHH").hide();
+                    } else if (profession == "后勤人员")
+                    {
+                        $("#ProfessionByZJ").hide();
+                        $("#ProfessionByHL").hide();
+                        $("#ProfessionByHH").show();
+                    } else
+                    {
+                        $("#ProfessionByZJ").hide();
+                        $("#ProfessionByHL").hide();
+                        $("#ProfessionByHH").hide();
+                    }
+                    MISSY.setRadioChecked("rbWeiJi", model.WeiJi);
+                    MISSY.setRadioChecked("rbSheGong", model.SheGong);
+                    MISSY.setRadioChecked("rbQiTa", model.QiTa);
+                    MISSY.setRadioChecked("rbHgChiZheng", model.HgChiZheng);
+                    MISSY.setRadioChecked("rbHgXueLi", model.HgXueLi);
+                    MISSY.setRadioChecked("rbHgNianLing", model.HgNianLing);
+                    MISSY.setRadioChecked("rbHgRuZhiNian", model.HgRuZhiNian);
+                    MISSY.setRadioChecked("rbHgHuJi", model.HgHuJi);
+                    MISSY.setRadioChecked("rbHouQin", model.HouQin);
+
+                    $("#txtPhone").val(model.Phone);
+                    $("#txtAddress").val(model.AddressPlace);
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown)
+                {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                }
+            });
+        }
+
+        function ClickBack() //Back
+        {
+            $("#div_detailsBox").hide();
+            $("#div_shearchBox").show();
+            $("#div_shadeBox").removeClass("show");
+            ClickRefresh();
+        }
+
+        function ClickSubmit() //Add、Update
+        {
+            if (!CheckForm()) return;
+            var layerLoadIndex;
+            $.ajax({
+                url: "AddOrUpdate",
+                data: {
+                    NodeId: _iNodeId,
+                    ID: $("#txtId").val(),
+                    ddlOrgID: $("#ddlOrgID").val(),
+                    Phone: $("#txtPhone").val(),
+                    AddressPlace: $("#txtAddress").val(),
+                    StaffName: $("#txtStaffName").val(),
+                    StaffGender: $("input[name='rbStaffGender']:checked").val(),
+                    EmployType: $("input[name='rbEmployType']:checked").val(),
+                    SocialSecurity: $("input[name='rbSocialSecurity']:checked").val(),
+                    Profession: $("input[name='rbProfession']:checked").val(),
+                    WeiJi: $("input[name='rbWeiJi']:checked").val(),
+                    SheGong: $("input[name='rbSheGong']:checked").val(),
+                    QiTa: $("input[name='rbQiTa']:checked").val(),
+                    HgChiZheng: $("input[name='rbHgChiZheng']:checked").val(),
+                    HgXueLi: $("input[name='rbHgXueLi']:checked").val(),
+                    HgNianLing: $("input[name='rbHgNianLing']:checked").val(),
+                    HgRuZhiNian: $("input[name='rbHgRuZhiNian']:checked").val(),
+                    HgHuJi: $("input[name='rbHgHuJi']:checked").val(),
+                    HouQin: $("input[name='rbHouQin']:checked").val()
+                },
+                type: "POST",
+                dataType: "json",
+                ContentType: "application/json;charset=utf-8",
+                beforeSend: function () { layerLoadIndex = MISSY.iShowLoading("正在执行中，请稍候..."); },
+                success: function (response)
+                {
+                    if (!response) { MISSY.iErrorReturnNull(); return; }
+                    switch (response.ErrorType)//标记
+                    {
+                        case 0://错误
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                        case 1://返回正确数据
+                            MISSY.iSuccessMessage(response.MessageContent, ClickBack);
+                            break;
+                        case 2://请求地址不正确
+                            MISSY.iNoFound(response.MessageContent);
+                            return;
+                        case 3://未登录
+                            MISSY.iNoLogin(response.MessageContent);
+                            return;
+                        case 4://无页面权限
+                            MISSY.iNoPageAuth(response.MessageContent);
+                            return;
+                        case 5://无操作权限
+                            MISSY.iNoOperateAuth(response.MessageContent);
+                            return;
+                        default:
+                            MISSY.iErrorMessage(response.MessageContent);
+                            return;
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown)
+                {
+                    MISSY.iDebugAjaxError(xmlHttpRequest, textStatus, errorThrown);
+                    MISSY.iSystemAjaxError();
+                },
+                complete: function (xmlHttpRequest, textStatus)
+                {
+                    MISSY.iHideLoading(layerLoadIndex);
+                }
+            });
+        }
+
+        function CheckForm()  //CheckForm
+        {
+            return true;
+        }
+
+        function inputClear()
+        {
+            $("#txtId").val("");
+            $("#txtStaffName").val("");
+            $("input[name='rbStaffGender']").attr("checked", false);
+            $("input[name='rbEmployType']").attr("checked", false);
+            $("input[name='rbSocialSecurity']").attr("checked", false);
+            $("input[name='rbProfession']").attr("checked", false);
+            $("input[name='rbWeiJi']").attr("checked", false);
+            $("input[name='rbSheGong']").attr("checked", false);
+            $("input[name='rbQiTa']").attr("checked", false);
+            $("input[name='rbHgChiZheng']").attr("checked", false);
+            $("input[name='rbHgXueLi']").attr("checked", false);
+            $("input[name='rbHgNianLing']").attr("checked", false);
+            $("input[name='rbHgRuZhiNian']").attr("checked", false);
+            $("input[name='rbHgHuJi']").attr("checked", false);
+            $("input[name='rbHouQin']").attr("checked", false);
+            $("#txtPhone").val("");
+            $("#txtAddress").val("");
+            $("#ProfessionByZJ").hide();
+            $("#ProfessionByHL").hide();
+            $("#ProfessionByHH").hide();
+        }
+        //点击排序
+        function ClickSort()
+        {
+            var sorttype = $("#btnSortOperate").attr("data-val");
+            if (sorttype == "desc")
+            {
+                sorttype = "asc";
+                $("#btnSortOperate").removeClass("btn-sort-down");
+                $("#btnSortOperate").addClass("btn-sort-up");
+            } else
+            {
+                sorttype = "desc";
+                $("#btnSortOperate").removeClass("btn-sort-up");
+                $("#btnSortOperate").addClass("btn-sort-down");
+            }
+            $("#btnSortOperate").attr("data-val", sorttype);
+            $("#sorttype").val(sorttype);
+            ChangePage(1, _iPageSize);
+        }
+
+
+    });
+</script>
+

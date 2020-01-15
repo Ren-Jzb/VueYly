@@ -1,0 +1,312 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta name="robots" content="all">
+<meta name="author" content="">
+<meta name="Copyright" content="">
+<title></title>
+<style>
+html{font-size: 62.5%;font-family: Tahoma;}
+html, body, div, span, h1, h2, h3, h4, h5, h6, p,
+a, em, img, strong, ol, ul, li{margin: 0;padding: 0;}
+img{-ms-interpolation-mode: bicubic;}
+body{line-height:1.333;font-size:14px;font-size:1.4rem;color:#333;}
+li{list-style:none;}
+a{text-decoration:none;color:#438ac4;}
+a:hover{text-decoration:underline;}
+.em_txt{font-weight:700;}
+/*--- layout ---*/
+#page{ width:890px; margin:0 auto;}
+/* container */
+#logo{width:159px;height:56px;position:absolute;left:0;top:12px;text-indent:-999em;overflow:hidden; no-repeat 0 0;}
+#logo a{display:block;}
+#container{padding:30px;}
+.page_tit{position:relative;line-height:1.8;height:80px;margin-bottom:20px;padding-left:120px;}
+.page_tit i{position:absolute;width:87px;height:80px;left:15px;}
+.page_item{position:relative;zoom:1;padding:20px;border-top:1px solid #e6e8e7;}
+.page_item h2{font-size:22px;font-size:2.2rem;}
+.browser_icon{margin-top:40px;overflow:hidden;zoom:1}
+.browser_icon li{float:left;width:150px;margin-right:5px;padding-bottom:20px;font-size:12px;font-size:1.2rem;}
+.browser_icon a{position:relative;display:block;text-align:center;padding-top:32px;overflow:hidden;height:30px;line-height:30px;}
+.browser_icon a i{position:absolute;top:0;left:50%;margin-left:-16px;width:32px;height:32px;cursor:pointer;background:url(images/browserIcon.png) no-repeat -32px 0;}
+.browser_icon .ie8_icon a i{background-position:0 0;}
+.browser_icon .ff_icon a i{background-position:-64px 0;}
+.browser_icon .ch_icon a i{background-position:-96px 0;}
+.browser_icon .op_icon a i{background-position:-128px 0;}
+.browser_icon .ay_icon a i{background-position:-160px 0;}
+.browser_icon .sg_icon a i{background-position:-192px 0;}
+.browser_icon .qb_icon a i{background-position:-224px 0;}
+.browser_icon .sl_icon a i{background-position:-256px 0;}
+.goTop{position:absolute;bottom:0;right:0;width:100px;height:30px;line-height:30px;border:1px solid #e6e8e7;border-bottom:0 none ;text-align:center;}
+.goTop a{display:block;}
+/* steps */
+.steps{margin-top:20px;}
+.steps li{margin-bottom:25px;list-style:decimal inside;color:#888;font-weight:700;}
+.step_desc{display:inline;*margin-left:10px;font:400 14px Tahoma;color:#333;}
+.step_desc img{display:block;margin:5px;margin-top:15px;padding:3px;border:1px solid #ddd;}
+#oprea{border-bottom:1px solid #e6e8e7;}
+</style>
+</head>
+<body>
+	<div id="page">
+		<div id="container">
+			<div id="logo"></div>
+			<div class="page_item desc">
+				<h2>首先，请选择您的浏览器类型：</h2>
+				<ul class="browser_icon">
+					<li><a href="#ie6" title="ie6"><i></i>Internet Explorer 6</a></li>
+					<li class="ie8_icon"><a href="#ie8" title="ie8"><i></i>Internet Explorer 8</a></li>
+					<li class="ff_icon"><a href="#ff" title="firefox"><i></i>火狐浏览器（Firefox）</a></li>
+					<li class="ch_icon"><a href="#chrome" title="chrome"><i></i>谷歌浏览器（Chrome）</a></li>
+					<li class="op_icon"><a href="#oprea" title="oprea"><i></i>Oprea</a></li>
+					<li class="qb_icon"><a href="#qqbrowser" title="QQ浏览器"><i></i>QQ浏览器</a></li>
+					<li class="sl_icon"><a href="#qhbrowser" title="360浏览器"><i></i>360浏览器</a></li>
+					<li class="sg_icon"><a href="#sgbrowser" title="搜狗浏览器"><i></i>搜狗浏览器</a></li>
+					<li class="ay_icon"><a href="#maxthon" title="遨游浏览器"><i></i>遨游浏览器</a></li>
+				</ul>
+			</div>
+			<div class="page_item" id="ie6">
+				<h2>Internet Explorer 6 浏览器下的开启步骤：</h2>
+				<ol class="steps">
+					<li>
+						<div class="step_desc">
+							在浏览器菜单栏上选择“工具”→点击“Internet选项”。
+							<div><img src="images/1.png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							在弹出的“Internet选项”小窗口中点击“安全”选项→点击“自定义级别”。
+							<div><img src="images/2.png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							在弹出的“安全设置”小窗口中找到“活动脚本”，勾选“启用”，点击“确定”按钮。
+							<div><img src="images/3.png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							重新打开页面。<br>怎么样，还是不行么？如果您使用IE族浏览器，有可能是脚本引擎损坏，请试试 <a href="#reg32" title="查看具体方法" class="em_txt">IE浏览器脚本修复方法</a> 
+						</div>
+					</li>
+				</ol>
+				<div class="goTop"><a href="#logo" title="点击这里返回到页面顶部">↑返回顶部</a></div>
+			</div>
+			<div class="page_item" id="ie8">
+				<h2>Internet Explorer 8 浏览器下的开启步骤：</h2>
+				<ol class="steps">
+					<li>
+						<div class="step_desc">
+							在浏览器菜单栏上选择“工具”→点击“Internet选项”。
+							<div><img src="images/1(1).png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							在弹出的“Internet选项”小窗口中点击“安全”选项→点击“自定义级别”。
+							<div><img src="images/2(1).png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							在弹出的“安全设置”小窗口中找到“活动脚本”，勾选“启用”，点击“确定”按钮。
+							<div><img src="images/3(1).png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							重新打开页面。<br>怎么样，还是不行么？如果您使用IE族浏览器，有可能是脚本引擎损坏，请试试 <a href="#reg32" title="查看具体方法" class="em_txt">IE浏览器脚本修复方法</a> 
+						</div>
+					</li>
+				</ol>
+				<div class="goTop"><a href="#logo" title="点击这里返回到页面顶部">↑返回顶部</a></div>
+			</div>
+			<div class="page_item" id="reg32">
+				<h2>ie浏览器终极修复步骤...囧：</h2>
+				<ol class="steps">
+					<li>
+						<div class="step_desc">
+							按键盘上的“win”+“r”，在弹出的运行窗口输入“cmd”→点击“确定”。
+							<div><img src="images/1(2).png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							弹出如下的命令行窗口：
+							<div><img src="images/2(2).png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							输入regsvr32 jscript.dll，回车→弹出成功提示后，点击“确定”。
+							<div><img src="images/3(2).png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							输入regsvr32 vbscript.dll，回车→弹出成功提示后，点击“确定”。
+							<div><img src="images/4.png" alt=""></div>
+						</div>
+					</li>
+				</ol>
+				<div class="goTop"><a href="#logo" title="点击这里返回到页面顶部">↑返回顶部</a></div>
+			</div>
+			<div class="page_item" id="ff">
+				<h2>火狐浏览器（Firefox）下的开启步骤：</h2>
+				<ol class="steps">
+					<li>
+						<div class="step_desc">
+							在浏览器菜单栏（如果菜单栏没有出现，点击键盘“Alt”键调出菜单栏）上选择“工具”→点击“选项”。
+							<div><img src="images/1(3).png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							在弹出的“选项”小窗口中点击“内容”选项→勾选“启用Javascript”→点击“确定”按钮。
+							<div><img src="images/2(3).png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							重新打开页面。
+						</div>
+					</li>
+				</ol>
+				<div class="goTop"><a href="#logo" title="点击这里返回到页面顶部">↑返回顶部</a></div>
+			</div>
+			<div class="page_item" id="chrome">
+				<h2>谷歌浏览器（Chrome）下的开启步骤：</h2>
+				<ol class="steps">
+					<li>
+						<div class="step_desc">
+							在浏览器菜单栏点击<img src="images/c1.png" alt="" style="display:inline;vertical-align:middle;margin-top:-2px;">。
+							<div><img src="images/1(4).png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							在弹出的“选项”面板中选择“高级选项”→点击“内容设置”。
+							<div><img src="images/2(4).png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							在“内容设置”面板中勾选“允许所有网站运行 JavaScript（推荐）”。
+							<div><img src="images/3(3).png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							重新打开页面。
+						</div>
+					</li>
+				</ol>
+				<div class="goTop"><a href="#logo" title="点击这里返回到页面顶部">↑返回顶部</a></div>
+			</div>
+			<div class="page_item" id="oprea">
+				<h2>Oprea 浏览器下的开启步骤：</h2>
+				<ol class="steps">
+					<li>
+						<div class="step_desc">
+							按“Ctrl”+“F12”键，在弹出的首选项面板中选择“高级”选项→选择“内容”→勾选“允许使用JavaScript”。
+							<div><img src="images/1(5).png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							重新打开页面。
+						</div>
+					</li>
+				</ol>
+				<div class="goTop"><a href="#logo" title="点击这里返回到页面顶部">↑返回顶部</a></div>
+			</div>
+			<div class="page_item" id="qqbrowser">
+				<h2>QQ浏览器下的开启步骤：</h2>
+				<ol class="steps">
+					<li>
+						<div class="step_desc">
+							观察浏览器是否为“兼容”模式。
+							<div><img src="images/qb1.png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							若是“兼容”模式，请点击<a href="#container">这里参考 Internet Explorer</a>的解决方案解决。
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							重新打开页面。
+						</div>
+					</li>
+				</ol>
+				<div class="goTop"><a href="#logo" title="点击这里返回到页面顶部">↑返回顶部</a></div>
+			</div>
+			<div class="page_item" id="qhbrowser">
+				<h2>360浏览器下的开启步骤：</h2>
+				<ol class="steps">
+					<li>
+						<div class="step_desc">
+							由于360安全浏览器采用Internet Explorer内核，该项设置与Internet Explorer共享，请点击<a href="#container">这里参考 Internet Explorer</a>的解决方案解决。
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							重新打开页面。
+						</div>
+					</li>
+				</ol>
+				<div class="goTop"><a href="#logo" title="点击这里返回到页面顶部">↑返回顶部</a></div>
+			</div>
+			<div class="page_item" id="sgbrowser">
+				<h2>搜狗浏览器下的开启步骤：</h2>
+				<ol class="steps">
+					<li>
+						<div class="step_desc">
+							观察浏览器是否为“兼容”模式。
+							<div><img src="images/sg1.png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							若是“兼容”模式，请点击<a href="#container">这里参考 Internet Explorer</a>的解决方案解决。
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							重新打开页面。
+						</div>
+					</li>
+				</ol>
+				<div class="goTop"><a href="#logo" title="点击这里返回到页面顶部">↑返回顶部</a></div>
+			</div>
+			<div class="page_item" id="maxthon">
+				<h2>遨游浏览器下的开启步骤：</h2>
+				<ol class="steps">
+					<li>
+						<div class="step_desc">
+							观察浏览器是否为“兼容”模式。
+							<div><img src="images/mx1.png" alt=""></div>
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							若是“兼容”模式，请点击<a href="#container">这里参考 Internet Explorer</a>的解决方案解决。
+						</div>
+					</li>
+					<li>
+						<div class="step_desc">
+							重新打开页面。
+						</div>
+					</li>
+				</ol>
+				<div class="goTop"><a href="#logo" title="点击这里返回到页面顶部">↑返回顶部</a></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

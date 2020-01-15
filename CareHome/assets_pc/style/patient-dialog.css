@@ -1,0 +1,267 @@
+.charge-dialog {
+  width: 645px;
+}
+
+.charge-dialog .charge-wrapper {
+  padding: 30px 40px;
+}
+
+.charge-dialog .charge-info-head {
+  padding: 10px 0;
+}
+
+.charge-dialog .charge-info-head .info-title {
+  display: inline-block;
+  height: 18px;
+  line-height: 18px;
+  font-size: 16px;
+  font-weight: bold;
+  padding-left: 12px;
+  position: relative;
+}
+
+.charge-dialog .charge-info-head .info-title:before {
+  content: '';
+  display: block;
+  width: 3px;
+  height: 3px;
+  background-color: #8184ff;
+  position: absolute;
+  top: 6px;
+  left: 0;
+}
+
+.charge-dialog .charge-info-head .head-right {
+  display: inline-block;
+  float: right;
+}
+
+.charge-dialog .charge-info-head .head-right select {
+  display: inline-block;
+  vertical-align: top;
+  height: 24px;
+  line-height: 24px;
+  font-size: 14px;
+  border: 1px solid #8184ff;
+}
+
+.charge-dialog .charge-info-head .head-right select option {
+  font-size: 14px;
+}
+
+.charge-dialog .charge-info-head .head-right .btn-arrow {
+  display: inline-block;
+  vertical-align: top;
+  height: 20px;
+  line-height: 20px;
+  width: 24px;
+  background-color: #e4deff;
+  border: 1px solid #adafff;
+  position: relative;
+}
+
+.charge-dialog .charge-info-head .head-right .btn-arrow.left:before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-right-color: #adafff;
+  position: absolute;
+  top: 4px;
+  right: 8px;
+}
+
+.charge-dialog .charge-info-head .head-right .btn-arrow.right:before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-left-color: #adafff;
+  position: absolute;
+  top: 4px;
+  left: 8px;
+}
+
+.charge-dialog .charge-info-head .head-right .percent-num {
+  display: inline-block;
+  vertical-align: top;
+  width: 40px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  color: #6e64ff;
+}
+
+.charge-dialog .charge-info-head .head-right .btn-review {
+  display: inline-block;
+  vertical-align: top;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  color: #6e64ff;
+  background-color: #e4deff;
+  border: 1px solid #adafff;
+  padding: 0 15px;
+}
+
+.charge-dialog .charge-info-table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.charge-dialog .charge-info-table td {
+  border: 1px solid #dddddd;
+  padding: 5px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #666;
+}
+
+.charge-dialog .charge-info-table .text-bold {
+  font-weight: bold;
+  color: #333;
+}
+
+.charge-dialog .charge-info-table .text-purple {
+  color: #6e64ff;
+}
+
+.charge-dialog .charge-info-table .charge-input {
+  display: inline-block;
+  width: 100%;
+  height: 24px;
+  line-height: 24px;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #eeeeee;
+}
+
+.charge-dialog .charge-info-table .icon-lock {
+  display: inline-block;
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+  background: url("../images/icon-lock1.png") no-repeat;
+  cursor: pointer;
+}
+
+.charge-dialog .charge-info-table .icon-lock.active {
+  background: url("../images/icon-lock1-active.png") no-repeat;
+}
+
+.charge-dialog .charge-type-box {
+  padding: 5px;
+}
+
+.charge-dialog .charge-type-box .charge-type-tag {
+  display: inline-block;
+  padding-left: 5px;
+  height: 14px;
+  line-height: 14px;
+  border-left: 3px solid green;
+  margin-right: 20px;
+}
+
+.charge-dialog .patient-dialog-btns {
+  border-top: 1px solid #dddddd;
+  text-align: center;
+  padding: 10px  0;
+}
+
+.charge-dialog .patient-dialog-btns .dialog-btn {
+  display: inline-block;
+  height: 30px;
+  width: 200px;
+  line-height: 30px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #6e64ff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.charge-dialog .patient-info-item {
+  display: inline-block;
+  width: 100%;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.charge-dialog .patient-info-item.half-item {
+  width: 45%;
+}
+
+.charge-dialog .patient-info-item .info-title {
+  display: inline-block;
+  vertical-align: top;
+  width: 90px;
+  height: 22px;
+  line-height: 22px;
+  font-weight: bold;
+  color: #333;
+}
+
+.charge-dialog .patient-info-item .info-title.long-title {
+  width: 130px;
+}
+
+.charge-dialog .patient-info-item .info-text {
+  display: inline-block;
+  vertical-align: top;
+  height: 22px;
+  line-height: 22px;
+  color: #666;
+  font-weight: bold;
+}
+
+.charge-dialog .patient-info-item .bg-gray {
+  background-color: #eee;
+  padding: 0 5px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  margin: 0 3px;
+}
+
+.charge-dialog .patient-info-item .text-bold {
+  font-weight: bold;
+  color: #333;
+}
+
+.charge-dialog .patient-info-item .text-purple {
+  color: #6e64ff;
+}
+
+.charge-dialog .patient-info-item .text-red {
+  color: #b00400;
+}
+
+.patient-info-box {
+  padding-left: 200px;
+  position: relative;
+}
+
+.patient-info-box .patient-avatar-box {
+  display: inline-block;
+  width: 150px;
+  height: 180px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid #dddddd;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.patient-info-box .patient-avatar-box img {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
